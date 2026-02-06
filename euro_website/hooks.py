@@ -5,6 +5,12 @@ app_description = "Custom ERPNext public website frontend"
 app_email = "hello@example.com"
 app_license = "MIT"
 
+# Hide default Frappe navbar/footer across public website pages
+website_context = {
+    "hide_navbar": 1,
+    "hide_footer": 1,
+}
+
 # Website assets
 web_include_css = [
     "/assets/euro_website/css/euro_website.css",
