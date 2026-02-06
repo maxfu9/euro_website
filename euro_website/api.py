@@ -106,14 +106,31 @@ def list_addresses():
     addresses = frappe.get_all(
         "Address",
         filters=[["Dynamic Link", "link_doctype", "=", "Customer"], ["Dynamic Link", "link_name", "=", customer]],
-        fields=["name", "address_title", "address_line1", "city", "country"],
+        fields=[
+            "name",
+            "address_title",
+            "address_type",
+            "address_line1",
+            "city",
+            "country",
+            "is_shipping_address",
+            "is_primary_address",
+        ],
         limit_page_length=50,
     )
     return addresses
 
 
 @frappe.whitelist()
-def save_address(address_name: str = None, address_title: str = None, address_line1: str = None, city: str = None, country: str = None):
+def save_address(
+    address_name: str = None,
+    address_title: str = None,
+    address_type: str = "Shipping",
+    address_line1: str = None,
+    city: str = None,
+    country: str = None,
+    is_default: int = 0,
+):
     user = frappe.session.user
     if not user or user == "Guest":
         frappe.throw("Login required")
@@ -126,9 +143,12 @@ def save_address(address_name: str = None, address_title: str = None, address_li
     if address_name:
         doc = frappe.get_doc("Address", address_name)
         doc.address_title = address_title
+        doc.address_type = address_type
         doc.address_line1 = address_line1
         doc.city = city
         doc.country = country
+        if int(is_default):
+            _set_default_flags(doc)
         doc.flags.ignore_permissions = True
         doc.save()
         return {"ok": True, "name": doc.name}
@@ -137,13 +157,15 @@ def save_address(address_name: str = None, address_title: str = None, address_li
         {
             "doctype": "Address",
             "address_title": address_title,
-            "address_type": "Shipping",
+            "address_type": address_type,
             "address_line1": address_line1,
             "city": city,
             "country": country,
             "links": [{"link_doctype": "Customer", "link_name": customer}],
         }
     )
+    if int(is_default):
+        _set_default_flags(doc)
     doc.flags.ignore_permissions = True
     doc.insert()
     return {"ok": True, "name": doc.name}
@@ -160,6 +182,13 @@ def delete_address(address_name: str):
     doc.flags.ignore_permissions = True
     doc.delete()
     return {"ok": True}
+
+
+def _set_default_flags(doc):
+    if doc.address_type == "Billing":
+        doc.is_primary_address = 1
+    else:
+        doc.is_shipping_address = 1
 
 
 @frappe.whitelist(allow_guest=True)

@@ -115,6 +115,13 @@ a {
   justify-content: center;
 }
 
+.badge--soft {
+  position: static;
+  background: rgba(163, 24, 122, 0.12);
+  color: var(--accent);
+  margin-top: 6px;
+}
+
 .icon-btn {
   display: inline-flex;
   align-items: center;

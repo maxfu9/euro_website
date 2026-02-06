@@ -17,6 +17,15 @@
       <input type="hidden" name="address_name" />
       <label>Label</label>
       <input type="text" name="address_title" placeholder="Home, Office" required />
+      <label>Address Type</label>
+      <select name="address_type">
+        <option value="Shipping">Shipping</option>
+        <option value="Billing">Billing</option>
+      </select>
+      <label class="checkbox-line">
+        <input type="checkbox" name="is_default" />
+        Set as default
+      </label>
       <label>Address Line 1</label>
       <input type="text" name="address_line1" required />
       <label>City</label>

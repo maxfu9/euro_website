@@ -547,7 +547,8 @@
           <div class="address-row">
             <div>
               <div class="row-title">${addr.address_title || addr.name}</div>
-              <div class="muted">${addr.address_line1}, ${addr.city}, ${addr.country}</div>
+              <div class="muted">${addr.address_type || "Shipping"} · ${addr.address_line1}, ${addr.city}, ${addr.country}</div>
+              ${addr.is_primary_address || addr.is_shipping_address ? '<span class="badge badge--soft">Default</span>' : ''}
             </div>
             <div class="address-actions">
               <button class="btn btn-ghost btn-small" data-address-edit="${addr.name}">Edit</button>
@@ -568,9 +569,11 @@
         const result = await call("euro_website.api.save_address", {
           address_name: addressForm.address_name.value || null,
           address_title: addressForm.address_title.value,
+          address_type: addressForm.address_type.value,
           address_line1: addressForm.address_line1.value,
           city: addressForm.city.value,
           country: addressForm.country.value,
+          is_default: addressForm.is_default.checked ? 1 : 0,
         });
         const ok = result.message ? result.message.ok : result.ok;
         if (ok) {
@@ -602,6 +605,9 @@
         if (!addr) return;
         addressForm.address_name.value = addr.name;
         addressForm.address_title.value = addr.address_title || "";
+        addressForm.address_type.value = addr.address_type || "Shipping";
+        addressForm.is_default.checked = (addr.address_type === "Billing" && addr.is_primary_address) ||
+          (addr.address_type !== "Billing" && addr.is_shipping_address);
         addressForm.address_line1.value = addr.address_line1 || "";
         addressForm.city.value = addr.city || "";
         addressForm.country.value = addr.country || "";
