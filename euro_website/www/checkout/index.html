@@ -3,21 +3,6 @@
 {% extends "templates/web.html" %}
 {% block page_content %}
 
-<section class="page-hero">
-  <div class="container">
-    <div class="checkout-hero">
-      <div>
-        <p class="eyebrow">Checkout</p>
-        <h1>Complete your order</h1>
-        <p class="lead">Secure checkout, tailored for Euro Plast customers.</p>
-      </div>
-      {% if frappe.session.user == "Guest" %}
-        <a class="checkout-login" href="/login?redirect-to=/checkout">Login</a>
-      {% endif %}
-    </div>
-  </div>
-</section>
-
 <section class="section">
   <div class="container checkout-grid">
     <form class="checkout-form" id="checkout-form">
