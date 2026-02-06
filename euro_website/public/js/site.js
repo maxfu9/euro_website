@@ -80,6 +80,10 @@
     if (cartTotalEl) {
       cartTotalEl.textContent = cartTotal(cart).toFixed(2);
     }
+    const compactTotal = document.getElementById("cart-total-compact");
+    if (compactTotal) {
+      compactTotal.textContent = cartTotal(cart).toFixed(2);
+    }
   };
 
   const openCart = () => {

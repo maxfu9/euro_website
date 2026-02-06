@@ -63,6 +63,7 @@ a {
 .nav-cta {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
 .brand {
@@ -110,6 +111,40 @@ a {
   color: var(--accent);
   font-size: 11px;
   font-weight: 700;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.icon-btn .icon {
+  font-size: 16px;
+}
+
+.cart-total {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .btn:hover {

@@ -13,16 +13,21 @@
       {% endif %}
     </div>
     <div class="nav-cta">
-      <a class="btn btn-ghost" href="/store">Shop Now</a>
       {% if frappe.session.user == "Guest" %}
         <a class="btn btn-ghost" href="/signup">Sign Up</a>
         <a class="btn btn-solid" href="/login?redirect-to=/portal">Login</a>
       {% else %}
-        <a class="btn btn-solid" href="/portal">My Account</a>
+        <div class="avatar">{{ frappe.session.user[:1]|upper }}</div>
+        <a class="btn btn-ghost" href="/logout">Logout</a>
       {% endif %}
-      <button class="btn btn-solid" type="button" data-cart-toggle>
-        Cart <span class="cart-count" data-cart-count>0</span>
+      <button class="icon-btn" type="button" data-cart-toggle>
+        <span class="icon">🛒</span>
+        <span class="cart-count" data-cart-count>0</span>
+        <span class="cart-total" id="cart-total-compact">0</span>
       </button>
+      <a class="icon-btn" href="/wishlist">
+        <span class="icon">♡</span>
+      </a>
     </div>
   </div>
 </nav>
