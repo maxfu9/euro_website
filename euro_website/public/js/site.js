@@ -458,12 +458,15 @@
 
       try {
         const result = await call("euro_website.api.place_order", payload);
-        const ok = result.message ? result.message.ok : result.ok;
+        const payload = result.message || result;
+        const ok = payload?.ok || payload?.sales_order;
         if (ok) {
-          const orderId = result.message?.sales_order || result.sales_order;
+          const orderId = payload?.sales_order;
           saveAddressHistory({ address_line1: addressLine1, city, country });
           localStorage.removeItem(cartKey());
-          status.textContent = `Order placed: ${orderId}`;
+          status.textContent = payload.warning
+            ? `Order placed: ${orderId}. Note: ${payload.warning}`
+            : `Order placed: ${orderId}`;
           window.location.href = `/order?order=${encodeURIComponent(orderId)}`;
         } else {
           status.textContent = "Unable to place order.";

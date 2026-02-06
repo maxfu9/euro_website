@@ -161,10 +161,27 @@ def place_order(
     so.flags.ignore_permissions = True
     so.insert()
 
-    if frappe.session.user != "Guest" and bool(int(update_profile)):
-        _update_contact_for_user(frappe.session.user, full_name, email, phone)
+    submitted = False
+    submit_error = None
+    try:
+        so.flags.ignore_permissions = True
+        so.submit()
+        submitted = True
+    except Exception as exc:
+        submit_error = str(exc)
 
-    return {"ok": True, "sales_order": so.name}
+    if frappe.session.user != "Guest" and bool(int(update_profile)):
+        try:
+            _update_contact_for_user(frappe.session.user, full_name, email, phone)
+        except Exception:
+            pass
+
+    return {
+        "ok": True,
+        "sales_order": so.name,
+        "submitted": submitted,
+        "warning": submit_error,
+    }
 
 
 def _create_address(full_name, address_line1, city, country, customer):
