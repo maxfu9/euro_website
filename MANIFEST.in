@@ -1,0 +1,2 @@
+recursive-include euro_website *.py *.html *.css *.js *.json *.md *.txt
+recursive-exclude * __pycache__ *.pyc
