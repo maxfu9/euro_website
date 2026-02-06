@@ -5,22 +5,57 @@
 
 <section class="page-hero">
   <div class="container">
-    <p class="eyebrow">Checkout</p>
-    <h1>Complete your order</h1>
-    <p class="lead">Secure checkout, tailored for Euro Plast customers.</p>
+    <div class="checkout-hero">
+      <div>
+        <p class="eyebrow">Checkout</p>
+        <h1>Complete your order</h1>
+        <p class="lead">Secure checkout, tailored for Euro Plast customers.</p>
+      </div>
+      {% if frappe.session.user == "Guest" %}
+        <a class="checkout-login" href="/login?redirect-to=/checkout">Login</a>
+      {% endif %}
+    </div>
   </div>
 </section>
 
 <section class="section">
-  <div class="container grid-2">
-    <form class="contact-card" id="checkout-form">
-      <div class="stepper">
-        <div class="step is-active" data-step="1">Shipping</div>
-        <div class="step" data-step="2">Payment</div>
-        <div class="step" data-step="3">Review</div>
+  <div class="container checkout-grid">
+    <form class="checkout-form" id="checkout-form">
+      <div class="checkout-section">
+        <h3>Contact</h3>
+        <div class="field-row">
+          <div>
+            <label>Full Name</label>
+            <input type="text" name="full_name" required />
+          </div>
+          <div>
+            <label>Email</label>
+            <input type="email" name="email" required />
+          </div>
+        </div>
+        <label>Phone</label>
+        <input type="text" name="phone" />
       </div>
 
-      <div class="checkout-step" data-step-panel="1">
+      <div class="checkout-section">
+        <h3>Shipping Address</h3>
+        <label>Address</label>
+        <input type="text" name="address_line1" list="address-history" required />
+        <datalist id="address-history"></datalist>
+        <div class="field-row">
+          <div>
+            <label>City</label>
+            <input type="text" name="city" required />
+          </div>
+          <div>
+            <label>Country</label>
+            <input type="text" name="country" value="United States" required />
+          </div>
+        </div>
+        <label class="checkbox-line">
+          <input type="checkbox" name="billing_same" checked />
+          Billing address same as shipping
+        </label>
         {% if frappe.session.user != "Guest" %}
           <div class="inline-switches">
             <label class="checkbox-line">
@@ -33,25 +68,19 @@
             </label>
           </div>
         {% endif %}
-        <label>Full Name</label>
-        <input type="text" name="full_name" required />
-        <label>Email</label>
-        <input type="email" name="email" required />
-        <label>Phone</label>
-        <input type="text" name="phone" />
-        <label>Address</label>
-        <input type="text" name="address_line1" list="address-history" required />
-        <datalist id="address-history"></datalist>
-        <label>City</label>
-        <input type="text" name="city" required />
-        <label>Country</label>
-        <input type="text" name="country" value="United States" required />
-        <label>Notes</label>
-        <textarea name="notes" rows="4" placeholder="Order notes"></textarea>
       </div>
 
-      <div class="checkout-step" data-step-panel="2" style="display:none;">
-        <label>Payment Method</label>
+      <div class="checkout-section">
+        <h3>Delivery Method</h3>
+        <select name="delivery_method" required>
+          <option value="Standard">Standard Delivery</option>
+          <option value="Express">Express Delivery</option>
+          <option value="Pickup">Pickup</option>
+        </select>
+      </div>
+
+      <div class="checkout-section">
+        <h3>Payment</h3>
         <select name="payment_method" required>
           <option value="Cash">Cash</option>
           <option value="Cash on Delivery">Cash on Delivery</option>
@@ -59,22 +88,21 @@
         <p class="muted">Payment will be collected on delivery or pickup.</p>
       </div>
 
-      <div class="checkout-step" data-step-panel="3" style="display:none;">
-        <div class="review-card">
-          <h3>Review</h3>
-          <div class="review-block" id="checkout-review"></div>
-        </div>
+      <div class="checkout-section">
+        <h3>Notes</h3>
+        <textarea name="notes" rows="4" placeholder="Order notes"></textarea>
       </div>
 
-      <div class="step-actions">
-        <button class="btn btn-ghost" type="button" data-step-prev>Back</button>
-        <button class="btn btn-solid" type="button" data-step-next>Continue</button>
-        <button class="btn btn-solid" type="submit" data-step-submit style="display:none;">Place order</button>
+      <div class="checkout-actions">
+        <button class="btn btn-solid" type="submit">Place order</button>
       </div>
       <div class="form-note" id="checkout-status"></div>
     </form>
-    <div class="info-card">
-      <h3>Order summary</h3>
+    <div class="checkout-summary-card">
+      <div class="summary-header">
+        <h3>Order summary</h3>
+        <a href="/store" class="lineup-link">Edit cart →</a>
+      </div>
       <div id="checkout-summary" class="checkout-summary"></div>
       <div class="checkout-total">
         <span>Total</span>

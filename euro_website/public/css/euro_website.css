@@ -836,6 +836,21 @@ button:focus-visible {
   border-bottom: 1px solid var(--border);
 }
 
+.checkout-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.checkout-login {
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
 .store-benefits {
   padding: 30px 0 10px;
 }
@@ -1481,6 +1496,65 @@ select {
   display: grid;
   gap: 10px;
   margin-top: 12px;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 32px;
+  align-items: start;
+}
+
+.checkout-form {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  display: grid;
+  gap: 22px;
+}
+
+.checkout-section h3 {
+  margin: 0 0 10px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.checkout-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.checkout-summary-card {
+  position: sticky;
+  top: 110px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  display: grid;
+  gap: 12px;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.checkout-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
 }
 
 .stepper {
