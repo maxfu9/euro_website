@@ -110,6 +110,52 @@
     }
   };
 
+  const mergeCartItems = (base, incoming) => {
+    const map = new Map(base.map((item) => [item.item_code, { ...item }]));
+    incoming.forEach((item) => {
+      if (!item.item_code) return;
+      const existing = map.get(item.item_code);
+      if (existing) {
+        existing.qty = (existing.qty || 1) + (item.qty || 1);
+      } else {
+        map.set(item.item_code, { ...item });
+      }
+    });
+    return Array.from(map.values());
+  };
+
+  const refreshCartPrices = async () => {
+    if (getUserKey() === "Guest") return;
+    const cart = getCart();
+    if (!cart.length) return;
+    const itemCodes = cart.map((item) => item.item_code).filter(Boolean);
+    if (!itemCodes.length) return;
+    try {
+      const result = await call("euro_website.api.get_item_prices", { item_codes: itemCodes });
+      const data = result.message || result;
+      const prices = data?.prices || {};
+      const updated = cart.map((item) => ({
+        ...item,
+        rate: prices[item.item_code] != null ? prices[item.item_code] : item.rate,
+      }));
+      saveCart(updated);
+      renderCart();
+    } catch (e) {
+      // Ignore price refresh errors
+    }
+  };
+
+  const migrateGuestCart = () => {
+    if (getUserKey() === "Guest") return;
+    const guestKey = "euro_cart:Guest";
+    const guestCart = JSON.parse(localStorage.getItem(guestKey) || "[]");
+    if (!guestCart.length) return;
+    const current = getCart();
+    const merged = mergeCartItems(current, guestCart);
+    saveCart(merged);
+    localStorage.removeItem(guestKey);
+  };
+
   const openCart = () => {
     document.querySelector(".cart-drawer")?.classList.add("is-open");
     document.querySelector(".cart-backdrop")?.classList.add("is-open");
@@ -619,6 +665,8 @@
   }
 
   migrateLegacyStorage();
+  migrateGuestCart();
+  refreshCartPrices();
   renderCart();
   wishlistCount();
 })();

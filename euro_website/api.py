@@ -73,6 +73,38 @@ def get_checkout_profile():
     return data
 
 
+@frappe.whitelist(allow_guest=True)
+def get_item_prices(item_codes):
+    if isinstance(item_codes, str):
+        try:
+            item_codes = json.loads(item_codes)
+        except Exception:
+            item_codes = []
+    if not item_codes:
+        return {"price_list": None, "prices": {}}
+
+    price_list = _get_price_list_for_user()
+    prices = {}
+    if price_list:
+        records = frappe.get_all(
+            "Item Price",
+            filters={"item_code": ["in", item_codes], "price_list": price_list, "selling": 1},
+            fields=["item_code", "price_list_rate"],
+        )
+        prices = {row.item_code: row.price_list_rate for row in records}
+
+    for code in item_codes:
+        if code in prices:
+            continue
+        fallback = _get_value_if_field("Item", code, "standard_rate")
+        if fallback is not None:
+            prices[code] = fallback
+        else:
+            prices[code] = 0
+
+    return {"price_list": price_list, "prices": prices}
+
+
 @frappe.whitelist()
 def get_profile():
     user = frappe.session.user
@@ -396,6 +428,22 @@ def _get_payment_terms(payment_method):
         if frappe.db.exists("Payment Terms Template", name):
             return name
     return None
+
+
+def _get_price_list_for_user():
+    user = frappe.session.user
+    if user and user != "Guest":
+        customer = _get_customer_for_user(user)
+        if customer:
+            group = frappe.db.get_value("Customer", customer, "customer_group")
+            if group == "Commercial" and frappe.db.exists("Price List", "Standard Selling"):
+                return "Standard Selling"
+    if frappe.db.exists("Price List", "Website Price List"):
+        return "Website Price List"
+    if frappe.db.exists("Price List", "Standard Selling"):
+        return "Standard Selling"
+    price_list = frappe.get_all("Price List", filters={"selling": 1}, fields=["name"], limit_page_length=1)
+    return price_list[0].name if price_list else None
 
 
 def _get_customer_for_user(user):
