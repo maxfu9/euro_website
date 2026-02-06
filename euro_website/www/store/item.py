@@ -2,13 +2,13 @@ import frappe
 
 
 def get_context(context):
-    route = frappe.form_dict.get("item")
+    route = frappe.form_dict.get("item") or frappe.form_dict.get("name")
     if not route:
-        frappe.throw("Not Found", frappe.DoesNotExistError)
+        return _fallback_to_store(context)
 
     item = _get_item_by_route(route)
     if not item:
-        frappe.throw("Not Found", frappe.DoesNotExistError)
+        return _fallback_to_store(context)
 
     context.no_cache = 1
     context.title = item.item_name
@@ -21,6 +21,16 @@ def get_context(context):
     price_list = _get_price_list()
     context.price_list = price_list
     context.price = _get_item_price(item.item_code, price_list) or getattr(item, "standard_rate", 0) or 0
+    return context
+
+
+def _fallback_to_store(context):
+    context.no_cache = 1
+    context.title = "Store"
+    context.message = "Product not found."
+    context.show_store_link = True
+    context.template = "euro_website/templates/includes/empty_state.html"
+    return context
 
 
 def _get_item_by_route(route):

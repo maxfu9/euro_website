@@ -1,0 +1,14 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+<section class="section">
+  <div class="container empty-state">
+    <h3>{{ message or "We couldn't find that product." }}</h3>
+    <p class="muted">Try browsing the store for available items.</p>
+    {% if show_store_link %}
+      <a class="btn btn-solid" href="/store">Go to store</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
