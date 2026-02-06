@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+*.pyc
+.env
+
+# Node / build
+node_modules/
+
+# Frappe build
+public/files/
+public/cache/
+
+# Logs
+*.log

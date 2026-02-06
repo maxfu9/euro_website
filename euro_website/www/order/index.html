@@ -1,0 +1,40 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Order Confirmed</p>
+    <h1>Thank you for your order.</h1>
+    <p class="lead">We’ve received your request and will start processing it right away.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid-2">
+    <div class="info-card">
+      <h3>Order reference</h3>
+      {% if order_id %}
+        <div class="stat">{{ order_id }}</div>
+      {% else %}
+        <p class="muted">Your order reference will appear here.</p>
+      {% endif %}
+      <p class="muted">You can track your order anytime from the portal.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="/portal">Go to portal</a>
+        <a class="btn btn-ghost" href="/store">Continue shopping</a>
+      </div>
+    </div>
+    <div class="info-card">
+      <h3>Next steps</h3>
+      <ul class="muted">
+        <li>We’ll review your order and confirm inventory.</li>
+        <li>You’ll receive updates by email.</li>
+        <li>Payment will be collected as selected.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

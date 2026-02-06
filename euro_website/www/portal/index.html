@@ -1,0 +1,122 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">My Account</p>
+    <h1>Welcome back{% if customer %}, {{ customer.customer_name }}{% endif %}.</h1>
+    <p class="lead">Track orders, invoices, and payments from one place.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container portal-grid">
+    <div class="portal-summary">
+      <div class="summary-card">
+        <div class="summary-label">Orders total</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.order_total if summary else 0) }}</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Invoices total</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.invoice_total if summary else 0) }}</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Outstanding</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.outstanding_total if summary else 0) }}</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Payments received</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.payments_total if summary else 0) }}</div>
+      </div>
+    </div>
+    {% if pending_trader %}
+      <div class="portal-card alert-card">
+        <h2>Wholesale approval pending</h2>
+        <p class="muted">Your trader account request is under review. Retail pricing applies until approval.</p>
+      </div>
+    {% endif %}
+    <div class="portal-card">
+      <h2>Orders</h2>
+      {% if orders and orders | length %}
+        <div class="portal-table">
+          <div class="portal-row portal-head">
+            <div>Order</div>
+            <div>Date</div>
+            <div>Status</div>
+            <div>Total</div>
+          </div>
+          {% for order in orders %}
+            <div class="portal-row">
+              <div>
+                <div class="row-title">{{ order.name }}</div>
+                <a class="row-link" href="/printview?doctype=Sales Order&name={{ order.name }}&format=Standard&no_letterhead=0" target="_blank">Download</a>
+              </div>
+              <div>{{ frappe.utils.formatdate(order.transaction_date) }}</div>
+              <div><span class="status-badge status-{{ order.status | lower | replace(' ', '-') }}">{{ order.status }}</span></div>
+              <div>{{ frappe.utils.fmt_money(order.grand_total) }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="muted">No orders yet.</p>
+      {% endif %}
+    </div>
+
+    <div class="portal-card">
+      <h2>Invoices</h2>
+      {% if invoices and invoices | length %}
+        <div class="portal-table">
+          <div class="portal-row portal-head">
+            <div>Invoice</div>
+            <div>Date</div>
+            <div>Status</div>
+            <div>Outstanding</div>
+          </div>
+          {% for invoice in invoices %}
+            <div class="portal-row">
+              <div>
+                <div class="row-title">{{ invoice.name }}</div>
+                <a class="row-link" href="/printview?doctype=Sales Invoice&name={{ invoice.name }}&format=Standard&no_letterhead=0" target="_blank">Download</a>
+              </div>
+              <div>{{ frappe.utils.formatdate(invoice.posting_date) }}</div>
+              <div><span class="status-badge status-{{ invoice.status | lower | replace(' ', '-') }}">{{ invoice.status }}</span></div>
+              <div>{{ frappe.utils.fmt_money(invoice.outstanding_amount) }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="muted">No invoices yet.</p>
+      {% endif %}
+    </div>
+
+    <div class="portal-card">
+      <h2>Payments</h2>
+      {% if payments and payments | length %}
+        <div class="portal-table">
+          <div class="portal-row portal-head">
+            <div>Payment</div>
+            <div>Date</div>
+            <div>Status</div>
+            <div>Amount</div>
+          </div>
+          {% for payment in payments %}
+            <div class="portal-row">
+              <div>
+                <div class="row-title">{{ payment.name }}</div>
+                <a class="row-link" href="/printview?doctype=Payment Entry&name={{ payment.name }}&format=Standard&no_letterhead=0" target="_blank">Download</a>
+              </div>
+              <div>{{ frappe.utils.formatdate(payment.posting_date) }}</div>
+              <div><span class="status-badge status-{{ payment.status | lower | replace(' ', '-') }}">{{ payment.status }}</span></div>
+              <div>{{ frappe.utils.fmt_money(payment.paid_amount) }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="muted">No payments yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

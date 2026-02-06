@@ -1,0 +1,101 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+
+<section class="section">
+  <div class="container product-detail">
+    <div class="gallery">
+      <div class="product-detail-media" data-gallery-main style="background-image: url('{{ (gallery[0] if gallery else item.website_image or item.thumbnail or '/assets/frappe/images/ui/placeholder-image.png') }}')"></div>
+      <div class="gallery-thumbs">
+        {% for img in gallery %}
+          <button class="thumb" type="button" data-gallery-thumb="{{ img }}" style="background-image: url('{{ img }}')"></button>
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">{{ item.item_code }}</p>
+      <h1>{{ item.item_name }}</h1>
+      <div class="product-badges">
+        <span class="tag">100% virgin material</span>
+        <span class="tag">Food safe</span>
+        <span class="tag">BPA free</span>
+      </div>
+      <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
+      <p class="lead">{{ item.website_description or item.web_long_description or '' }}</p>
+      <div class="product-actions">
+        <button class="btn btn-solid" type="button"
+          data-add-to-cart
+          data-item-code="{{ item.item_code }}"
+          data-item-name="{{ item.item_name }}"
+          data-item-route="{{ item.route or item.item_code }}"
+          data-item-image="{{ item.website_image or item.thumbnail or '' }}"
+          data-item-price="{{ price or 0 }}">
+          Add to cart
+        </button>
+        <button class="btn btn-ghost" type="button" data-cart-toggle>View cart</button>
+        <button class="btn btn-ghost" type="button"
+          data-add-to-wishlist
+          data-item-code="{{ item.item_code }}"
+          data-item-name="{{ item.item_name }}"
+          data-item-route="{{ item.route or item.item_code }}"
+          data-item-image="{{ item.website_image or item.thumbnail or '' }}">
+          Save to wishlist
+        </button>
+      </div>
+      <div class="product-highlights">
+        {% for highlight in highlights %}
+          <div class="highlight">
+            <div class="highlight-label">{{ highlight.label }}</div>
+            <div class="highlight-value">{{ highlight.value }}</div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="product-meta">
+        <div>Fulfilled via ERPNext</div>
+        <div>Live stock and pricing</div>
+        <div>Secure checkout</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid-2">
+    <div class="specs-card">
+      <h2>Specifications</h2>
+      {% if specs and specs | length %}
+        <div class="specs-grid">
+          {% for spec in specs %}
+            <div class="spec-row">
+              <div class="spec-label">{{ spec.label }}</div>
+              <div class="spec-value">{{ spec.value }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="muted">Specifications will be listed here.</p>
+      {% endif %}
+    </div>
+    <div class="reviews-card">
+      <h2>Reviews</h2>
+      {% if reviews and reviews | length %}
+        <div class="reviews-list">
+          {% for review in reviews %}
+            <div class="review">
+              <div class="review-header">
+                <div class="review-name">{{ review.customer_name or 'Customer' }}</div>
+                <div class="review-rating">{{ review.rating or 0 }}/5</div>
+              </div>
+              <p>{{ review.review }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="muted">No reviews yet. Be the first to share your experience.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

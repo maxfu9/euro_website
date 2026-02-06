@@ -1,0 +1,48 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Addresses</p>
+    <h1>Saved addresses</h1>
+    <p class="lead">Add, update, or remove delivery addresses.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid-2">
+    <form class="contact-card" id="address-form">
+      <input type="hidden" name="address_name" />
+      <label>Label</label>
+      <input type="text" name="address_title" placeholder="Home, Office" required />
+      <label>Address Type</label>
+      <select name="address_type">
+        <option value="Shipping">Shipping</option>
+        <option value="Billing">Billing</option>
+      </select>
+      <label class="checkbox-line">
+        <input type="checkbox" name="is_default" />
+        Set as default
+      </label>
+      <label>Address Line 1</label>
+      <input type="text" name="address_line1" required />
+      <label>City</label>
+      <input type="text" name="city" required />
+      <label>Country</label>
+      <input type="text" name="country" value="United States" required />
+      <div class="step-actions">
+        <button class="btn btn-solid" type="submit">Save address</button>
+        <button class="btn btn-ghost" type="button" id="address-reset">Clear</button>
+      </div>
+      <div class="form-note" id="address-status"></div>
+    </form>
+    <div class="info-card">
+      <h3>Existing addresses</h3>
+      <div id="address-list" class="address-list"></div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+<nav class="site-nav" data-user="{{ frappe.session.user }}">
+  <div class="container nav-inner">
+    <a class="brand brand-logo" href="/">
+      {% if brand_image %}
+        <img src="{{ brand_image }}" alt="Euro Plast" />
+      {% else %}
+        Euro Plast
+      {% endif %}
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/store">Store</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      {% if frappe.session.user != "Guest" %}
+        <a href="/portal">Portal</a>
+      {% endif %}
+    </div>
+    <div class="nav-cta">
+      {% if frappe.session.user == "Guest" %}
+        <a class="btn btn-ghost" href="/signup">Sign Up</a>
+        <a class="btn btn-solid" href="/login?redirect-to=/portal">Login</a>
+      {% else %}
+        {% set current_user = frappe.get_doc("User", frappe.session.user) %}
+        <div class="user-menu">
+          <button class="avatar" type="button" data-user-menu>{{ frappe.session.user[:1]|upper }}</button>
+          <div class="user-dropdown">
+            <div class="user-name">{{ current_user.full_name or frappe.session.user }}</div>
+            {% if current_user.user_type == "System User" %}
+              <a href="/app">Desk</a>
+            {% endif %}
+            <a href="/portal">Portal</a>
+            <a href="/profile">Profile</a>
+            <a href="/addresses">Addresses</a>
+            <a href="/logout">Logout</a>
+          </div>
+        </div>
+      {% endif %}
+      <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
+        <span class="icon">🛒</span>
+        <span class="badge" data-cart-count>0</span>
+        <span class="cart-total" id="cart-total-compact">0</span>
+      </button>
+      <a class="icon-btn icon-btn--wish" href="/wishlist">
+        <span class="icon">♡</span>
+        <span class="badge" data-wishlist-count>0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="cart-backdrop" data-cart-close></div>
+<aside class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <button class="cart-back" type="button" data-cart-close>←</button>
+    <div class="cart-title">Review Your Cart</div>
+    <div class="cart-count" id="cart-count-header">0</div>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer">
+    <button class="cart-discount" type="button">
+      <span>Got a Discount Code?</span>
+      <span class="chevron">⌄</span>
+    </button>
+    <div class="cart-summary">
+      <div class="cart-line">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">0</span>
+      </div>
+      <div class="cart-line">
+        <span>Shipping</span>
+        <span id="cart-shipping">0</span>
+      </div>
+      <div class="cart-line cart-line--total">
+        <span>Total</span>
+        <span id="cart-total">0</span>
+      </div>
+    </div>
+    <a class="btn btn-solid cart-checkout" href="/checkout">Proceed to Checkout →</a>
+  </div>
+</aside>

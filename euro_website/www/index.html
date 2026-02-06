@@ -1,0 +1,227 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="hero-pill">
+        <span class="pill-icon">★</span>
+        <span>New product: {{ featured.item_name if featured else 'Signature Basket' }}</span>
+      </div>
+      <p class="eyebrow">Homeware & Kitchenware</p>
+      {% if featured %}
+        <h1 class="hero-title">{{ featured.item_name }}<span class="accent-dot">.</span></h1>
+        <p class="lead">{{ (featured.website_description or featured.web_long_description or featured.description or '') | striptags }}</p>
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="/store/{{ featured.route or featured.item_code }}">Start order flow</a>
+          <a class="btn btn-ghost" href="/contact">Business inquiry</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Food safe certified</div>
+          </div>
+          <div>
+            <div class="stat-number">100% virgin</div>
+            <div class="stat-label">Premium material</div>
+          </div>
+        </div>
+      {% else %}
+        <h1 class="hero-title">Design-forward homeware built for retail and wholesale scale<span class="accent-dot">.</span></h1>
+        <p class="lead">Euro Plast manufactures kitchen and home essentials with dependable supply, consistent quality, and pricing tailored for both retail and traders.</p>
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="/store">Start order flow</a>
+          <a class="btn btn-ghost" href="/contact">Business inquiry</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Food safe certified</div>
+          </div>
+          <div>
+            <div class="stat-number">100% virgin</div>
+            <div class="stat-label">Premium material</div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="hero-media">
+      <div class="hero-card">
+        <figure class="hero-figure">
+          <img src="{{ featured_image }}" alt="{{ featured.item_name if featured else 'Euro Plast product' }}">
+        </figure>
+        <div class="hero-chip hero-chip--top">BPA free</div>
+        <div class="hero-chip hero-chip--bottom">
+          <div class="chip-icon">◎</div>
+          <div>
+            <div class="chip-title">Virgin polypropylene</div>
+            <div class="chip-sub">Certified safe</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container cta-grid">
+    <div class="cta-item">
+      <div class="cta-icon">🚚</div>
+      <div>
+        <div class="cta-title">Fast &amp; Free Delivery</div>
+        <div class="cta-sub">Free delivery on all orders</div>
+      </div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-icon">🔒</div>
+      <div>
+        <div class="cta-title">Secure Payment</div>
+        <div class="cta-sub">Protected checkout experience</div>
+      </div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-icon">💳</div>
+      <div>
+        <div class="cta-title">Money Back Guarantee</div>
+        <div class="cta-sub">Quality you can trust</div>
+      </div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-icon">⏱️</div>
+      <div>
+        <div class="cta-title">Online Support</div>
+        <div class="cta-sub">We respond in 24 hours</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section lineup">
+  <div class="container">
+    <div class="lineup-header">
+      <h2>Explore the lineup.</h2>
+      <a class="lineup-link" href="/store">Compare all models →</a>
+    </div>
+    <div class="lineup-grid">
+      {% if lineup and lineup | length %}
+        {% for item in lineup %}
+          <div class="lineup-card">
+            <a class="lineup-media" href="/store/{{ item.route or item.item_code }}">
+              <div class="lineup-image" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+            </a>
+            <div class="lineup-body">
+              <div class="lineup-title">{{ item.item_name }}</div>
+              <div class="lineup-desc">{{ (item.website_description or item.web_long_description or item.description or '') | striptags | truncate(120, True, '...') }}</div>
+              <div class="lineup-actions">
+                <a class="btn btn-solid btn-small" href="/store/{{ item.route or item.item_code }}">Learn more</a>
+                <a class="btn btn-ghost btn-small" href="/store/{{ item.route or item.item_code }}">Buy</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section brand-message">
+  <div class="container">
+    <div class="message-card">
+      <div class="message-dot message-dot--red"></div>
+      <div class="message-dot message-dot--blue"></div>
+      <div class="message-dot message-dot--green"></div>
+      <div class="message-shape"></div>
+      <h2>Quality You Feel, Trust You Keep, Growth You See.</h2>
+      <p class="lead">At Euro Plast, we believe every product tells a story of care, quality, and trust. From the first design to the final touch, we craft with tomorrow in mind, so you can live better today.</p>
+      <a class="message-link" href="/about">Euro Plast →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section essentials">
+  <div class="container">
+    <div class="lineup-header">
+      <h2>Kitchen essentials.</h2>
+      <a class="lineup-link" href="/store">All accessories →</a>
+    </div>
+    <div class="essentials-grid">
+      <div class="essentials-card">
+        <p class="eyebrow">Accessories</p>
+        <h3>Storage &amp; prep sets</h3>
+        <p class="lead">Protect and organize with versatile storage, strainers, and prep essentials built for everyday kitchens.</p>
+        <a class="lineup-link" href="/store">Shop accessories →</a>
+        <div class="essentials-image" style="background-image: url('{{ featured_image }}')"></div>
+      </div>
+      <div class="essentials-card">
+        <p class="eyebrow">New</p>
+        <h3>Rinza collection</h3>
+        <p class="lead">Lightweight, durable, and food-safe pieces designed for high-rotation shelves.</p>
+        <a class="lineup-link" href="/store">Shop new arrivals →</a>
+        <div class="essentials-image essentials-image--alt" style="background-image: url('{{ featured_image }}')"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section why-us">
+  <div class="container">
+    <h2>Why Choose Us</h2>
+    <p class="lead">With Euro Plast, you’re not just choosing products — you’re choosing quality you can trust, every day.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>Unmatched Quality</h3>
+        <p>We use premium, food-grade, BPA-free materials to guarantee safety, strength, and long-lasting performance.</p>
+      </div>
+      <div class="why-card">
+        <h3>Innovative Designs</h3>
+        <p>Modern, functional, and stylish products designed to make everyday life easier.</p>
+      </div>
+      <div class="why-card">
+        <h3>Eco-Conscious Approach</h3>
+        <p>We prioritize sustainable practices and recyclable materials to protect the planet.</p>
+      </div>
+      <div class="why-card">
+        <h3>Customer-Centric Service</h3>
+        <p>Your satisfaction is our top priority, with dedicated support at every step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section trending">
+  <div class="container">
+    <div class="lineup-header">
+      <h2>Trending this week</h2>
+      <a class="lineup-link" href="/store">See all →</a>
+    </div>
+    <div class="trending-grid">
+      {% if lineup and lineup | length %}
+        {% for item in lineup[:3] %}
+          <div class="trending-card">
+            <a class="trending-media" href="/store/{{ item.route or item.item_code }}">
+              <div class="trending-image" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+            </a>
+            <div class="trending-body">
+              <div class="trending-title">{{ item.item_name }}</div>
+              <div class="trending-desc">{{ (item.website_description or item.web_long_description or item.description or '') | striptags | truncate(90, True, '...') }}</div>
+              <a class="lineup-link" href="/store/{{ item.route or item.item_code }}">Explore →</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="container">
+    <div class="cta-card">
+      <h2>Looking for retail lines or wholesale supply?</h2>
+      <p>Tell us what you need and we’ll tailor pricing, lead times, and assortments.</p>
+      <a class="btn btn-solid" href="/contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Store</p>
+    <h1>Discover the collection.</h1>
+    <p class="lead">Live pricing and inventory, directly from ERPNext.</p>
+  </div>
+</section>
+
+<section class="store-benefits">
+  <div class="container benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-title">Food-safe materials</div>
+      <div class="benefit-text">Kitchen-ready plastics built for daily use.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-title">Retail & wholesale pricing</div>
+      <div class="benefit-text">Dynamic price lists for every buyer type.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-title">Fast fulfillment</div>
+      <div class="benefit-text">Reliable supply with live stock visibility.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="store-toolbar">
+      <div>Showing {{ products | length }} of {{ total_products }} items</div>
+      <button class="btn btn-ghost" type="button" data-cart-toggle>View Cart</button>
+    </div>
+    {% if category_chips and category_chips | length %}
+      <div class="category-chips">
+        {% for chip in category_chips %}
+          <a class="chip {% if chip.active %}is-active{% endif %}" href="/store?{{ chip.query }}">{{ chip.label }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form class="filter-bar" method="get">
+      <div class="filter-field">
+        <label>Search</label>
+        <input type="text" name="q" placeholder="Search products" value="{{ filters.q }}" />
+      </div>
+      <div class="filter-field">
+        <label>Category</label>
+        <select name="category">
+          <option value="">All categories</option>
+          {% for cat in categories %}
+            <option value="{{ cat }}" {% if filters.category == cat %}selected{% endif %}>{{ cat }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>Min price</label>
+        <input type="number" name="min_price" min="0" step="0.01" value="{{ filters.min_price or '' }}" />
+      </div>
+      <div class="filter-field">
+        <label>Max price</label>
+        <input type="number" name="max_price" min="0" step="0.01" value="{{ filters.max_price or '' }}" />
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-solid" type="submit">Apply</button>
+        <a class="btn btn-ghost" href="/store">Reset</a>
+      </div>
+    </form>
+    {% if products and products | length %}
+      <div class="product-grid">
+        {% for item in products %}
+          <div class="product-card">
+            <a href="/store/{{ item.route or item.item_code }}">
+              <div class="product-media" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+            </a>
+            <div class="product-body">
+              <div class="product-title">{{ item.item_name }}</div>
+              <div class="product-price">{{ frappe.utils.fmt_money(item.price or 0) }}</div>
+              <div class="product-cta">View details</div>
+              <div class="card-actions">
+                <button class="btn btn-solid btn-small" type="button"
+                  data-add-to-cart
+                  data-item-code="{{ item.item_code }}"
+                  data-item-name="{{ item.item_name }}"
+                  data-item-route="{{ item.route or item.item_code }}"
+                  data-item-image="{{ item.thumbnail or item.website_image or '' }}"
+                  data-item-price="{{ item.price or 0 }}">
+                  Add to cart
+                </button>
+                <button class="btn btn-ghost btn-small" type="button"
+                  data-add-to-wishlist
+                  data-item-code="{{ item.item_code }}"
+                  data-item-name="{{ item.item_name }}"
+                  data-item-route="{{ item.route or item.item_code }}"
+                  data-item-image="{{ item.thumbnail or item.website_image or '' }}">
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h3>No products found</h3>
+        <p class="muted">Try adjusting your filters or search.</p>
+        <a class="btn btn-ghost" href="/store">Clear filters</a>
+      </div>
+    {% endif %}
+    {% if total_pages > 1 %}
+      <div class="pager">
+        {% if page > 1 %}
+          <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page - 1 }}">Previous</a>
+        {% endif %}
+        <div class="pager-info">Page {{ page }} of {{ total_pages }}</div>
+        {% if page < total_pages %}
+          <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page + 1 }}">Next</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
