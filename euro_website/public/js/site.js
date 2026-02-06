@@ -16,8 +16,30 @@
     }).then((response) => response.json());
   };
 
-  const getCart = () => JSON.parse(localStorage.getItem("euro_cart") || "[]");
-  const saveCart = (cart) => localStorage.setItem("euro_cart", JSON.stringify(cart));
+  const getUserKey = () => {
+    const nav = document.querySelector(".site-nav");
+    const user = nav?.dataset?.user || "Guest";
+    return user;
+  };
+
+  const cartKey = () => `euro_cart:${getUserKey()}`;
+  const wishlistKey = () => `euro_wishlist:${getUserKey()}`;
+
+  const migrateLegacyStorage = () => {
+    const legacyCart = localStorage.getItem("euro_cart");
+    if (legacyCart && !localStorage.getItem(cartKey())) {
+      localStorage.setItem(cartKey(), legacyCart);
+      localStorage.removeItem("euro_cart");
+    }
+    const legacyWishlist = localStorage.getItem("euro_wishlist");
+    if (legacyWishlist && !localStorage.getItem(wishlistKey())) {
+      localStorage.setItem(wishlistKey(), legacyWishlist);
+      localStorage.removeItem("euro_wishlist");
+    }
+  };
+
+  const getCart = () => JSON.parse(localStorage.getItem(cartKey()) || "[]");
+  const saveCart = (cart) => localStorage.setItem(cartKey(), JSON.stringify(cart));
   const cartTotal = (cart) =>
     cart.reduce((sum, item) => sum + (parseFloat(item.rate) || 0) * (item.qty || 1), 0);
 
@@ -41,7 +63,7 @@
               <div class="cart-thumb" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')"></div>
               <div class="cart-info">
                 <div class="cart-name">${item.item_name}</div>
-                <div class="cart-meta">${item.qty} × ${item.rate}</div>
+                <div class="cart-meta">${item.qty} × ${item.rate} = ${(item.qty * item.rate).toFixed(2)}</div>
                 <div class="cart-actions">
                   <button class="btn btn-ghost btn-small" data-cart-minus="${item.item_code}">-</button>
                   <button class="btn btn-ghost btn-small" data-cart-plus="${item.item_code}">+</button>
@@ -225,7 +247,7 @@
       const itemImage = button.getAttribute("data-item-image");
       if (!itemCode) return;
 
-      const list = JSON.parse(localStorage.getItem("euro_wishlist") || "[]");
+      const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
       const exists = list.find((entry) => entry.item_code === itemCode);
       if (!exists) {
         list.push({
@@ -234,7 +256,7 @@
           route: itemRoute || itemCode,
           image: itemImage || "",
         });
-        localStorage.setItem("euro_wishlist", JSON.stringify(list));
+        localStorage.setItem(wishlistKey(), JSON.stringify(list));
       }
       button.textContent = "Saved";
     });
@@ -242,7 +264,7 @@
 
   const wishlistGrid = document.getElementById("wishlist-grid");
   if (wishlistGrid) {
-    const list = JSON.parse(localStorage.getItem("euro_wishlist") || "[]");
+    const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
     const empty = document.getElementById("wishlist-empty");
     if (!list.length) {
       if (empty) empty.style.display = "block";
@@ -255,6 +277,18 @@
       )
       .join("");
   }
+
+  const addressHistoryKey = () => `euro_address_history:${getUserKey()}`;
+  const saveAddressHistory = (entry) => {
+    const history = JSON.parse(localStorage.getItem(addressHistoryKey()) || "[]");
+    const exists = history.find(
+      (item) => item.address_line1 === entry.address_line1 && item.city === entry.city
+    );
+    if (!exists) {
+      history.unshift(entry);
+      localStorage.setItem(addressHistoryKey(), JSON.stringify(history.slice(0, 5)));
+    }
+  };
 
   const checkoutSummary = document.getElementById("checkout-summary");
   if (checkoutSummary) {
@@ -279,6 +313,27 @@
 
   const checkoutForm = document.getElementById("checkout-form");
   if (checkoutForm) {
+    const datalist = document.getElementById("address-history");
+    if (datalist) {
+      const history = JSON.parse(localStorage.getItem(addressHistoryKey()) || "[]");
+      datalist.innerHTML = history
+        .map((item) => `<option value="${item.address_line1}">`)
+        .join("");
+    }
+
+    const markError = (input, message) => {
+      input.classList.add("input-error");
+      input.setAttribute("aria-invalid", "true");
+      if (message) input.setAttribute("title", message);
+    };
+
+    const clearErrors = () => {
+      checkoutForm.querySelectorAll(".input-error").forEach((el) => {
+        el.classList.remove("input-error");
+        el.removeAttribute("aria-invalid");
+      });
+    };
+
     checkoutForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const status = document.getElementById("checkout-status");
@@ -288,14 +343,48 @@
         return;
       }
 
+      clearErrors();
+      const email = checkoutForm.email.value.trim();
+      const fullName = checkoutForm.full_name.value.trim();
+      const addressLine1 = checkoutForm.address_line1.value.trim();
+      const city = checkoutForm.city.value.trim();
+      const country = checkoutForm.country.value.trim();
+
+      let valid = true;
+      if (!fullName) {
+        markError(checkoutForm.full_name, "Name required");
+        valid = false;
+      }
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        markError(checkoutForm.email, "Valid email required");
+        valid = false;
+      }
+      if (!addressLine1) {
+        markError(checkoutForm.address_line1, "Address required");
+        valid = false;
+      }
+      if (!city) {
+        markError(checkoutForm.city, "City required");
+        valid = false;
+      }
+      if (!country) {
+        markError(checkoutForm.country, "Country required");
+        valid = false;
+      }
+
+      if (!valid) {
+        status.textContent = "Please fix the highlighted fields.";
+        return;
+      }
+
       status.textContent = "Placing order...";
       const payload = {
-        full_name: checkoutForm.full_name.value,
-        email: checkoutForm.email.value,
+        full_name: fullName,
+        email,
         phone: checkoutForm.phone.value,
-        address_line1: checkoutForm.address_line1.value,
-        city: checkoutForm.city.value,
-        country: checkoutForm.country.value,
+        address_line1: addressLine1,
+        city,
+        country,
         notes: checkoutForm.notes.value,
         payment_method: checkoutForm.payment_method.value,
         items: cart,
@@ -305,7 +394,8 @@
         const result = await call("euro_website.api.place_order", payload);
         const ok = result.message ? result.message.ok : result.ok;
         if (ok) {
-          localStorage.removeItem("euro_cart");
+          saveAddressHistory({ address_line1: addressLine1, city, country });
+          localStorage.removeItem(cartKey());
           status.textContent = `Order placed: ${result.message?.sales_order || result.sales_order}`;
           window.location.href = "/portal";
         } else {
@@ -331,5 +421,6 @@
     });
   }
 
+  migrateLegacyStorage();
   renderCart();
 })();
