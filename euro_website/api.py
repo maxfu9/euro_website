@@ -77,12 +77,14 @@ def place_order(
     for item in items:
         if not item.get("item_code"):
             continue
+        warehouse = _get_item_warehouse(item.get("item_code"))
         so_items.append(
             {
                 "item_code": item.get("item_code"),
                 "qty": item.get("qty") or 1,
                 "rate": item.get("rate") or 0,
                 "price_list_rate": item.get("rate") or 0,
+                "warehouse": warehouse,
             }
         )
 
@@ -136,6 +138,25 @@ def _create_address(full_name, address_line1, city, country, customer):
     address.flags.ignore_permissions = True
     address.insert()
     return address.name
+
+
+def _get_item_warehouse(item_code):
+    warehouse = frappe.db.get_value("Item", item_code, "default_warehouse")
+    if warehouse:
+        return warehouse
+
+    company = frappe.defaults.get_global_default("company")
+    if company:
+        warehouse = frappe.db.get_value("Company", company, "default_warehouse")
+        if warehouse:
+            return warehouse
+
+    stock_settings = frappe.get_single("Stock Settings")
+    warehouse = getattr(stock_settings, "default_warehouse", None)
+    if warehouse:
+        return warehouse
+
+    return None
 
 
 def _get_payment_terms(payment_method):
