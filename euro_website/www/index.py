@@ -4,7 +4,8 @@ import frappe
 def get_context(context):
     context.no_cache = 1
     context.featured = _get_rotating_item()
-    context.lineup = _get_lineup_items()
+    context.lineup = _get_lineup_items() or []
+    context.featured_image = _get_featured_image(context.featured)
 
 
 def _get_rotating_item():
@@ -63,6 +64,12 @@ def _get_lineup_items():
         order_by="modified desc",
         limit_page_length=4,
     )
+
+
+def _get_featured_image(item):
+    if not item:
+        return "/assets/frappe/images/ui/placeholder-image.png"
+    return item.get("thumbnail") or item.get("website_image") or "/assets/frappe/images/ui/placeholder-image.png"
 
 
 def _random_item(items):

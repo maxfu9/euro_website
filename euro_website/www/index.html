@@ -47,10 +47,9 @@
       {% endif %}
     </div>
     <div class="hero-media">
-      {% set hero_image = featured.thumbnail or featured.website_image or '/assets/frappe/images/ui/placeholder-image.png' %}
       <div class="hero-card">
         <figure class="hero-figure">
-          <img src="{{ hero_image }}" alt="{{ featured.item_name if featured else 'Euro Plast product' }}">
+          <img src="{{ featured_image }}" alt="{{ featured.item_name if featured else 'Euro Plast product' }}">
         </figure>
         <div class="hero-chip hero-chip--top">BPA free</div>
         <div class="hero-chip hero-chip--bottom">
@@ -152,14 +151,14 @@
         <h3>Storage &amp; prep sets</h3>
         <p class="lead">Protect and organize with versatile storage, strainers, and prep essentials built for everyday kitchens.</p>
         <a class="lineup-link" href="/store">Shop accessories →</a>
-        <div class="essentials-image" style="background-image: url('{{ featured.thumbnail or featured.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+        <div class="essentials-image" style="background-image: url('{{ featured_image }}')"></div>
       </div>
       <div class="essentials-card">
         <p class="eyebrow">New</p>
         <h3>Rinza collection</h3>
         <p class="lead">Lightweight, durable, and food-safe pieces designed for high-rotation shelves.</p>
         <a class="lineup-link" href="/store">Shop new arrivals →</a>
-        <div class="essentials-image essentials-image--alt" style="background-image: url('{{ featured.thumbnail or featured.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+        <div class="essentials-image essentials-image--alt" style="background-image: url('{{ featured_image }}')"></div>
       </div>
     </div>
   </div>
