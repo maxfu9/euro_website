@@ -43,7 +43,9 @@ def _get_rotating_item():
 def _random_item(items):
     if not items:
         return None
-    return items[frappe.utils.random.randint(0, len(items) - 1)]
+    import random
+
+    return items[random.randint(0, len(items) - 1)]
 
 
 def _get_item_groups(items):
