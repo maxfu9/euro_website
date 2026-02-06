@@ -353,6 +353,19 @@
         .join("");
     }
 
+    if (window.frappe && frappe.session && frappe.session.user !== "Guest") {
+      call("euro_website.api.get_checkout_profile", {}).then((result) => {
+        const data = result.message || result;
+        if (!data) return;
+        if (data.full_name) checkoutForm.full_name.value = data.full_name;
+        if (data.email) checkoutForm.email.value = data.email;
+        if (data.phone) checkoutForm.phone.value = data.phone;
+        if (data.address_line1) checkoutForm.address_line1.value = data.address_line1;
+        if (data.city) checkoutForm.city.value = data.city;
+        if (data.country) checkoutForm.country.value = data.country;
+      });
+    }
+
     const markError = (input, message) => {
       input.classList.add("input-error");
       input.setAttribute("aria-invalid", "true");
@@ -438,6 +451,8 @@
         country: checkoutForm.country.value.trim(),
         notes: checkoutForm.notes.value,
         payment_method: checkoutForm.payment_method.value,
+        update_profile: checkoutForm.update_profile?.checked ? 1 : 0,
+        update_address: checkoutForm.update_address?.checked ? 1 : 0,
         items: cart,
       };
 

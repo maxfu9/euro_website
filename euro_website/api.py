@@ -41,6 +41,38 @@ def update_cart(item_code: str, qty: int = 1):
     return updater(item_code=item_code, qty=qty)
 
 
+@frappe.whitelist()
+def get_checkout_profile():
+    user = frappe.session.user
+    if not user or user == "Guest":
+        return {}
+
+    customer = _get_customer_for_user(user)
+    contact = _get_contact_for_user(user)
+    address = _get_primary_address(customer)
+
+    data = {}
+    if contact:
+        data["full_name"] = contact.get("first_name") or contact.get("name") or ""
+        data["email"] = contact.get("email_id") or user
+        data["phone"] = contact.get("phone") or ""
+    else:
+        data["full_name"] = ""
+        data["email"] = user
+        data["phone"] = ""
+
+    if address:
+        data.update(
+            {
+                "address_line1": address.get("address_line1") or "",
+                "city": address.get("city") or "",
+                "country": address.get("country") or "",
+            }
+        )
+
+    return data
+
+
 @frappe.whitelist(allow_guest=True)
 def place_order(
     full_name: str,
@@ -52,6 +84,8 @@ def place_order(
     items,
     notes: str = "",
     payment_method: str = "Cash",
+    update_profile: int = 0,
+    update_address: int = 0,
 ):
     if not (full_name and email and address_line1 and city and country):
         frappe.throw("Missing required fields")
@@ -67,7 +101,14 @@ def place_order(
     customer = _get_or_create_customer(full_name, email, customer_type="Retail")
     _ensure_contact(customer, full_name, email)
 
-    address_name = _create_address(full_name, address_line1, city, country, customer)
+    address_name = _create_or_update_address(
+        full_name,
+        address_line1,
+        city,
+        country,
+        customer,
+        update_address=bool(int(update_address)),
+    )
 
     company = frappe.defaults.get_global_default("company")
     if not company:
@@ -120,6 +161,9 @@ def place_order(
     so.flags.ignore_permissions = True
     so.insert()
 
+    if frappe.session.user != "Guest" and bool(int(update_profile)):
+        _update_contact_for_user(frappe.session.user, full_name, email, phone)
+
     return {"ok": True, "sales_order": so.name}
 
 
@@ -138,6 +182,21 @@ def _create_address(full_name, address_line1, city, country, customer):
     address.flags.ignore_permissions = True
     address.insert()
     return address.name
+
+
+def _create_or_update_address(full_name, address_line1, city, country, customer, update_address=False):
+    if update_address:
+        existing = _get_primary_address(customer)
+        if existing:
+            doc = frappe.get_doc("Address", existing.name)
+            doc.address_title = full_name
+            doc.address_line1 = address_line1
+            doc.city = city
+            doc.country = country
+            doc.flags.ignore_permissions = True
+            doc.save()
+            return doc.name
+    return _create_address(full_name, address_line1, city, country, customer)
 
 
 def _get_item_warehouse(item_code, company):
@@ -202,6 +261,63 @@ def _get_payment_terms(payment_method):
         if frappe.db.exists("Payment Terms Template", name):
             return name
     return None
+
+
+def _get_customer_for_user(user):
+    customer = frappe.get_all(
+        "Customer",
+        filters={"email_id": user},
+        fields=["name"],
+        limit_page_length=1,
+    )
+    if customer:
+        return customer[0].name
+
+    contact = _get_contact_for_user(user)
+    if contact:
+        link = frappe.get_all(
+            "Dynamic Link",
+            filters={"parent": contact.get("name"), "link_doctype": "Customer"},
+            fields=["link_name"],
+            limit_page_length=1,
+        )
+        if link:
+            return link[0].link_name
+    return None
+
+
+def _get_contact_for_user(user):
+    contact = frappe.get_all(
+        "Contact",
+        filters={"email_id": user},
+        fields=["name", "first_name", "email_id", "phone"],
+        limit_page_length=1,
+    )
+    return contact[0] if contact else None
+
+
+def _get_primary_address(customer):
+    if not customer:
+        return None
+    address = frappe.get_all(
+        "Address",
+        filters=[["Dynamic Link", "link_doctype", "=", "Customer"], ["Dynamic Link", "link_name", "=", customer]],
+        fields=["name", "address_line1", "city", "country"],
+        limit_page_length=1,
+    )
+    return address[0] if address else None
+
+
+def _update_contact_for_user(user, full_name, email, phone):
+    contact = _get_contact_for_user(user)
+    if not contact:
+        return
+    doc = frappe.get_doc("Contact", contact.get("name"))
+    doc.first_name = full_name
+    doc.email_id = email
+    doc.phone = phone
+    doc.flags.ignore_permissions = True
+    doc.save()
 
 @frappe.whitelist(allow_guest=True)
 def signup_portal_user(full_name: str, email: str, password: str, is_trader: int = 0):

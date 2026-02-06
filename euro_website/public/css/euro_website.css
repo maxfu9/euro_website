@@ -298,6 +298,13 @@ button:focus-visible {
   color: var(--muted);
 }
 
+.inline-switches {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
 input, textarea {
   width: 100%;
   padding: 12px 14px;
