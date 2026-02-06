@@ -21,13 +21,8 @@
           {% else %}
             <span class="stock out-stock">✖ Out of stock</span>
           {% endif %}
+          <span class="stock-heart">♥</span>
         </div>
-        <button class="wishlist-icon" type="button"
-          data-add-to-wishlist
-          data-item-code="{{ item.item_code }}"
-          data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"
-          data-item-route="{{ item.route or item.item_code }}"
-          data-item-image="{{ item.website_image or item.thumbnail or '' }}">♥</button>
       </div>
       <h1 class="product-title-tight">{{ item.web_item_name or item.website_item_name or item.item_name }}</h1>
       <div class="product-subline">

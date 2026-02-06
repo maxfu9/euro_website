@@ -1208,17 +1208,17 @@ select {
   background: rgba(220, 38, 38, 0.1);
 }
 
-.wishlist-icon {
-  width: 36px;
-  height: 36px;
+.stock-heart {
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: #fff;
-  font-size: 16px;
-  cursor: pointer;
+  font-size: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: var(--accent);
 }
 
 .product-subline {
