@@ -71,6 +71,12 @@ a {
   letter-spacing: 0.5px;
 }
 
+.brand-logo img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
