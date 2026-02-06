@@ -313,6 +313,38 @@
 
   const checkoutForm = document.getElementById("checkout-form");
   if (checkoutForm) {
+    const stepper = checkoutForm.querySelectorAll(".step");
+    const panels = checkoutForm.querySelectorAll("[data-step-panel]");
+    const nextBtn = checkoutForm.querySelector("[data-step-next]");
+    const prevBtn = checkoutForm.querySelector("[data-step-prev]");
+    const submitBtn = checkoutForm.querySelector("[data-step-submit]");
+    const reviewBlock = document.getElementById("checkout-review");
+    let currentStep = 1;
+
+    const showStep = (step) => {
+      currentStep = step;
+      stepper.forEach((el) => el.classList.toggle("is-active", Number(el.dataset.step) === step));
+      panels.forEach((panel) => {
+        panel.style.display = Number(panel.dataset.stepPanel) === step ? "block" : "none";
+      });
+      if (prevBtn) prevBtn.style.display = step === 1 ? "none" : "inline-flex";
+      if (nextBtn) nextBtn.style.display = step === 3 ? "none" : "inline-flex";
+      if (submitBtn) submitBtn.style.display = step === 3 ? "inline-flex" : "none";
+      if (step === 3 && reviewBlock) {
+        reviewBlock.innerHTML = `
+          <div class="checkout-row"><span>Name</span><span>${checkoutForm.full_name.value || "-"}</span></div>
+          <div class="checkout-row"><span>Email</span><span>${checkoutForm.email.value || "-"}</span></div>
+          <div class="checkout-row"><span>Phone</span><span>${checkoutForm.phone.value || "-"}</span></div>
+          <div class="checkout-row"><span>Address</span><span>${checkoutForm.address_line1.value || "-"}</span></div>
+          <div class="checkout-row"><span>City</span><span>${checkoutForm.city.value || "-"}</span></div>
+          <div class="checkout-row"><span>Country</span><span>${checkoutForm.country.value || "-"}</span></div>
+          <div class="checkout-row"><span>Payment</span><span>${checkoutForm.payment_method.value || "-"}</span></div>
+        `;
+      }
+    };
+
+    showStep(1);
+
     const datalist = document.getElementById("address-history");
     if (datalist) {
       const history = JSON.parse(localStorage.getItem(addressHistoryKey()) || "[]");
@@ -334,6 +366,55 @@
       });
     };
 
+    const validateStep = () => {
+      clearErrors();
+      const status = document.getElementById("checkout-status");
+      if (currentStep === 1) {
+        const email = checkoutForm.email.value.trim();
+        const fullName = checkoutForm.full_name.value.trim();
+        const addressLine1 = checkoutForm.address_line1.value.trim();
+        const city = checkoutForm.city.value.trim();
+        const country = checkoutForm.country.value.trim();
+        let valid = true;
+        if (!fullName) {
+          markError(checkoutForm.full_name, "Name required");
+          valid = false;
+        }
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+          markError(checkoutForm.email, "Valid email required");
+          valid = false;
+        }
+        if (!addressLine1) {
+          markError(checkoutForm.address_line1, "Address required");
+          valid = false;
+        }
+        if (!city) {
+          markError(checkoutForm.city, "City required");
+          valid = false;
+        }
+        if (!country) {
+          markError(checkoutForm.country, "Country required");
+          valid = false;
+        }
+        if (!valid) {
+          status.textContent = "Please fix the highlighted fields.";
+        }
+        return valid;
+      }
+      return true;
+    };
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        if (!validateStep()) return;
+        showStep(Math.min(3, currentStep + 1));
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => showStep(Math.max(1, currentStep - 1)));
+    }
+
     checkoutForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const status = document.getElementById("checkout-status");
@@ -343,48 +424,18 @@
         return;
       }
 
-      clearErrors();
-      const email = checkoutForm.email.value.trim();
-      const fullName = checkoutForm.full_name.value.trim();
-      const addressLine1 = checkoutForm.address_line1.value.trim();
-      const city = checkoutForm.city.value.trim();
-      const country = checkoutForm.country.value.trim();
-
-      let valid = true;
-      if (!fullName) {
-        markError(checkoutForm.full_name, "Name required");
-        valid = false;
-      }
-      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-        markError(checkoutForm.email, "Valid email required");
-        valid = false;
-      }
-      if (!addressLine1) {
-        markError(checkoutForm.address_line1, "Address required");
-        valid = false;
-      }
-      if (!city) {
-        markError(checkoutForm.city, "City required");
-        valid = false;
-      }
-      if (!country) {
-        markError(checkoutForm.country, "Country required");
-        valid = false;
-      }
-
-      if (!valid) {
-        status.textContent = "Please fix the highlighted fields.";
+      if (!validateStep()) {
         return;
       }
 
       status.textContent = "Placing order...";
       const payload = {
-        full_name: fullName,
-        email,
+        full_name: checkoutForm.full_name.value.trim(),
+        email: checkoutForm.email.value.trim(),
         phone: checkoutForm.phone.value,
-        address_line1: addressLine1,
-        city,
-        country,
+        address_line1: checkoutForm.address_line1.value.trim(),
+        city: checkoutForm.city.value.trim(),
+        country: checkoutForm.country.value.trim(),
         notes: checkoutForm.notes.value,
         payment_method: checkoutForm.payment_method.value,
         items: cart,

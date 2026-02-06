@@ -14,27 +14,51 @@
 <section class="section">
   <div class="container grid-2">
     <form class="contact-card" id="checkout-form">
-      <label>Full Name</label>
-      <input type="text" name="full_name" required />
-      <label>Email</label>
-      <input type="email" name="email" required />
-      <label>Phone</label>
-      <input type="text" name="phone" />
-      <label>Address</label>
-      <input type="text" name="address_line1" list="address-history" required />
-      <datalist id="address-history"></datalist>
-      <label>City</label>
-      <input type="text" name="city" required />
-      <label>Country</label>
-      <input type="text" name="country" value="United States" required />
-      <label>Notes</label>
-      <textarea name="notes" rows="4" placeholder="Order notes"></textarea>
-      <label>Payment Method</label>
-      <select name="payment_method" required>
-        <option value="Cash">Cash</option>
-        <option value="Cash on Delivery">Cash on Delivery</option>
-      </select>
-      <button class="btn btn-solid" type="submit">Place order</button>
+      <div class="stepper">
+        <div class="step is-active" data-step="1">Shipping</div>
+        <div class="step" data-step="2">Payment</div>
+        <div class="step" data-step="3">Review</div>
+      </div>
+
+      <div class="checkout-step" data-step-panel="1">
+        <label>Full Name</label>
+        <input type="text" name="full_name" required />
+        <label>Email</label>
+        <input type="email" name="email" required />
+        <label>Phone</label>
+        <input type="text" name="phone" />
+        <label>Address</label>
+        <input type="text" name="address_line1" list="address-history" required />
+        <datalist id="address-history"></datalist>
+        <label>City</label>
+        <input type="text" name="city" required />
+        <label>Country</label>
+        <input type="text" name="country" value="United States" required />
+        <label>Notes</label>
+        <textarea name="notes" rows="4" placeholder="Order notes"></textarea>
+      </div>
+
+      <div class="checkout-step" data-step-panel="2" style="display:none;">
+        <label>Payment Method</label>
+        <select name="payment_method" required>
+          <option value="Cash">Cash</option>
+          <option value="Cash on Delivery">Cash on Delivery</option>
+        </select>
+        <p class="muted">Payment will be collected on delivery or pickup.</p>
+      </div>
+
+      <div class="checkout-step" data-step-panel="3" style="display:none;">
+        <div class="review-card">
+          <h3>Review</h3>
+          <div class="review-block" id="checkout-review"></div>
+        </div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn btn-ghost" type="button" data-step-prev>Back</button>
+        <button class="btn btn-solid" type="button" data-step-next>Continue</button>
+        <button class="btn btn-solid" type="submit" data-step-submit style="display:none;">Place order</button>
+      </div>
       <div class="form-note" id="checkout-status"></div>
     </form>
     <div class="info-card">

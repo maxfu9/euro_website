@@ -663,6 +663,48 @@ select {
   margin-top: 12px;
 }
 
+.stepper {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f4eaf2;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.step.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.step-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.review-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 16px;
+}
+
+.review-block {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
 .checkout-row {
   display: flex;
   justify-content: space-between;
