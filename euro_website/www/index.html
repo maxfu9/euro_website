@@ -5,43 +5,70 @@
 <section class="hero">
   <div class="container hero-grid">
     <div class="hero-content">
+      <div class="hero-pill">
+        <span class="pill-icon">★</span>
+        <span>New product: {{ featured.item_name if featured else 'Signature Basket' }}</span>
+      </div>
       <p class="eyebrow">Homeware & Kitchenware</p>
       {% if featured %}
-        <h1>{{ featured.item_name }}</h1>
+        <h1 class="hero-title">{{ featured.item_name }}<span class="accent-dot">.</span></h1>
         <p class="lead">{{ (featured.website_description or featured.web_long_description or featured.description or '') | striptags }}</p>
         <div class="hero-actions">
-          <a class="btn btn-solid" href="/store/{{ featured.route or featured.item_code }}">Shop now</a>
-          <a class="btn btn-ghost" href="/store/{{ featured.route or featured.item_code }}">Explore detail</a>
+          <a class="btn btn-solid" href="/store/{{ featured.route or featured.item_code }}">Start order flow</a>
+          <a class="btn btn-ghost" href="/contact">Business inquiry</a>
         </div>
-        <div class="hero-tags">
-          <span class="tag">100% virgin material</span>
-          <span class="tag">Food safe</span>
-          <span class="tag">BPA free</span>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Food safe certified</div>
+          </div>
+          <div>
+            <div class="stat-number">100% virgin</div>
+            <div class="stat-label">Premium material</div>
+          </div>
+          <div>
+            <div class="stat-number">Retail + Wholesale</div>
+            <div class="stat-label">Price lists ready</div>
+          </div>
         </div>
       {% else %}
-        <h1>Design-forward homeware built for retail and wholesale scale.</h1>
+        <h1 class="hero-title">Design-forward homeware built for retail and wholesale scale<span class="accent-dot">.</span></h1>
         <p class="lead">Euro Plast manufactures kitchen and home essentials with dependable supply, consistent quality, and pricing tailored for both retail and traders.</p>
         <div class="hero-actions">
-          <a class="btn btn-solid" href="/store">Browse Collection</a>
-          <a class="btn btn-ghost" href="/about">Our Manufacturing</a>
+          <a class="btn btn-solid" href="/store">Start order flow</a>
+          <a class="btn btn-ghost" href="/contact">Business inquiry</a>
         </div>
-        <div class="hero-tags">
-          <span class="tag">100% virgin material</span>
-          <span class="tag">Food safe</span>
-          <span class="tag">BPA free</span>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Food safe certified</div>
+          </div>
+          <div>
+            <div class="stat-number">100% virgin</div>
+            <div class="stat-label">Premium material</div>
+          </div>
+          <div>
+            <div class="stat-number">Retail + Wholesale</div>
+            <div class="stat-label">Price lists ready</div>
+          </div>
         </div>
       {% endif %}
-      <div class="hero-tags">
-        <span class="tag">100% virgin material</span>
-        <span class="tag">Food safe</span>
-        <span class="tag">BPA free</span>
-      </div>
     </div>
     <div class="hero-media">
       {% set hero_image = featured.thumbnail or featured.website_image or '/assets/frappe/images/ui/placeholder-image.png' %}
-      <figure class="hero-figure">
-        <img src="{{ hero_image }}" alt="{{ featured.item_name if featured else 'Euro Plast product' }}">
-      </figure>
+      <div class="hero-card">
+        <figure class="hero-figure">
+          <img src="{{ hero_image }}" alt="{{ featured.item_name if featured else 'Euro Plast product' }}">
+        </figure>
+        <div class="hero-chip hero-chip--top">BPA free</div>
+        <div class="hero-chip hero-chip--bottom">
+          <div class="chip-icon">◎</div>
+          <div>
+            <div class="chip-title">Virgin polypropylene</div>
+            <div class="chip-sub">Certified safe</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
