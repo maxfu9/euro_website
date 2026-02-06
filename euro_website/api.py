@@ -77,7 +77,7 @@ def place_order(
     for item in items:
         if not item.get("item_code"):
             continue
-        warehouse = _get_item_warehouse(item.get("item_code"))
+        warehouse = _get_item_warehouse(item.get("item_code"), company)
         so_items.append(
             {
                 "item_code": item.get("item_code"),
@@ -140,10 +140,11 @@ def _create_address(full_name, address_line1, city, country, customer):
     return address.name
 
 
-def _get_item_warehouse(item_code):
+def _get_item_warehouse(item_code, company):
     warehouse = _get_value_if_field("Item", item_code, "default_warehouse")
     if warehouse:
-        return warehouse
+        if _warehouse_belongs_to_company(warehouse, company):
+            return warehouse
 
     if frappe.db.exists("DocType", "Item Default"):
         defaults = frappe.get_all(
@@ -153,21 +154,29 @@ def _get_item_warehouse(item_code):
             limit_page_length=1,
         )
         if defaults and defaults[0].default_warehouse:
-            return defaults[0].default_warehouse
+            if _warehouse_belongs_to_company(defaults[0].default_warehouse, company):
+                return defaults[0].default_warehouse
 
-    company = frappe.defaults.get_global_default("company")
     if company:
         warehouse = _get_value_if_field("Company", company, "default_warehouse")
-        if warehouse:
+        if warehouse and _warehouse_belongs_to_company(warehouse, company):
             return warehouse
 
     stock_settings = frappe.get_single("Stock Settings")
     warehouse = getattr(stock_settings, "default_warehouse", None) if stock_settings else None
-    if warehouse:
+    if warehouse and _warehouse_belongs_to_company(warehouse, company):
         return warehouse
 
-    fallback = frappe.get_all("Warehouse", fields=["name"], limit_page_length=1)
-    return fallback[0].name if fallback else None
+    fallback = frappe.get_all(
+        "Warehouse",
+        filters={"company": company} if company else None,
+        fields=["name"],
+        limit_page_length=1,
+    )
+    if fallback:
+        return fallback[0].name
+    fallback_any = frappe.get_all("Warehouse", fields=["name"], limit_page_length=1)
+    return fallback_any[0].name if fallback_any else None
 
 
 def _get_value_if_field(doctype, name, fieldname):
@@ -176,6 +185,13 @@ def _get_value_if_field(doctype, name, fieldname):
     if fieldname not in fieldnames:
         return None
     return frappe.db.get_value(doctype, name, fieldname)
+
+
+def _warehouse_belongs_to_company(warehouse, company):
+    if not warehouse or not company:
+        return True
+    wh_company = frappe.db.get_value("Warehouse", warehouse, "company")
+    return not wh_company or wh_company == company
 
 
 def _get_payment_terms(payment_method):
