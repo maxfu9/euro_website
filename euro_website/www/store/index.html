@@ -14,7 +14,7 @@
   <div class="container">
     <div class="store-toolbar">
       <div>Showing {{ products | length }} of {{ total_products }} items</div>
-      <a class="btn btn-ghost" href="/cart">View Cart ({{ cart.items | length }})</a>
+      <a class="btn btn-ghost" href="/cart">View Cart ({{ (cart.get("items") or []) | length }})</a>
     </div>
     <form class="filter-bar" method="get">
       <div class="filter-field">
