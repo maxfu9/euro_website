@@ -110,6 +110,7 @@ def _get_products(filters, page, page_size):
         q = f"%{filters['q']}%"
         or_filters = [
             ["item_name", "like", q],
+            ["web_item_name", "like", q],
             ["website_description", "like", q],
             ["web_long_description", "like", q],
         ]
@@ -125,6 +126,7 @@ def _get_products(filters, page, page_size):
         [
             "item_code",
             "item_name",
+            "web_item_name",
             "route",
             "thumbnail",
             "website_image",

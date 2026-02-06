@@ -7,11 +7,11 @@
     <div class="hero-content">
       <div class="hero-pill">
         <span class="pill-icon">★</span>
-        <span>New product: {{ featured.item_name if featured else 'Signature Basket' }}</span>
+        <span>New product: {{ featured.web_item_name or featured.item_name if featured else 'Signature Basket' }}</span>
       </div>
       <p class="eyebrow">Homeware & Kitchenware</p>
       {% if featured %}
-        <h1 class="hero-title">{{ featured.item_name }}<span class="accent-dot">.</span></h1>
+        <h1 class="hero-title">{{ featured.web_item_name or featured.item_name }}<span class="accent-dot">.</span></h1>
         <p class="lead">{{ (featured.website_description or featured.web_long_description or featured.description or '') | striptags }}</p>
         <div class="hero-actions">
           <a class="btn btn-solid" href="/store/{{ featured.route or featured.item_code }}">Start order flow</a>
@@ -49,7 +49,7 @@
     <div class="hero-media">
       <div class="hero-card">
         <figure class="hero-figure">
-          <img src="{{ featured_image }}" alt="{{ featured.item_name if featured else 'Euro Plast product' }}">
+          <img src="{{ featured_image }}" alt="{{ (featured.web_item_name or featured.item_name) if featured else 'Euro Plast product' }}">
         </figure>
         <div class="hero-chip hero-chip--top">BPA free</div>
         <div class="hero-chip hero-chip--bottom">
@@ -111,7 +111,7 @@
               <div class="lineup-image" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
             </a>
             <div class="lineup-body">
-              <div class="lineup-title">{{ item.item_name }}</div>
+              <div class="lineup-title">{{ item.web_item_name or item.item_name }}</div>
               <div class="lineup-desc">{{ (item.website_description or item.web_long_description or item.description or '') | striptags | truncate(120, True, '...') }}</div>
               <div class="lineup-actions">
                 <a class="btn btn-solid btn-small" href="/store/{{ item.route or item.item_code }}">Learn more</a>
@@ -203,7 +203,7 @@
               <div class="trending-image" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
             </a>
             <div class="trending-body">
-              <div class="trending-title">{{ item.item_name }}</div>
+              <div class="trending-title">{{ item.web_item_name or item.item_name }}</div>
               <div class="trending-desc">{{ (item.website_description or item.web_long_description or item.description or '') | striptags | truncate(90, True, '...') }}</div>
               <a class="lineup-link" href="/store/{{ item.route or item.item_code }}">Explore →</a>
             </div>

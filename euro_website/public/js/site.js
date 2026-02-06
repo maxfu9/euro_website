@@ -366,7 +366,7 @@
       if (!exists) {
         list.push({
           item_code: itemCode,
-          item_name: itemName || itemCode,
+        item_name: itemName || itemCode,
           route: itemRoute || itemCode,
           image: itemImage || "",
         });

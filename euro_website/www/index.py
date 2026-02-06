@@ -14,6 +14,7 @@ def _get_rotating_item():
         [
             "item_code",
             "item_name",
+            "web_item_name",
             "route",
             "thumbnail",
             "website_image",
@@ -48,6 +49,7 @@ def _get_lineup_items():
         [
             "item_code",
             "item_name",
+            "web_item_name",
             "route",
             "thumbnail",
             "website_image",

@@ -76,14 +76,14 @@
               <div class="product-media" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
             </a>
             <div class="product-body">
-              <div class="product-title">{{ item.item_name }}</div>
+              <div class="product-title">{{ item.web_item_name or item.item_name }}</div>
               <div class="product-price">{{ frappe.utils.fmt_money(item.price or 0) }}</div>
               <div class="product-cta">View details</div>
               <div class="card-actions">
                 <button class="btn btn-solid btn-small" type="button"
                   data-add-to-cart
                   data-item-code="{{ item.item_code }}"
-                  data-item-name="{{ item.item_name }}"
+                  data-item-name="{{ item.web_item_name or item.item_name }}"
                   data-item-route="{{ item.route or item.item_code }}"
                   data-item-image="{{ item.thumbnail or item.website_image or '' }}"
                   data-item-price="{{ item.price or 0 }}">
@@ -92,7 +92,7 @@
                 <button class="btn btn-ghost btn-small" type="button"
                   data-add-to-wishlist
                   data-item-code="{{ item.item_code }}"
-                  data-item-name="{{ item.item_name }}"
+                  data-item-name="{{ item.web_item_name or item.item_name }}"
                   data-item-route="{{ item.route or item.item_code }}"
                   data-item-image="{{ item.thumbnail or item.website_image or '' }}">
                   Save

@@ -18,7 +18,7 @@
         <p class="eyebrow">{{ item.item_code }}</p>
         <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
       </div>
-      <h1>{{ item.website_item_name or item.item_name }}</h1>
+      <h1>{{ item.web_item_name or item.website_item_name or item.item_name }}</h1>
       <div class="product-subline">
         <span class="subline-tag">Loose leaf inspired</span>
         <span class="subline-sep">•</span>
@@ -35,7 +35,7 @@
         <button class="btn btn-solid" type="button"
           data-add-to-cart
           data-item-code="{{ item.item_code }}"
-          data-item-name="{{ item.item_name }}"
+          data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"
           data-item-route="{{ item.route or item.item_code }}"
           data-item-image="{{ item.website_image or item.thumbnail or '' }}"
           data-item-price="{{ price or 0 }}"
@@ -45,7 +45,7 @@
         <button class="btn btn-solid btn-buy" type="button"
           data-buy-now
           data-item-code="{{ item.item_code }}"
-          data-item-name="{{ item.item_name }}"
+          data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"
           data-item-route="{{ item.route or item.item_code }}"
           data-item-image="{{ item.website_image or item.thumbnail or '' }}"
           data-item-price="{{ price or 0 }}"
@@ -56,7 +56,7 @@
         <button class="btn btn-ghost" type="button"
           data-add-to-wishlist
           data-item-code="{{ item.item_code }}"
-          data-item-name="{{ item.item_name }}"
+          data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"
           data-item-route="{{ item.route or item.item_code }}"
           data-item-image="{{ item.website_image or item.thumbnail or '' }}">
           Save to wishlist

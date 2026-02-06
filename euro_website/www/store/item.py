@@ -11,7 +11,7 @@ def get_context(context):
         return _fallback_to_store(context)
 
     context.no_cache = 1
-    context.title = item.item_name
+    context.title = item.get("web_item_name") or item.item_name
     context.item = item
     context.gallery = _get_gallery(item)
     context.specs = _get_specs(item)
@@ -41,6 +41,7 @@ def _get_item_by_route(route):
             "item_code",
             "item_name",
             "website_item_name",
+            "web_item_name",
             "route",
             "thumbnail",
             "website_image",
