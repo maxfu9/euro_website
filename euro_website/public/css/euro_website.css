@@ -625,6 +625,39 @@ button:focus-visible {
   filter: saturate(1.1);
 }
 
+.why-us {
+  padding-top: 30px;
+}
+
+.why-us .lead {
+  max-width: 760px;
+}
+
+.why-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.why-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  min-height: 180px;
+}
+
+.why-card h3 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.why-card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .section.dark {
   background: var(--bg-dark);
   color: #fff;
