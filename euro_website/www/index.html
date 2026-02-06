@@ -98,6 +98,34 @@
   </div>
 </section>
 
+<section class="section lineup">
+  <div class="container">
+    <div class="lineup-header">
+      <h2>Explore the lineup.</h2>
+      <a class="lineup-link" href="/store">Compare all models →</a>
+    </div>
+    <div class="lineup-grid">
+      {% if lineup and lineup | length %}
+        {% for item in lineup %}
+          <div class="lineup-card">
+            <a class="lineup-media" href="/store/{{ item.route or item.item_code }}">
+              <div class="lineup-image" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+            </a>
+            <div class="lineup-body">
+              <div class="lineup-title">{{ item.item_name }}</div>
+              <div class="lineup-desc">{{ (item.website_description or item.web_long_description or item.description or '') | striptags | truncate(120, True, '...') }}</div>
+              <div class="lineup-actions">
+                <a class="btn btn-solid btn-small" href="/store/{{ item.route or item.item_code }}">Learn more</a>
+                <a class="btn btn-ghost btn-small" href="/store/{{ item.route or item.item_code }}">Buy</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
 <section class="section">
   <div class="container split">
     <div>

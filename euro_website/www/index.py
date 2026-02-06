@@ -4,6 +4,7 @@ import frappe
 def get_context(context):
     context.no_cache = 1
     context.featured = _get_rotating_item()
+    context.lineup = _get_lineup_items()
 
 
 def _get_rotating_item():
@@ -38,6 +39,30 @@ def _get_rotating_item():
     category = categories[today.toordinal() % len(categories)]
     filtered = [item for item in items if item_groups.get(item.item_code) == category]
     return _random_item(filtered or items)
+
+
+def _get_lineup_items():
+    fields = _available_fields(
+        "Website Item",
+        [
+            "item_code",
+            "item_name",
+            "route",
+            "thumbnail",
+            "website_image",
+            "website_description",
+            "web_long_description",
+            "description",
+            "standard_rate",
+        ],
+    )
+    return frappe.get_all(
+        "Website Item",
+        filters={"published": 1},
+        fields=fields,
+        order_by="modified desc",
+        limit_page_length=4,
+    )
 
 
 def _random_item(items):
