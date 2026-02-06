@@ -10,6 +10,8 @@ def get_context(context):
     context.page = page
     context.page_size = page_size
     context.categories = _get_categories()
+    context.category_chips = _build_category_chips(filters, context.categories)
+    context.base_query_string = _build_base_query(filters, page_size)
     price_list = _get_price_list()
     context.price_list = price_list
     products, total = _get_products(filters, page, page_size)
@@ -48,6 +50,50 @@ def _get_paging():
     except (TypeError, ValueError):
         page_size = 24
     return page, page_size
+
+
+def _build_base_query(filters, page_size):
+    query = {
+        "q": filters.get("q"),
+        "category": filters.get("category"),
+        "min_price": filters.get("min_price"),
+        "max_price": filters.get("max_price"),
+        "page_size": page_size,
+    }
+    return frappe.utils.urlencode(_clean_query(query))
+
+
+def _build_category_chips(filters, categories):
+    chips = []
+    base = _clean_query(
+        {
+            "q": filters.get("q"),
+            "min_price": filters.get("min_price"),
+            "max_price": filters.get("max_price"),
+        }
+    )
+    chips.append(
+        {
+            "label": "All",
+            "query": frappe.utils.urlencode(base),
+            "active": not filters.get("category"),
+        }
+    )
+    for cat in categories:
+        query = dict(base)
+        query["category"] = cat
+        chips.append(
+            {
+                "label": cat,
+                "query": frappe.utils.urlencode(query),
+                "active": filters.get("category") == cat,
+            }
+        )
+    return chips
+
+
+def _clean_query(query):
+    return {key: value for key, value in query.items() if value not in (None, "")}
 
 
 def _get_products(filters, page, page_size):

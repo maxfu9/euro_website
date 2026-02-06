@@ -34,13 +34,10 @@
       <div>Showing {{ products | length }} of {{ total_products }} items</div>
       <button class="btn btn-ghost" type="button" data-cart-toggle>View Cart</button>
     </div>
-    {% if categories and categories | length %}
-      {% set chip_base = {"q": filters.q, "min_price": filters.min_price, "max_price": filters.max_price} %}
+    {% if category_chips and category_chips | length %}
       <div class="category-chips">
-        <a class="chip {% if not filters.category %}is-active{% endif %}" href="/store?{{ frappe.utils.urlencode(chip_base) }}">All</a>
-        {% for cat in categories %}
-          {% set chip_query = {"q": filters.q, "category": cat, "min_price": filters.min_price, "max_price": filters.max_price} %}
-          <a class="chip {% if filters.category == cat %}is-active{% endif %}" href="/store?{{ frappe.utils.urlencode(chip_query) }}">{{ cat }}</a>
+        {% for chip in category_chips %}
+          <a class="chip {% if chip.active %}is-active{% endif %}" href="/store?{{ chip.query }}">{{ chip.label }}</a>
         {% endfor %}
       </div>
     {% endif %}
@@ -113,14 +110,13 @@
       </div>
     {% endif %}
     {% if total_pages > 1 %}
-      {% set base_query = {"q": filters.q, "category": filters.category, "min_price": filters.min_price, "max_price": filters.max_price, "page_size": page_size} %}
       <div class="pager">
         {% if page > 1 %}
-          <a class="btn btn-ghost" href="/store?{{ frappe.utils.urlencode(base_query) }}&page={{ page - 1 }}">Previous</a>
+          <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page - 1 }}">Previous</a>
         {% endif %}
         <div class="pager-info">Page {{ page }} of {{ total_pages }}</div>
         {% if page < total_pages %}
-          <a class="btn btn-ghost" href="/store?{{ frappe.utils.urlencode(base_query) }}&page={{ page + 1 }}">Next</a>
+          <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page + 1 }}">Next</a>
         {% endif %}
       </div>
     {% endif %}
