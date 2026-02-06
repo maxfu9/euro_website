@@ -61,5 +61,9 @@ def _get_item_groups(items):
 
 def _available_fields(doctype, candidates):
     meta = frappe.get_meta(doctype)
-    allowed = set(meta.get_fieldnames() + ["name", "owner", "creation", "modified", "modified_by"])
+    if hasattr(meta, "get_fieldnames"):
+        fieldnames = meta.get_fieldnames()
+    else:
+        fieldnames = [df.fieldname for df in meta.fields if df.fieldname]
+    allowed = set(fieldnames + ["name", "owner", "creation", "modified", "modified_by"])
     return [field for field in candidates if field in allowed]
