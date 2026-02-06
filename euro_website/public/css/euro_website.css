@@ -1160,6 +1160,11 @@ select {
   font-size: 16px;
 }
 
+.product-qty .btn-solid {
+  padding: 16px 26px;
+  font-size: 15px;
+}
+
 .btn-buy {
   background: #111827;
   color: #fff;
@@ -1305,15 +1310,20 @@ select {
   gap: 12px;
 }
 
+.price-row .product-price {
+  font-size: 24px;
+  font-weight: 700;
+}
+
 .price-discount {
   font-weight: 700;
   color: #16a34a;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .price-note {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .qty-label {
