@@ -1103,6 +1103,10 @@ select {
   align-items: center;
 }
 
+.product-detail.refined {
+  align-items: start;
+}
+
 .gallery {
   display: grid;
   gap: 16px;
@@ -1114,6 +1118,8 @@ select {
   background-size: cover;
   background-position: center;
   border: 1px solid var(--border);
+  background-color: var(--surface-2);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
 }
 
 .gallery-thumbs {
@@ -1141,6 +1147,22 @@ select {
   gap: 12px;
   margin: 20px 0;
   flex-wrap: wrap;
+}
+
+.product-actions.refined .btn {
+  padding: 14px 22px;
+}
+
+.product-copy {
+  display: grid;
+  gap: 12px;
+}
+
+.product-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
 }
 
 .product-highlights {
@@ -1175,6 +1197,12 @@ select {
   color: var(--muted);
   display: grid;
   gap: 6px;
+}
+
+.product-meta.refined {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .specs-card,

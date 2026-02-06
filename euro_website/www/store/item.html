@@ -3,8 +3,8 @@
 {% extends "templates/web.html" %}
 {% block page_content %}
 
-<section class="section">
-  <div class="container product-detail">
+<section class="section product-hero">
+  <div class="container product-detail refined">
     <div class="gallery">
       <div class="product-detail-media" data-gallery-main style="background-image: url('{{ (gallery[0] if gallery else item.website_image or item.thumbnail or '/assets/frappe/images/ui/placeholder-image.png') }}')"></div>
       <div class="gallery-thumbs">
@@ -13,17 +13,19 @@
         {% endfor %}
       </div>
     </div>
-    <div>
-      <p class="eyebrow">{{ item.item_code }}</p>
+    <div class="product-copy">
+      <div class="product-top">
+        <p class="eyebrow">{{ item.item_code }}</p>
+        <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
+      </div>
       <h1>{{ item.item_name }}</h1>
       <div class="product-badges">
         <span class="tag">100% virgin material</span>
         <span class="tag">Food safe</span>
         <span class="tag">BPA free</span>
       </div>
-      <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
       <p class="lead">{{ item.website_description or item.web_long_description or '' }}</p>
-      <div class="product-actions">
+      <div class="product-actions refined">
         <button class="btn btn-solid" type="button"
           data-add-to-cart
           data-item-code="{{ item.item_code }}"
@@ -51,7 +53,7 @@
           </div>
         {% endfor %}
       </div>
-      <div class="product-meta">
+      <div class="product-meta refined">
         <div>Fulfilled via ERPNext</div>
         <div>Live stock and pricing</div>
         <div>Secure checkout</div>
