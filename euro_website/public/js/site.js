@@ -450,6 +450,12 @@
     });
   });
 
+  document.querySelectorAll(".nav-toggle").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelector(".nav-links")?.classList.toggle("is-open");
+    });
+  });
+
   const addressHistoryKey = () => `euro_address_history:${getUserKey()}`;
   const saveAddressHistory = (entry) => {
     const history = JSON.parse(localStorage.getItem(addressHistoryKey()) || "[]");
