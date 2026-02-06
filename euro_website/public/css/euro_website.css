@@ -583,6 +583,70 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
+.brand-message {
+  padding-top: 10px;
+}
+
+.message-card {
+  position: relative;
+  background: #dff1e5;
+  border-radius: 30px;
+  padding: 46px 28px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.message-card h2 {
+  max-width: 680px;
+  margin: 0 auto 12px;
+}
+
+.message-card .lead {
+  max-width: 720px;
+  margin: 0 auto 18px;
+}
+
+.message-link {
+  font-weight: 700;
+  color: #1f3fff;
+}
+
+.message-shape {
+  position: absolute;
+  right: 80px;
+  top: 20px;
+  width: 300px;
+  height: 120px;
+  background: rgba(88, 155, 255, 0.25);
+  clip-path: polygon(0 50%, 100% 0, 90% 100%);
+  opacity: 0.6;
+}
+
+.message-dot {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+
+.message-dot--red {
+  background: #ef4444;
+  top: 18px;
+  left: 46%;
+}
+
+.message-dot--blue {
+  background: #2563eb;
+  bottom: 20px;
+  right: 18%;
+}
+
+.message-dot--green {
+  background: #22c55e;
+  bottom: 20px;
+  left: 25%;
+}
+
 .essentials {
   padding-top: 20px;
 }
