@@ -41,7 +41,7 @@ def update_cart(item_code: str, qty: int = 1):
     return updater(item_code=item_code, qty=qty)
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_checkout_profile():
     user = frappe.session.user
     if not user or user == "Guest":
