@@ -72,28 +72,6 @@ a {
   font-weight: 500;
 }
 
-.nav-pill {
-  background: #fff;
-  border-radius: 999px;
-  padding: 6px;
-  border: 1px solid var(--border);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
-}
-
-.nav-links.nav-pill a {
-  padding: 8px 14px;
-  border-radius: 999px;
-  color: var(--muted);
-  font-size: 13px;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-}
-
-.nav-links.nav-pill a.is-active,
-.nav-links.nav-pill a:hover {
-  background: rgba(0, 114, 255, 0.12);
-  color: #1f3fff;
-}
 
 .nav-cta {
   display: flex;
@@ -101,9 +79,6 @@ a {
   align-items: center;
 }
 
-.nav-cta.nav-pill {
-  padding: 6px 10px;
-}
 
 .brand {
   font-size: 22px;
@@ -189,12 +164,6 @@ a {
   font-size: 12px;
 }
 
-.btn-pill {
-  padding: 10px 20px;
-  border-radius: 999px;
-  background: #111827;
-  color: #fff;
-}
 
 .avatar {
   width: 36px;
@@ -289,6 +258,10 @@ button:focus-visible {
 
 .hero-grid > div {
   animation: fadeUp 0.7s ease both;
+}
+
+.hero-content {
+  max-width: 520px;
 }
 
 .hero-title {
@@ -438,7 +411,7 @@ button:focus-visible {
 
 .hero-chip--bottom {
   left: 18px;
-  bottom: -10px;
+  bottom: 18px;
   border-radius: 18px;
   text-transform: none;
   gap: 12px;

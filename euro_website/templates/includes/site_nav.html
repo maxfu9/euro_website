@@ -7,27 +7,19 @@
         Euro Plast
       {% endif %}
     </a>
-    <div class="nav-links nav-pill">
-      <a href="/" class="is-active">Home</a>
-      <a href="/store">Catalog</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/store">Store</a>
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
       {% if frappe.session.user != "Guest" %}
         <a href="/portal">Portal</a>
       {% endif %}
     </div>
-    <div class="nav-cta nav-pill">
-      <button class="icon-btn icon-btn--wish" type="button" data-wishlist-toggle>
-        <span class="icon">♡</span>
-        <span class="badge" data-wishlist-count>0</span>
-      </button>
-      <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
-        <span class="icon">🛒</span>
-        <span class="badge" data-cart-count>0</span>
-        <span class="cart-total" id="cart-total-compact">0</span>
-      </button>
+    <div class="nav-cta">
       {% if frappe.session.user == "Guest" %}
-        <a class="btn btn-solid btn-pill" href="/login?redirect-to=/portal">Sign in</a>
+        <a class="btn btn-ghost" href="/signup">Sign Up</a>
+        <a class="btn btn-solid" href="/login?redirect-to=/portal">Login</a>
       {% else %}
         {% set current_user = frappe.get_doc("User", frappe.session.user) %}
         <div class="user-menu">
@@ -44,6 +36,15 @@
           </div>
         </div>
       {% endif %}
+      <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
+        <span class="icon">🛒</span>
+        <span class="badge" data-cart-count>0</span>
+        <span class="cart-total" id="cart-total-compact">0</span>
+      </button>
+      <a class="icon-btn icon-btn--wish" href="/wishlist">
+        <span class="icon">♡</span>
+        <span class="badge" data-wishlist-count>0</span>
+      </a>
     </div>
   </div>
 </nav>
