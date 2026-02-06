@@ -1257,6 +1257,7 @@ select {
   gap: 16px;
   border-top-left-radius: 28px;
   border-bottom-left-radius: 28px;
+  overflow: hidden;
 }
 
 .cart-drawer.is-open {
@@ -1305,6 +1306,8 @@ select {
   display: grid;
   gap: 18px;
   padding-top: 6px;
+  align-content: start;
+  min-height: 0;
 }
 
 .cart-row {
