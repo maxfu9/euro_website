@@ -15,6 +15,7 @@ def get_context(context):
     context.item = item
     context.gallery = _get_gallery(item)
     context.specs = _get_specs(item)
+    context.highlights = _get_highlights(context.specs)
     context.reviews = _get_reviews(item)
     price_list = _get_price_list()
     context.price_list = price_list
@@ -104,6 +105,50 @@ def _get_reviews(item):
         )
     except Exception:
         return []
+
+
+def _get_highlights(specs):
+    spec_map = {}
+    for spec in specs or []:
+        label = (spec.get("label") or "").strip().lower()
+        if not label:
+            continue
+        normalized = _normalize_label(label)
+        spec_map[normalized] = spec.get("value") or ""
+
+    def pick(keys, fallback):
+        for key in keys:
+            value = spec_map.get(_normalize_label(key))
+            if value:
+                return value
+        return fallback
+
+    return [
+        {
+            "label": "Materials",
+            "value": pick(["material", "materials", "plastic type"], "Varies by product"),
+        },
+        {
+            "label": "Capacity",
+            "value": pick(["capacity", "volume", "size"], "See specifications"),
+        },
+        {
+            "label": "Food-safe",
+            "value": pick(["food safe", "food-safe"], "Available on request"),
+        },
+        {
+            "label": "BPA-free",
+            "value": pick(["bpa free", "bpa-free"], "Available on request"),
+        },
+        {
+            "label": "Dishwasher-safe",
+            "value": pick(["dishwasher safe", "dishwasher-safe"], "Available on request"),
+        },
+    ]
+
+
+def _normalize_label(label):
+    return "".join(ch for ch in label.lower() if ch.isalnum())
 
 
 def _available_fields(doctype, candidates):

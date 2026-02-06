@@ -38,6 +38,14 @@
           Save to wishlist
         </button>
       </div>
+      <div class="product-highlights">
+        {% for highlight in highlights %}
+          <div class="highlight">
+            <div class="highlight-label">{{ highlight.label }}</div>
+            <div class="highlight-value">{{ highlight.value }}</div>
+          </div>
+        {% endfor %}
+      </div>
       <div class="product-meta">
         <div>Fulfilled via ERPNext</div>
         <div>Live stock and pricing</div>

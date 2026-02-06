@@ -241,8 +241,7 @@ button:focus-visible {
   align-items: center;
 }
 
-.hero-grid > div,
-.hero-grid > .hero-card {
+.hero-grid > div {
   animation: fadeUp 0.7s ease both;
 }
 
@@ -267,9 +266,26 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
-.hero-card {
+.hero-tags {
+  margin-top: 16px;
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent-2);
 }
 
 .hero-media {
@@ -277,14 +293,21 @@ button:focus-visible {
   justify-content: center;
 }
 
-.hero-image {
+.hero-figure {
   width: min(520px, 90vw);
-  height: 380px;
   border-radius: 28px;
-  background-size: cover;
-  background-position: center;
+  padding: 18px;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.55));
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+}
+
+.hero-figure img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
 }
 
 .card-title {
@@ -580,6 +603,34 @@ select {
   gap: 12px;
   margin: 20px 0;
   flex-wrap: wrap;
+}
+
+.product-highlights {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.highlight {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 8px 18px rgba(17, 17, 17, 0.06);
+}
+
+.highlight-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.highlight-value {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 6px;
 }
 
 .product-meta {

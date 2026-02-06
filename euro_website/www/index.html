@@ -4,40 +4,53 @@
 {% block page_content %}
 <section class="hero">
   <div class="container hero-grid">
-    <div>
-      <p class="eyebrow">Featured Item</p>
+    <div class="hero-content">
+      <p class="eyebrow">Homeware & Kitchenware</p>
       {% if featured %}
         <h1>{{ featured.item_name }}</h1>
-        <p class="lead">{{ featured.website_description or featured.web_long_description or '' }}</p>
+        <p class="lead">{{ (featured.website_description or featured.web_long_description or featured.description or '') | striptags }}</p>
         <div class="hero-actions">
           <a class="btn btn-solid" href="/store/{{ featured.route or featured.item_code }}">Shop now</a>
           <a class="btn btn-ghost" href="/store/{{ featured.route or featured.item_code }}">Explore detail</a>
         </div>
+        <div class="hero-tags">
+          <span class="tag">100% virgin material</span>
+          <span class="tag">Food safe</span>
+          <span class="tag">BPA free</span>
+        </div>
       {% else %}
-        <h1>Premium plastic products with ERP-grade operations.</h1>
-        <p class="lead">A bold, immersive storefront connected directly to ERPNext inventory, pricing, and checkout.</p>
+        <h1>Design-forward homeware built for retail and wholesale scale.</h1>
+        <p class="lead">Euro Plast manufactures kitchen and home essentials with dependable supply, consistent quality, and pricing tailored for both retail and traders.</p>
         <div class="hero-actions">
           <a class="btn btn-solid" href="/store">Browse Collection</a>
-          <a class="btn btn-ghost" href="/about">Our Story</a>
+          <a class="btn btn-ghost" href="/about">Our Manufacturing</a>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">100% virgin material</span>
+          <span class="tag">Food safe</span>
+          <span class="tag">BPA free</span>
         </div>
       {% endif %}
       <div class="trust-row">
         <div>
-          <div class="stat">24/7</div>
-        <div class="stat-label">Live Inventory</div>
+          <div class="stat">OEM</div>
+          <div class="stat-label">Manufacturing Ready</div>
         </div>
         <div>
-          <div class="stat">ERP</div>
-          <div class="stat-label">Native Checkout</div>
+          <div class="stat">Retail</div>
+          <div class="stat-label">Shelf-Ready SKUs</div>
         </div>
         <div>
-          <div class="stat">99%</div>
-        <div class="stat-label">Fulfillment Accuracy</div>
+          <div class="stat">Wholesale</div>
+          <div class="stat-label">Trader Pricing</div>
         </div>
       </div>
     </div>
     <div class="hero-media">
-      <div class="hero-image" style="background-image: url('{{ featured.thumbnail or featured.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+      {% set hero_image = featured.thumbnail or featured.website_image or '/assets/frappe/images/ui/placeholder-image.png' %}
+      <figure class="hero-figure">
+        <img src="{{ hero_image }}" alt="{{ featured.item_name if featured else 'Euro Plast product' }}">
+      </figure>
     </div>
   </div>
 </section>
@@ -46,20 +59,20 @@
   <div class="container split">
     <div>
       <p class="eyebrow">Why Euro Plast</p>
-      <h2>Quality manufacturing with operational depth.</h2>
+      <h2>Homeware built to sell, engineered to scale.</h2>
     </div>
     <div class="grid-3">
       <div class="feature">
-        <h3>ERP-grade reliability</h3>
-        <p>Live stock, pricing, and order workflows backed by ERPNext v15.</p>
+        <h3>Retail-ready assortments</h3>
+        <p>Modern kitchen and home essentials with consistent finishes, barcodes, and packaging.</p>
       </div>
       <div class="feature">
-        <h3>Conversion-focused UI</h3>
-        <p>Rich visuals, confident typography, and an effortless path to checkout.</p>
+        <h3>Wholesale confidence</h3>
+        <p>Trader pricing, approval flow, and repeat ordering built for volume buyers.</p>
       </div>
       <div class="feature">
-        <h3>Fast to update</h3>
-        <p>Update products, pricing, and campaigns directly from ERPNext.</p>
+        <h3>Reliable supply chain</h3>
+        <p>Manufacturing-grade operations tied into ERPNext for accurate inventory and fulfillment.</p>
       </div>
     </div>
   </div>
@@ -68,9 +81,9 @@
 <section class="section dark">
   <div class="container">
     <div class="cta-card">
-      <h2>Ready to upgrade your storefront?</h2>
-      <p>Replace the default ERPNext website with a custom, premium experience.</p>
-      <a class="btn btn-solid" href="/contact">Talk to us</a>
+      <h2>Looking for retail lines or wholesale supply?</h2>
+      <p>Tell us what you need and we’ll tailor pricing, lead times, and assortments.</p>
+      <a class="btn btn-solid" href="/contact">Get in touch</a>
     </div>
   </div>
 </section>
