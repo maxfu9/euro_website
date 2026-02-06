@@ -153,7 +153,10 @@ def _available_fields(doctype, candidates):
 
 def _get_cart_summary():
     try:
-        from erpnext.shopping_cart.cart import get_cart_quotation
+        try:
+            from webshop.webshop.shopping_cart.cart import get_cart_quotation
+        except Exception:
+            from erpnext.shopping_cart.cart import get_cart_quotation
 
         quotation = get_cart_quotation()
         return {

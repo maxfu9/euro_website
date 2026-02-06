@@ -19,6 +19,26 @@ def submit_contact(full_name: str, email: str, message: str):
 
     return {"ok": True}
 
+
+@frappe.whitelist(allow_guest=True)
+def update_cart(item_code: str, qty: int = 1):
+    if not item_code:
+        frappe.throw("Missing item_code")
+
+    updater = None
+    try:
+        from webshop.webshop.shopping_cart.cart import update_cart as updater
+    except Exception:
+        try:
+            from erpnext.shopping_cart.cart import update_cart as updater
+        except Exception:
+            updater = None
+
+    if not updater:
+        frappe.throw("Shopping cart module not available")
+
+    return updater(item_code=item_code, qty=qty)
+
 @frappe.whitelist(allow_guest=True)
 def signup_portal_user(full_name: str, email: str, password: str, is_trader: int = 0):
     if not (full_name and email and password):

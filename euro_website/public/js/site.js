@@ -109,7 +109,7 @@
       button.textContent = "Adding...";
 
       try {
-        await call("erpnext.shopping_cart.cart.update_cart", {
+        await call("euro_website.api.update_cart", {
           item_code: itemCode,
           qty: 1,
         });
