@@ -722,6 +722,44 @@ button:focus-visible {
   font-size: 14px;
 }
 
+.trending {
+  padding-top: 10px;
+}
+
+.trending-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.trending-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+  display: grid;
+  gap: 12px;
+}
+
+.trending-image {
+  height: 200px;
+  border-radius: 18px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-2);
+}
+
+.trending-title {
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.trending-desc {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .section.dark {
   background: var(--bg-dark);
   color: #fff;

@@ -190,6 +190,31 @@
   </div>
 </section>
 
+<section class="section trending">
+  <div class="container">
+    <div class="lineup-header">
+      <h2>Trending this week</h2>
+      <a class="lineup-link" href="/store">See all →</a>
+    </div>
+    <div class="trending-grid">
+      {% if lineup and lineup | length %}
+        {% for item in lineup[:3] %}
+          <div class="trending-card">
+            <a class="trending-media" href="/store/{{ item.route or item.item_code }}">
+              <div class="trending-image" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+            </a>
+            <div class="trending-body">
+              <div class="trending-title">{{ item.item_name }}</div>
+              <div class="trending-desc">{{ (item.website_description or item.web_long_description or item.description or '') | striptags | truncate(90, True, '...') }}</div>
+              <a class="lineup-link" href="/store/{{ item.route or item.item_code }}">Explore →</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
 <section class="section">
   <div class="container split">
     <div>
