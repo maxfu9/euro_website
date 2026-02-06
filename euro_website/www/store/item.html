@@ -15,12 +15,23 @@
     </div>
     <div class="product-copy">
       <div class="product-top">
-        <p class="eyebrow">{{ item.item_code }}</p>
-        <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
+        <div class="product-status">
+          {% if item.in_stock or item.is_in_stock %}
+            <span class="stock in-stock">✔ In stock</span>
+          {% else %}
+            <span class="stock out-stock">✖ Out of stock</span>
+          {% endif %}
+        </div>
+        <button class="wishlist-icon" type="button"
+          data-add-to-wishlist
+          data-item-code="{{ item.item_code }}"
+          data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"
+          data-item-route="{{ item.route or item.item_code }}"
+          data-item-image="{{ item.website_image or item.thumbnail or '' }}">♥</button>
       </div>
       <h1>{{ item.web_item_name or item.website_item_name or item.item_name }}</h1>
       <div class="product-subline">
-        <span class="subline-tag">Loose leaf inspired</span>
+        <span class="subline-tag">Homeware essentials</span>
         <span class="subline-sep">•</span>
         <span class="subline-rating">★★★★★</span>
         <span class="subline-reviews">{{ reviews | length }} Reviews</span>
@@ -31,6 +42,15 @@
         <span class="tag">BPA free</span>
       </div>
       <p class="lead">{{ item.website_description or item.web_long_description or '' }}</p>
+      <div class="product-qty">
+        <div class="qty-label">Quantity</div>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-minus="detail-qty">−</button>
+          <input id="detail-qty" type="number" min="1" value="1" />
+          <button type="button" class="qty-btn" data-qty-plus="detail-qty">+</button>
+        </div>
+        <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
+      </div>
       <div class="product-actions refined">
         <button class="btn btn-solid" type="button"
           data-add-to-cart
@@ -53,22 +73,6 @@
           Buy now
         </button>
         <button class="btn btn-ghost" type="button" data-cart-toggle>View cart</button>
-        <button class="btn btn-ghost" type="button"
-          data-add-to-wishlist
-          data-item-code="{{ item.item_code }}"
-          data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"
-          data-item-route="{{ item.route or item.item_code }}"
-          data-item-image="{{ item.website_image or item.thumbnail or '' }}">
-          Save to wishlist
-        </button>
-      </div>
-      <div class="product-qty">
-        <div class="qty-label">Quantity</div>
-        <div class="qty-control">
-          <button type="button" class="qty-btn" data-qty-minus="detail-qty">−</button>
-          <input id="detail-qty" type="number" min="1" value="1" />
-          <button type="button" class="qty-btn" data-qty-plus="detail-qty">+</button>
-        </div>
       </div>
       {% if options and options | length %}
         <div class="product-options">
