@@ -503,6 +503,119 @@
     });
   }
 
+  const profileForm = document.getElementById("profile-form");
+  if (profileForm) {
+    call("euro_website.api.get_profile", {}).then((result) => {
+      const data = result.message || result;
+      if (!data) return;
+      profileForm.full_name.value = data.full_name || "";
+      profileForm.email.value = data.email || "";
+      profileForm.phone.value = data.phone || "";
+    });
+
+    profileForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const status = document.getElementById("profile-status");
+      status.textContent = "Saving...";
+      try {
+        const result = await call("euro_website.api.update_profile", {
+          full_name: profileForm.full_name.value,
+          email: profileForm.email.value,
+          phone: profileForm.phone.value,
+        });
+        const ok = result.message ? result.message.ok : result.ok;
+        status.textContent = ok ? "Profile updated." : "Unable to update profile.";
+      } catch (error) {
+        status.textContent = "Unable to update profile.";
+      }
+    });
+  }
+
+  const addressForm = document.getElementById("address-form");
+  if (addressForm) {
+    const listEl = document.getElementById("address-list");
+    const resetBtn = document.getElementById("address-reset");
+    const status = document.getElementById("address-status");
+
+    const loadAddresses = async () => {
+      const result = await call("euro_website.api.list_addresses", {});
+      const data = result.message || result || [];
+      if (!listEl) return;
+      listEl.innerHTML = data
+        .map(
+          (addr) => `
+          <div class="address-row">
+            <div>
+              <div class="row-title">${addr.address_title || addr.name}</div>
+              <div class="muted">${addr.address_line1}, ${addr.city}, ${addr.country}</div>
+            </div>
+            <div class="address-actions">
+              <button class="btn btn-ghost btn-small" data-address-edit="${addr.name}">Edit</button>
+              <button class="btn btn-ghost btn-small" data-address-delete="${addr.name}">Delete</button>
+            </div>
+          </div>
+        `
+        )
+        .join("");
+    };
+
+    loadAddresses();
+
+    addressForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "Saving...";
+      try {
+        const result = await call("euro_website.api.save_address", {
+          address_name: addressForm.address_name.value || null,
+          address_title: addressForm.address_title.value,
+          address_line1: addressForm.address_line1.value,
+          city: addressForm.city.value,
+          country: addressForm.country.value,
+        });
+        const ok = result.message ? result.message.ok : result.ok;
+        if (ok) {
+          status.textContent = "Address saved.";
+          addressForm.reset();
+          addressForm.address_name.value = "";
+          loadAddresses();
+        } else {
+          status.textContent = "Unable to save address.";
+        }
+      } catch (error) {
+        status.textContent = "Unable to save address.";
+      }
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        addressForm.reset();
+        addressForm.address_name.value = "";
+      });
+    }
+
+    listEl?.addEventListener("click", async (event) => {
+      const target = event.target;
+      if (target?.dataset?.addressEdit) {
+        const result = await call("euro_website.api.list_addresses", {});
+        const data = result.message || result || [];
+        const addr = data.find((row) => row.name === target.dataset.addressEdit);
+        if (!addr) return;
+        addressForm.address_name.value = addr.name;
+        addressForm.address_title.value = addr.address_title || "";
+        addressForm.address_line1.value = addr.address_line1 || "";
+        addressForm.city.value = addr.city || "";
+        addressForm.country.value = addr.country || "";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      if (target?.dataset?.addressDelete) {
+        status.textContent = "Deleting...";
+        await call("euro_website.api.delete_address", { address_name: target.dataset.addressDelete });
+        status.textContent = "Address removed.";
+        loadAddresses();
+      }
+    });
+  }
+
   const galleryMain = document.querySelector("[data-gallery-main]");
   const galleryThumbs = document.querySelectorAll("[data-gallery-thumb]");
   if (galleryMain && galleryThumbs.length) {

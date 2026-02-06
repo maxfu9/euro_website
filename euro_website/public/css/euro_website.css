@@ -791,6 +791,27 @@ select {
   gap: 8px;
   margin-top: 8px;
 }
+
+.address-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.address-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.address-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 .checkout-row {
   display: flex;
   justify-content: space-between;

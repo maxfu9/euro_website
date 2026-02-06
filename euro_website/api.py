@@ -73,6 +73,95 @@ def get_checkout_profile():
     return data
 
 
+@frappe.whitelist()
+def get_profile():
+    user = frappe.session.user
+    if not user or user == "Guest":
+        frappe.throw("Login required")
+    contact = _get_contact_for_user(user)
+    return {
+        "full_name": contact.get("first_name") if contact else "",
+        "email": contact.get("email_id") if contact else user,
+        "phone": contact.get("phone") if contact else "",
+    }
+
+
+@frappe.whitelist()
+def update_profile(full_name: str, email: str, phone: str = ""):
+    user = frappe.session.user
+    if not user or user == "Guest":
+        frappe.throw("Login required")
+    _update_contact_for_user(user, full_name, email, phone)
+    return {"ok": True}
+
+
+@frappe.whitelist()
+def list_addresses():
+    user = frappe.session.user
+    if not user or user == "Guest":
+        frappe.throw("Login required")
+    customer = _get_customer_for_user(user)
+    if not customer:
+        return []
+    addresses = frappe.get_all(
+        "Address",
+        filters=[["Dynamic Link", "link_doctype", "=", "Customer"], ["Dynamic Link", "link_name", "=", customer]],
+        fields=["name", "address_title", "address_line1", "city", "country"],
+        limit_page_length=50,
+    )
+    return addresses
+
+
+@frappe.whitelist()
+def save_address(address_name: str = None, address_title: str = None, address_line1: str = None, city: str = None, country: str = None):
+    user = frappe.session.user
+    if not user or user == "Guest":
+        frappe.throw("Login required")
+    customer = _get_customer_for_user(user)
+    if not customer:
+        frappe.throw("Customer not found")
+    if not address_title or not address_line1 or not city or not country:
+        frappe.throw("Missing required fields")
+
+    if address_name:
+        doc = frappe.get_doc("Address", address_name)
+        doc.address_title = address_title
+        doc.address_line1 = address_line1
+        doc.city = city
+        doc.country = country
+        doc.flags.ignore_permissions = True
+        doc.save()
+        return {"ok": True, "name": doc.name}
+
+    doc = frappe.get_doc(
+        {
+            "doctype": "Address",
+            "address_title": address_title,
+            "address_type": "Shipping",
+            "address_line1": address_line1,
+            "city": city,
+            "country": country,
+            "links": [{"link_doctype": "Customer", "link_name": customer}],
+        }
+    )
+    doc.flags.ignore_permissions = True
+    doc.insert()
+    return {"ok": True, "name": doc.name}
+
+
+@frappe.whitelist()
+def delete_address(address_name: str):
+    user = frappe.session.user
+    if not user or user == "Guest":
+        frappe.throw("Login required")
+    if not address_name:
+        frappe.throw("Missing address")
+    doc = frappe.get_doc("Address", address_name)
+    doc.flags.ignore_permissions = True
+    doc.delete()
+    return {"ok": True}
+
+
 @frappe.whitelist(allow_guest=True)
 def place_order(
     full_name: str,
