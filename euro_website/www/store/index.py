@@ -14,7 +14,7 @@ def get_context(context):
     context.products = products
     context.total_products = total
     context.total_pages = max(1, (total + page_size - 1) // page_size)
-    context.cart = _get_cart_summary()
+    context.cart = {"items": []}
 
 
 def _get_filters():
@@ -151,17 +151,4 @@ def _available_fields(doctype, candidates):
     return [field for field in candidates if field in allowed]
 
 
-def _get_cart_summary():
-    try:
-        try:
-            from webshop.webshop.shopping_cart.cart import get_cart_quotation
-        except Exception:
-            from erpnext.shopping_cart.cart import get_cart_quotation
-
-        quotation = get_cart_quotation()
-        return {
-            "items": quotation.get("items", []),
-            "grand_total": quotation.get("grand_total") or 0,
-        }
-    except Exception:
-        return {"items": [], "grand_total": 0}
+# Cart is handled client-side for custom UX

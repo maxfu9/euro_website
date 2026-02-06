@@ -1,0 +1,25 @@
+{% set hide_navbar = 1 %}
+{% set hide_footer = 1 %}
+{% extends "templates/web.html" %}
+{% block page_content %}
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Wishlist</p>
+    <h1>Your saved items</h1>
+    <p class="lead">Keep track of products you want to revisit.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div id="wishlist-grid" class="product-grid"></div>
+    <div id="wishlist-empty" class="empty-state" style="display:none;">
+      <h3>Your wishlist is empty</h3>
+      <p class="muted">Add products from the store to see them here.</p>
+      <a class="btn btn-ghost" href="/store">Browse products</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

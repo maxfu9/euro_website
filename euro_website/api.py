@@ -1,3 +1,4 @@
+import json
 import frappe
 
 
@@ -38,6 +39,96 @@ def update_cart(item_code: str, qty: int = 1):
         frappe.throw("Shopping cart module not available")
 
     return updater(item_code=item_code, qty=qty)
+
+
+@frappe.whitelist(allow_guest=True)
+def place_order(
+    full_name: str,
+    email: str,
+    phone: str,
+    address_line1: str,
+    city: str,
+    country: str,
+    items,
+    notes: str = "",
+):
+    if not (full_name and email and address_line1 and city and country):
+        frappe.throw("Missing required fields")
+
+    if isinstance(items, str):
+        items = json.loads(items)
+    if not items:
+        frappe.throw("Cart is empty")
+
+    from euro_website.handlers import _get_group_and_price, _get_or_create_customer, _ensure_contact
+
+    customer_group, price_list, customer_type_value = _get_group_and_price("Retail")
+    customer = _get_or_create_customer(full_name, email, customer_type="Retail")
+    _ensure_contact(customer, full_name, email)
+
+    address_name = _create_address(full_name, address_line1, city, country, customer)
+
+    company = frappe.defaults.get_global_default("company")
+    if not company:
+        company = frappe.get_all("Company", fields=["name"], limit_page_length=1)[0].name
+
+    so_items = []
+    for item in items:
+        if not item.get("item_code"):
+            continue
+        so_items.append(
+            {
+                "item_code": item.get("item_code"),
+                "qty": item.get("qty") or 1,
+                "rate": item.get("rate") or 0,
+                "price_list_rate": item.get("rate") or 0,
+            }
+        )
+
+    if not so_items:
+        frappe.throw("Invalid cart items")
+
+    so = frappe.get_doc(
+        {
+            "doctype": "Sales Order",
+            "customer": customer,
+            "customer_name": full_name,
+            "transaction_date": frappe.utils.nowdate(),
+            "delivery_date": frappe.utils.nowdate(),
+            "order_type": "Sales",
+            "company": company,
+            "contact_email": email,
+            "contact_phone": phone,
+            "selling_price_list": price_list,
+            "customer_group": customer_group,
+            "is_webshop": 1,
+            "shipping_address_name": address_name,
+            "customer_address": address_name,
+            "items": so_items,
+            "remarks": notes or "",
+        }
+    )
+    so.flags.ignore_permissions = True
+    so.insert()
+
+    return {"ok": True, "sales_order": so.name}
+
+
+def _create_address(full_name, address_line1, city, country, customer):
+    address = frappe.get_doc(
+        {
+            "doctype": "Address",
+            "address_title": full_name,
+            "address_type": "Shipping",
+            "address_line1": address_line1,
+            "city": city,
+            "country": country,
+            "links": [{"link_doctype": "Customer", "link_name": customer}],
+        }
+    )
+    address.flags.ignore_permissions = True
+    address.insert()
+    return address.name
 
 @frappe.whitelist(allow_guest=True)
 def signup_portal_user(full_name: str, email: str, password: str, is_trader: int = 0):

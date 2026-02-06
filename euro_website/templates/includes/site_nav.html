@@ -4,6 +4,8 @@
     <div class="nav-links">
       <a href="/">Home</a>
       <a href="/store">Store</a>
+      <a href="/checkout">Checkout</a>
+      <a href="/wishlist">Wishlist</a>
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
       {% if frappe.session.user != "Guest" %}
@@ -18,7 +20,24 @@
       {% else %}
         <a class="btn btn-solid" href="/portal">My Account</a>
       {% endif %}
-      <a class="btn btn-solid" href="/cart">Cart</a>
+      <button class="btn btn-solid" type="button" data-cart-toggle>
+        Cart <span class="cart-count" data-cart-count>0</span>
+      </button>
     </div>
   </div>
 </nav>
+<div class="cart-backdrop" data-cart-close></div>
+<aside class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Cart</div>
+    <button class="btn btn-ghost btn-small" type="button" data-cart-close>Close</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cart-total">0</span>
+    </div>
+    <a class="btn btn-solid" href="/checkout">Go to checkout</a>
+  </div>
+</aside>
