@@ -17,6 +17,16 @@
       <div>Showing {{ products | length }} of {{ total_products }} items</div>
       <button class="btn btn-ghost" type="button" data-cart-toggle>View Cart</button>
     </div>
+    {% if categories and categories | length %}
+      {% set chip_base = {"q": filters.q, "min_price": filters.min_price, "max_price": filters.max_price} %}
+      <div class="category-chips">
+        <a class="chip {% if not filters.category %}is-active{% endif %}" href="/store?{{ frappe.utils.urlencode(chip_base) }}">All</a>
+        {% for cat in categories %}
+          {% set chip_query = {"q": filters.q, "category": cat, "min_price": filters.min_price, "max_price": filters.max_price} %}
+          <a class="chip {% if filters.category == cat %}is-active{% endif %}" href="/store?{{ frappe.utils.urlencode(chip_query) }}">{{ cat }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
     <form class="filter-bar" method="get">
       <div class="filter-field">
         <label>Search</label>
