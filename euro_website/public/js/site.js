@@ -4,7 +4,8 @@
       return frappe.call({ method, args });
     }
 
-    const csrf = (window.frappe && frappe.csrf_token) || window.csrf_token || "";
+    const metaToken = document.querySelector("meta[name='csrf-token']")?.content || "";
+    const csrf = (window.frappe && frappe.csrf_token) || window.csrf_token || metaToken || "";
     return fetch(`/api/method/${method}`, {
       method: "POST",
       headers: {
@@ -458,21 +459,22 @@
 
       try {
         const result = await call("euro_website.api.place_order", payload);
-        const payload = result.message || result;
-        const ok = payload?.ok || payload?.sales_order;
+        const server = result.message || result;
+        const ok = server?.ok || server?.sales_order;
         if (ok) {
-          const orderId = payload?.sales_order;
+          const orderId = server?.sales_order;
           saveAddressHistory({ address_line1: addressLine1, city, country });
           localStorage.removeItem(cartKey());
-          status.textContent = payload.warning
-            ? `Order placed: ${orderId}. Note: ${payload.warning}`
+          status.textContent = server.warning
+            ? `Order placed: ${orderId}. Note: ${server.warning}`
             : `Order placed: ${orderId}`;
           window.location.href = `/order?order=${encodeURIComponent(orderId)}`;
         } else {
-          status.textContent = "Unable to place order.";
+          const serverMsg = server?._server_messages || server?.exc || server?.message;
+          status.textContent = serverMsg ? String(serverMsg) : "Unable to place order.";
         }
       } catch (error) {
-        status.textContent = "Unable to place order. Please try again.";
+        status.textContent = error?.message || "Unable to place order. Please try again.";
       }
     });
   }
