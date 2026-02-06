@@ -10,7 +10,10 @@ def get_context(context):
     context.page = page
     context.page_size = page_size
     context.categories = _get_categories()
+    price_list = _get_price_list()
+    context.price_list = price_list
     products, total = _get_products(filters, page, page_size)
+    _attach_prices(products, price_list)
     context.products = products
     context.total_products = total
     context.total_pages = max(1, (total + page_size - 1) // page_size)
@@ -149,6 +152,37 @@ def _available_fields(doctype, candidates):
         fieldnames = [df.fieldname for df in meta.fields if df.fieldname]
     allowed = set(fieldnames + ["name", "owner", "creation", "modified", "modified_by"])
     return [field for field in candidates if field in allowed]
+
+
+def _get_price_list():
+    candidates = ["Website Price List", "Standard Selling"]
+    for name in candidates:
+        if frappe.db.exists("Price List", name):
+            return name
+    price_list = frappe.get_all("Price List", filters={"selling": 1}, fields=["name"], limit_page_length=1)
+    return price_list[0].name if price_list else None
+
+
+def _attach_prices(items, price_list):
+    if not items:
+        return
+    if not price_list:
+        for item in items:
+            item.price = item.get("standard_rate") or 0
+        return
+
+    codes = [item.item_code for item in items if item.get("item_code")]
+    if not codes:
+        return
+
+    prices = frappe.get_all(
+        "Item Price",
+        filters={"item_code": ["in", codes], "price_list": price_list, "selling": 1},
+        fields=["item_code", "price_list_rate"],
+    )
+    price_map = {row.item_code: row.price_list_rate for row in prices}
+    for item in items:
+        item.price = price_map.get(item.item_code, item.get("standard_rate") or 0)
 
 
 # Cart is handled client-side for custom UX

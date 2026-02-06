@@ -16,7 +16,7 @@
     <div>
       <p class="eyebrow">{{ item.item_code }}</p>
       <h1>{{ item.item_name }}</h1>
-      <div class="product-price">{{ frappe.utils.fmt_money(item.standard_rate or 0) }}</div>
+      <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
       <p class="lead">{{ item.website_description or item.web_long_description or '' }}</p>
       <div class="product-actions">
         <button class="btn btn-solid" type="button"
@@ -25,7 +25,7 @@
           data-item-name="{{ item.item_name }}"
           data-item-route="{{ item.route or item.item_code }}"
           data-item-image="{{ item.website_image or item.thumbnail or '' }}"
-          data-item-price="{{ item.standard_rate or 0 }}">
+          data-item-price="{{ price or 0 }}">
           Add to cart
         </button>
         <button class="btn btn-ghost" type="button" data-cart-toggle>View cart</button>

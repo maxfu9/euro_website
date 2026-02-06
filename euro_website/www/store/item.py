@@ -16,6 +16,9 @@ def get_context(context):
     context.gallery = _get_gallery(item)
     context.specs = _get_specs(item)
     context.reviews = _get_reviews(item)
+    price_list = _get_price_list()
+    context.price_list = price_list
+    context.price = _get_item_price(item.item_code, price_list) or getattr(item, "standard_rate", 0) or 0
 
 
 def _get_item_by_route(route):
@@ -111,3 +114,23 @@ def _available_fields(doctype, candidates):
         fieldnames = [df.fieldname for df in meta.fields if df.fieldname]
     allowed = set(fieldnames + ["name", "owner", "creation", "modified", "modified_by"])
     return [field for field in candidates if field in allowed]
+
+
+def _get_price_list():
+    candidates = ["Website Price List", "Standard Selling"]
+    for name in candidates:
+        if frappe.db.exists("Price List", name):
+            return name
+    price_list = frappe.get_all("Price List", filters={"selling": 1}, fields=["name"], limit_page_length=1)
+    return price_list[0].name if price_list else None
+
+
+def _get_item_price(item_code, price_list):
+    if not item_code or not price_list:
+        return None
+    price = frappe.db.get_value(
+        "Item Price",
+        {"item_code": item_code, "price_list": price_list, "selling": 1},
+        "price_list_rate",
+    )
+    return price
