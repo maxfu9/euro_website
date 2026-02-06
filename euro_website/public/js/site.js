@@ -68,13 +68,18 @@
           .map(
             (item) => `
             <div class="cart-row">
-              <div class="cart-thumb" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')"></div>
+              <div class="cart-thumb" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')">
+                <span class="cart-badge">Sale!</span>
+              </div>
               <div class="cart-info">
                 <div class="cart-top">
                   <div class="cart-name">${item.item_name}</div>
                   <button class="cart-remove" type="button" data-cart-remove="${item.item_code}">×</button>
                 </div>
-                <div class="cart-meta">${(item.rate || 0).toFixed(2)}</div>
+                <div class="cart-meta">
+                  ${(item.rate || 0).toFixed(2)}
+                  <span class="cart-savings">You saved 12.5%</span>
+                </div>
                 <div class="cart-actions">
                   <button class="qty-btn" data-cart-minus="${item.item_code}">−</button>
                   <span class="qty-value">${item.qty || 1}</span>
