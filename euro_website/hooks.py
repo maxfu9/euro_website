@@ -6,10 +6,19 @@ app_email = "hello@example.com"
 app_license = "MIT"
 
 # Hide default Frappe navbar/footer across public website pages
-website_context = {
-    "hide_navbar": 1,
-    "hide_footer": 1,
-}
+def get_website_context(context):
+    try:
+        import frappe
+
+        context.brand_image = frappe.db.get_value("Website Settings", "Website Settings", "brand_image")
+    except Exception:
+        context.brand_image = None
+
+    context.hide_navbar = 1
+    context.hide_footer = 1
+
+
+website_context = {}
 
 # Website assets
 web_include_css = [

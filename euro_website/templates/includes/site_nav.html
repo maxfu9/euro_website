@@ -1,9 +1,8 @@
 <nav class="site-nav" data-user="{{ frappe.session.user }}">
   <div class="container nav-inner">
-    {% set ws = frappe.get_single("Website Settings") %}
     <a class="brand brand-logo" href="/">
-      {% if ws.brand_image %}
-        <img src="{{ ws.brand_image }}" alt="Euro Plast" />
+      {% if brand_image %}
+        <img src="{{ brand_image }}" alt="Euro Plast" />
       {% else %}
         Euro Plast
       {% endif %}
