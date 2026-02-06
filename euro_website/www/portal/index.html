@@ -108,7 +108,7 @@
               </div>
               <div>{{ frappe.utils.formatdate(payment.posting_date) }}</div>
               <div><span class="status-badge status-{{ payment.status | lower | replace(' ', '-') }}">{{ payment.status }}</span></div>
-              <div>{{ frappe.utils.fmt_money(payment.paid_amount, payment.paid_to_account_currency) }}</div>
+              <div>{{ frappe.utils.fmt_money(payment.paid_amount) }}</div>
             </div>
           {% endfor %}
         </div>
