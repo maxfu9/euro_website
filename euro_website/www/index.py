@@ -7,10 +7,23 @@ def get_context(context):
 
 
 def _get_rotating_item():
+    fields = _available_fields(
+        "Website Item",
+        [
+            "item_code",
+            "item_name",
+            "route",
+            "thumbnail",
+            "website_image",
+            "website_description",
+            "web_long_description",
+            "description",
+        ],
+    )
     items = frappe.get_all(
         "Website Item",
         filters={"published": 1},
-        fields=["item_code", "item_name", "route", "thumbnail", "website_image", "website_description", "web_long_description"],
+        fields=fields,
         limit_page_length=500,
     )
     if not items:
@@ -44,3 +57,9 @@ def _get_item_groups(items):
         fields=["item_code", "item_group"],
     )
     return {record.item_code: record.item_group for record in records}
+
+
+def _available_fields(doctype, candidates):
+    meta = frappe.get_meta(doctype)
+    allowed = set(meta.get_fieldnames() + ["name", "owner", "creation", "modified", "modified_by"])
+    return [field for field in candidates if field in allowed]

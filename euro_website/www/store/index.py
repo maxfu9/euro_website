@@ -71,11 +71,25 @@ def _get_products(filters, page, page_size):
             return [], 0
         data_filters["item_code"] = ["in", item_codes]
 
+    fields = _available_fields(
+        "Website Item",
+        [
+            "item_code",
+            "item_name",
+            "route",
+            "thumbnail",
+            "website_image",
+            "website_description",
+            "web_long_description",
+            "description",
+            "standard_rate",
+        ],
+    )
     items = frappe.get_all(
         "Website Item",
         filters=data_filters,
         or_filters=or_filters,
-        fields=["item_code", "item_name", "route", "thumbnail", "website_image", "website_description", "web_long_description", "standard_rate"],
+        fields=fields,
         order_by="modified desc",
         limit_start=(page - 1) * page_size,
         limit_page_length=page_size,
@@ -125,6 +139,12 @@ def _get_item_codes_by_category(category):
         limit_page_length=1000,
     )
     return [row.item_code for row in records if row.item_code]
+
+
+def _available_fields(doctype, candidates):
+    meta = frappe.get_meta(doctype)
+    allowed = set(meta.get_fieldnames() + ["name", "owner", "creation", "modified", "modified_by"])
+    return [field for field in candidates if field in allowed]
 
 
 def _get_cart_summary():

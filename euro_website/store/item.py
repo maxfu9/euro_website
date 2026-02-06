@@ -19,10 +19,9 @@ def get_context(context):
 
 
 def _get_item_by_route(route):
-    records = frappe.get_all(
+    fields = _available_fields(
         "Website Item",
-        filters={"route": route, "published": 1},
-        fields=[
+        [
             "name",
             "item_code",
             "item_name",
@@ -31,8 +30,14 @@ def _get_item_by_route(route):
             "website_image",
             "website_description",
             "web_long_description",
+            "description",
             "standard_rate",
         ],
+    )
+    records = frappe.get_all(
+        "Website Item",
+        filters={"route": route, "published": 1},
+        fields=fields,
         limit_page_length=1,
     )
     if not records:
@@ -40,17 +45,7 @@ def _get_item_by_route(route):
         records = frappe.get_all(
             "Website Item",
             filters={"item_code": route, "published": 1},
-            fields=[
-                "name",
-                "item_code",
-                "item_name",
-                "route",
-                "thumbnail",
-                "website_image",
-                "website_description",
-                "web_long_description",
-                "standard_rate",
-            ],
+            fields=fields,
             limit_page_length=1,
         )
 
@@ -106,3 +101,9 @@ def _get_reviews(item):
         )
     except Exception:
         return []
+
+
+def _available_fields(doctype, candidates):
+    meta = frappe.get_meta(doctype)
+    allowed = set(meta.get_fieldnames() + ["name", "owner", "creation", "modified", "modified_by"])
+    return [field for field in candidates if field in allowed]

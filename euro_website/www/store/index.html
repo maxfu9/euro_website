@@ -50,7 +50,7 @@
             <div class="product-media" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
             <div class="product-body">
               <div class="product-title">{{ item.item_name }}</div>
-              <div class="product-price">{{ frappe.utils.fmt_money(item.standard_rate) }}</div>
+              <div class="product-price">{{ frappe.utils.fmt_money(item.standard_rate or 0) }}</div>
               <div class="product-cta">View details</div>
             </div>
           </a>
