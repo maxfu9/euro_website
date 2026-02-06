@@ -21,16 +21,18 @@
       </div>
 
       <div class="checkout-step" data-step-panel="1">
-        <div class="inline-switches">
-          <label class="checkbox-line">
-            <input type="checkbox" name="update_profile" />
-            Update my contact details
-          </label>
-          <label class="checkbox-line">
-            <input type="checkbox" name="update_address" />
-            Update my default address
-          </label>
-        </div>
+        {% if frappe.session.user != "Guest" %}
+          <div class="inline-switches">
+            <label class="checkbox-line">
+              <input type="checkbox" name="update_profile" />
+              Update my contact details
+            </label>
+            <label class="checkbox-line">
+              <input type="checkbox" name="update_address" />
+              Update my default address
+            </label>
+          </div>
+        {% endif %}
         <label>Full Name</label>
         <input type="text" name="full_name" required />
         <label>Email</label>
