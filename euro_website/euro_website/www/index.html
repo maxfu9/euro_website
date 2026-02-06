@@ -1,0 +1,91 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+{% include "euro_website/templates/includes/site_nav.html" %}
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">Euro Plast</p>
+      <h1>Premium plastic products with ERP-grade operations.</h1>
+      <p class="lead">A bold, immersive storefront connected directly to ERPNext inventory, pricing, and checkout.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="/store">Browse Collection</a>
+        <a class="btn btn-ghost" href="/about">Our Story</a>
+      </div>
+      <div class="trust-row">
+        <div>
+          <div class="stat">24/7</div>
+        <div class="stat-label">Live Inventory</div>
+        </div>
+        <div>
+          <div class="stat">ERP</div>
+          <div class="stat-label">Native Checkout</div>
+        </div>
+        <div>
+          <div class="stat">99%</div>
+        <div class="stat-label">Fulfillment Accuracy</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="glass-card">
+        <div class="card-title">Featured Item</div>
+        {% if featured %}
+          <div class="featured-media" style="background-image: url('{{ featured.thumbnail or featured.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+          <div class="card-body">
+            <div class="chip">Live from ERPNext</div>
+            <h3>{{ featured.item_name }}</h3>
+            <p>{{ featured.website_description or featured.web_long_description or '' }}</p>
+            <div class="hero-actions">
+              <a class="btn btn-solid" href="/store/{{ featured.route or featured.item_code }}">Shop now</a>
+              <a class="btn btn-ghost" href="/store/{{ featured.route or featured.item_code }}">Explore detail</a>
+            </div>
+          </div>
+        {% else %}
+          <div class="card-body">
+            <div class="chip">New arrivals</div>
+            <h3>Reliable plastics for modern industry.</h3>
+            <p>From discovery to fulfillment, every detail is designed for speed and quality.</p>
+            <a class="btn btn-solid" href="/store">Shop the collection</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <p class="eyebrow">Why Euro Plast</p>
+      <h2>Quality manufacturing with operational depth.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="feature">
+        <h3>ERP-grade reliability</h3>
+        <p>Live stock, pricing, and order workflows backed by ERPNext v15.</p>
+      </div>
+      <div class="feature">
+        <h3>Conversion-focused UI</h3>
+        <p>Rich visuals, confident typography, and an effortless path to checkout.</p>
+      </div>
+      <div class="feature">
+        <h3>Fast to update</h3>
+        <p>Update products, pricing, and campaigns directly from ERPNext.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="container">
+    <div class="cta-card">
+      <h2>Ready to upgrade your storefront?</h2>
+      <p>Replace the default ERPNext website with a custom, premium experience.</p>
+      <a class="btn btn-solid" href="/contact">Talk to us</a>
+    </div>
+  </div>
+</section>
+
+{% include "euro_website/templates/includes/site_footer.html" %}
+{% endblock %}
