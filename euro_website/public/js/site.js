@@ -442,14 +442,18 @@
         return;
       }
 
+      const addressLine1 = checkoutForm.address_line1.value.trim();
+      const city = checkoutForm.city.value.trim();
+      const country = checkoutForm.country.value.trim();
+
       status.textContent = "Placing order...";
       const payload = {
         full_name: checkoutForm.full_name.value.trim(),
         email: checkoutForm.email.value.trim(),
         phone: checkoutForm.phone.value,
-        address_line1: checkoutForm.address_line1.value.trim(),
-        city: checkoutForm.city.value.trim(),
-        country: checkoutForm.country.value.trim(),
+        address_line1: addressLine1,
+        city,
+        country,
         notes: checkoutForm.notes.value,
         payment_method: checkoutForm.payment_method.value,
         update_profile: checkoutForm.update_profile?.checked ? 1 : 0,
