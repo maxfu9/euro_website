@@ -71,6 +71,34 @@
     });
   }
 
+  const loginForm = document.getElementById("login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const status = document.getElementById("login-status");
+      status.textContent = "Signing in...";
+      try {
+        const response = await fetch("/api/method/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usr: loginForm.login_email.value,
+            pwd: loginForm.login_password.value,
+          }),
+          credentials: "same-origin",
+        });
+        const result = await response.json();
+        if (result.message === "Logged In" || result.home_page) {
+          window.location.href = "/portal";
+        } else {
+          status.textContent = "Invalid credentials. Try again.";
+        }
+      } catch (error) {
+        status.textContent = "Unable to sign in. Try again.";
+      }
+    });
+  }
+
   const addButtons = document.querySelectorAll("[data-add-to-cart]");
   addButtons.forEach((button) => {
     button.addEventListener("click", async () => {

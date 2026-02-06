@@ -1,0 +1,33 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+{% include "euro_website/templates/includes/site_nav.html" %}
+
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Account</p>
+    <h1>Sign in to Euro Plast.</h1>
+    <p class="lead">Access your orders, invoices, and portal in one place.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid-2">
+    <form class="contact-card" id="login-form">
+      <label>Email</label>
+      <input type="email" name="login_email" placeholder="you@company.com" required />
+      <label>Password</label>
+      <input type="password" name="login_password" placeholder="Your password" required />
+      <button class="btn btn-solid" type="submit">Login</button>
+      <div class="form-note" id="login-status"></div>
+      <a class="row-link" href="/signup">Create an account</a>
+    </form>
+    <div class="info-card">
+      <h3>New customer?</h3>
+      <p>Create an account to track orders and request wholesale access.</p>
+      <a class="btn btn-ghost" href="/signup">Sign up</a>
+    </div>
+  </div>
+</section>
+
+{% include "euro_website/templates/includes/site_footer.html" %}
+{% endblock %}
