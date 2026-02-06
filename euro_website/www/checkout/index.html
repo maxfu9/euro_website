@@ -28,6 +28,11 @@
       <input type="text" name="country" value="United States" required />
       <label>Notes</label>
       <textarea name="notes" rows="4" placeholder="Order notes"></textarea>
+      <label>Payment Method</label>
+      <select name="payment_method" required>
+        <option value="Cash">Cash</option>
+        <option value="Cash on Delivery">Cash on Delivery</option>
+      </select>
       <button class="btn btn-solid" type="submit">Place order</button>
       <div class="form-note" id="checkout-status"></div>
     </form>

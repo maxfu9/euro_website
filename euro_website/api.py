@@ -51,6 +51,7 @@ def place_order(
     country: str,
     items,
     notes: str = "",
+    payment_method: str = "Cash",
 ):
     if not (full_name and email and address_line1 and city and country):
         frappe.throw("Missing required fields")
@@ -88,6 +89,11 @@ def place_order(
     if not so_items:
         frappe.throw("Invalid cart items")
 
+    payment_terms = _get_payment_terms(payment_method)
+    remarks = notes or ""
+    if payment_method:
+        remarks = f"{remarks}\nPayment Method: {payment_method}".strip()
+
     so = frappe.get_doc(
         {
             "doctype": "Sales Order",
@@ -105,7 +111,8 @@ def place_order(
             "shipping_address_name": address_name,
             "customer_address": address_name,
             "items": so_items,
-            "remarks": notes or "",
+            "remarks": remarks,
+            "payment_terms_template": payment_terms,
         }
     )
     so.flags.ignore_permissions = True
@@ -129,6 +136,16 @@ def _create_address(full_name, address_line1, city, country, customer):
     address.flags.ignore_permissions = True
     address.insert()
     return address.name
+
+
+def _get_payment_terms(payment_method):
+    if not payment_method:
+        return None
+    candidates = [payment_method, "Cash on Delivery", "Cash"]
+    for name in candidates:
+        if frappe.db.exists("Payment Terms Template", name):
+            return name
+    return None
 
 @frappe.whitelist(allow_guest=True)
 def signup_portal_user(full_name: str, email: str, password: str, is_trader: int = 0):

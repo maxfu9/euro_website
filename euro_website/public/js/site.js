@@ -297,6 +297,7 @@
         city: checkoutForm.city.value,
         country: checkoutForm.country.value,
         notes: checkoutForm.notes.value,
+        payment_method: checkoutForm.payment_method.value,
         items: cart,
       };
 
