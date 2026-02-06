@@ -323,6 +323,12 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
+.hero-actions .btn {
+  padding: 16px 28px;
+  font-size: 15px;
+  letter-spacing: 0.4px;
+}
+
 .hero-stats {
   margin-top: 26px;
   display: grid;
