@@ -198,6 +198,14 @@
       saveCart(cart);
       renderCart();
     }
+    if (target?.dataset?.qtyPlus) {
+      const input = document.getElementById(target.dataset.qtyPlus);
+      if (input) input.value = Math.max(1, parseInt(input.value || "1", 10) + 1);
+    }
+    if (target?.dataset?.qtyMinus) {
+      const input = document.getElementById(target.dataset.qtyMinus);
+      if (input) input.value = Math.max(1, parseInt(input.value || "1", 10) - 1);
+    }
   });
 
   const contactForm = document.getElementById("contact-form");
@@ -291,12 +299,15 @@
       const itemRoute = button.getAttribute("data-item-route");
       const itemImage = button.getAttribute("data-item-image");
       const itemPrice = button.getAttribute("data-item-price");
+      const qtyInputId = button.getAttribute("data-qty-input");
+      const qtyInput = qtyInputId ? document.getElementById(qtyInputId) : null;
+      const qty = Math.max(1, parseInt(qtyInput?.value || "1", 10));
       if (!itemCode) return;
 
       const cart = getCart();
       const existing = cart.find((entry) => entry.item_code === itemCode);
       if (existing) {
-        existing.qty += 1;
+        existing.qty += qty;
       } else {
         cart.push({
           item_code: itemCode,
@@ -304,7 +315,7 @@
           route: itemRoute || itemCode,
           image: itemImage || "",
           rate: parseFloat(itemPrice) || 0,
-          qty: 1,
+          qty,
         });
       }
       saveCart(cart);

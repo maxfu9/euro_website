@@ -1165,6 +1165,33 @@ select {
   gap: 12px;
 }
 
+.product-subline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.subline-tag {
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.subline-sep {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.subline-rating {
+  color: #f59e0b;
+  letter-spacing: 1px;
+}
+
+.subline-reviews {
+  color: var(--muted);
+}
+
 .product-highlights {
   margin-top: 12px;
   display: grid;
@@ -1203,6 +1230,64 @@ select {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.product-qty {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.qty-label {
+  font-weight: 600;
+}
+
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px 8px;
+  background: #fff;
+}
+
+.qty-control input {
+  width: 60px;
+  border: none;
+  text-align: center;
+  padding: 0;
+}
+
+.product-options {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.option-title {
+  font-weight: 600;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.option-pill {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.option-pill.is-active {
+  border-color: rgba(163, 24, 122, 0.4);
+  background: rgba(163, 24, 122, 0.08);
 }
 
 .specs-card,

@@ -16,6 +16,7 @@ def get_context(context):
     context.gallery = _get_gallery(item)
     context.specs = _get_specs(item)
     context.highlights = _get_highlights(context.specs)
+    context.options = _get_option_values(context.specs)
     context.reviews = _get_reviews(item)
     price_list = _get_price_list()
     context.price_list = price_list
@@ -105,6 +106,34 @@ def _get_reviews(item):
         )
     except Exception:
         return []
+
+
+def _get_option_values(specs):
+    if not specs:
+        return []
+    option_labels = {"capacity", "size", "volume", "pack size", "weight"}
+    values = []
+    for spec in specs:
+        label = (spec.get("label") or "").strip().lower()
+        if label not in option_labels:
+            continue
+        raw = (spec.get("value") or "").strip()
+        if not raw:
+            continue
+        parts = []
+        for chunk in raw.replace("|", ",").replace("/", ",").split(","):
+            chunk = chunk.strip()
+            if chunk:
+                parts.append(chunk)
+        values.extend(parts or [raw])
+    # de-duplicate, keep order
+    seen = set()
+    unique = []
+    for value in values:
+        if value not in seen:
+            unique.append(value)
+            seen.add(value)
+    return unique[:4]
 
 
 def _get_highlights(specs):

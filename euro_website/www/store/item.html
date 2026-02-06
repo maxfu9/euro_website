@@ -19,6 +19,12 @@
         <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
       </div>
       <h1>{{ item.item_name }}</h1>
+      <div class="product-subline">
+        <span class="subline-tag">Loose leaf inspired</span>
+        <span class="subline-sep">•</span>
+        <span class="subline-rating">★★★★★</span>
+        <span class="subline-reviews">{{ reviews | length }} Reviews</span>
+      </div>
       <div class="product-badges">
         <span class="tag">100% virgin material</span>
         <span class="tag">Food safe</span>
@@ -32,7 +38,8 @@
           data-item-name="{{ item.item_name }}"
           data-item-route="{{ item.route or item.item_code }}"
           data-item-image="{{ item.website_image or item.thumbnail or '' }}"
-          data-item-price="{{ price or 0 }}">
+          data-item-price="{{ price or 0 }}"
+          data-qty-input="detail-qty">
           Add to cart
         </button>
         <button class="btn btn-ghost" type="button" data-cart-toggle>View cart</button>
@@ -45,6 +52,24 @@
           Save to wishlist
         </button>
       </div>
+      <div class="product-qty">
+        <div class="qty-label">Quantity</div>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-minus="detail-qty">−</button>
+          <input id="detail-qty" type="number" min="1" value="1" />
+          <button type="button" class="qty-btn" data-qty-plus="detail-qty">+</button>
+        </div>
+      </div>
+      {% if options and options | length %}
+        <div class="product-options">
+          <div class="option-title">How much?</div>
+          <div class="option-grid">
+            {% for option in options %}
+              <button type="button" class="option-pill {% if loop.index == 1 %}is-active{% endif %}">{{ option }}</button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
       <div class="product-highlights">
         {% for highlight in highlights %}
           <div class="highlight">
