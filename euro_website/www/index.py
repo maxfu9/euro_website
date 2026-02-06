@@ -6,6 +6,10 @@ def get_context(context):
     context.featured = _get_rotating_item()
     context.lineup = _get_lineup_items() or []
     context.featured_image = _get_featured_image(context.featured)
+    context.meta_title = "Euro Plast | Homeware & Kitchenware"
+    context.meta_description = (
+        "Homeware and kitchenware manufacturer offering retail and wholesale assortments, built for quality and scale."
+    )
 
 
 def _get_rotating_item():

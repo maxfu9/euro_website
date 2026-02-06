@@ -20,6 +20,8 @@ def get_context(context):
     context.total_products = total
     context.total_pages = max(1, (total + page_size - 1) // page_size)
     context.cart = {"items": []}
+    context.meta_title = "Store | Euro Plast"
+    context.meta_description = "Browse Euro Plast homeware and kitchenware collections with live pricing."
 
 
 def _get_filters():

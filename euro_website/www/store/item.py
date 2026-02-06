@@ -11,7 +11,8 @@ def get_context(context):
         return _fallback_to_store(context)
 
     context.no_cache = 1
-    context.title = item.get("web_item_name") or item.item_name
+    title = item.get("web_item_name") or item.item_name
+    context.title = title
     context.item = item
     context.gallery = _get_gallery(item)
     context.specs = _get_specs(item)
@@ -21,6 +22,9 @@ def get_context(context):
     price_list = _get_price_list()
     context.price_list = price_list
     context.price = _get_item_price(item.item_code, price_list) or getattr(item, "standard_rate", 0) or 0
+    context.meta_title = f"{title} | Euro Plast"
+    context.meta_description = _clean_meta(item.website_description or item.web_long_description or "")
+    context.meta_image = item.website_image or item.thumbnail
     return context
 
 
@@ -148,6 +152,12 @@ def _get_option_values(specs):
             unique.append(value)
             seen.add(value)
     return unique[:4]
+
+
+def _clean_meta(text):
+    if not text:
+        return ""
+    return frappe.utils.strip_html(text)[:200]
 
 
 def _get_highlights(specs):

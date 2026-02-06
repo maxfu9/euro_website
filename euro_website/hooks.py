@@ -11,6 +11,23 @@ def get_website_context(context):
         import frappe
 
         context.brand_image = frappe.db.get_value("Website Settings", "Website Settings", "brand_image")
+        context.base_template_path = "euro_website/templates/base_custom.html"
+        context.meta_title = "Euro Plast"
+        context.meta_description = (
+            "Euro Plast manufactures homeware and kitchenware for retail and wholesale customers."
+        )
+        context.meta_image = context.brand_image
+        path = frappe.request.path if getattr(frappe, "request", None) else "/"
+        context.meta_url = frappe.utils.get_url(path)
+        context.schema_json = frappe.as_json(
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Euro Plast",
+                "url": frappe.utils.get_url(),
+                "logo": context.brand_image or "",
+            }
+        )
     except Exception:
         context.brand_image = None
 
