@@ -141,22 +141,41 @@ def _create_address(full_name, address_line1, city, country, customer):
 
 
 def _get_item_warehouse(item_code):
-    warehouse = frappe.db.get_value("Item", item_code, "default_warehouse")
+    warehouse = _get_value_if_field("Item", item_code, "default_warehouse")
     if warehouse:
         return warehouse
 
+    if frappe.db.exists("DocType", "Item Default"):
+        defaults = frappe.get_all(
+            "Item Default",
+            filters={"parent": item_code},
+            fields=["default_warehouse"],
+            limit_page_length=1,
+        )
+        if defaults and defaults[0].default_warehouse:
+            return defaults[0].default_warehouse
+
     company = frappe.defaults.get_global_default("company")
     if company:
-        warehouse = frappe.db.get_value("Company", company, "default_warehouse")
+        warehouse = _get_value_if_field("Company", company, "default_warehouse")
         if warehouse:
             return warehouse
 
     stock_settings = frappe.get_single("Stock Settings")
-    warehouse = getattr(stock_settings, "default_warehouse", None)
+    warehouse = getattr(stock_settings, "default_warehouse", None) if stock_settings else None
     if warehouse:
         return warehouse
 
-    return None
+    fallback = frappe.get_all("Warehouse", fields=["name"], limit_page_length=1)
+    return fallback[0].name if fallback else None
+
+
+def _get_value_if_field(doctype, name, fieldname):
+    meta = frappe.get_meta(doctype)
+    fieldnames = [df.fieldname for df in meta.fields if df.fieldname]
+    if fieldname not in fieldnames:
+        return None
+    return frappe.db.get_value(doctype, name, fieldname)
 
 
 def _get_payment_terms(payment_method):
