@@ -29,7 +29,7 @@
           data-item-route="{{ item.route or item.item_code }}"
           data-item-image="{{ item.website_image or item.thumbnail or '' }}">♥</button>
       </div>
-      <h1>{{ item.web_item_name or item.website_item_name or item.item_name }}</h1>
+      <h1 class="product-title-tight">{{ item.web_item_name or item.website_item_name or item.item_name }}</h1>
       <div class="product-subline">
         <span class="subline-tag">Homeware essentials</span>
         <span class="subline-sep">•</span>
@@ -42,16 +42,19 @@
         <span class="tag">BPA free</span>
       </div>
       <p class="lead">{{ item.website_description or item.web_long_description or '' }}</p>
+      <div class="price-stack">
+        <div class="price-row">
+          <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
+          <div class="price-discount">Save 12.5%</div>
+        </div>
+        <div class="price-note">Was {{ frappe.utils.fmt_money((price or 0) * 1.125) }}</div>
+      </div>
       <div class="product-qty">
-        <div class="qty-label">Quantity</div>
         <div class="qty-control">
           <button type="button" class="qty-btn" data-qty-minus="detail-qty">−</button>
           <input id="detail-qty" type="number" min="1" value="1" />
           <button type="button" class="qty-btn" data-qty-plus="detail-qty">+</button>
         </div>
-        <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
-      </div>
-      <div class="product-actions refined">
         <button class="btn btn-solid" type="button"
           data-add-to-cart
           data-item-code="{{ item.item_code }}"
@@ -62,7 +65,9 @@
           data-qty-input="detail-qty">
           Add to cart
         </button>
-        <button class="btn btn-solid btn-buy" type="button"
+      </div>
+      <div class="product-actions refined">
+        <button class="btn btn-solid btn-buy btn-large" type="button"
           data-buy-now
           data-item-code="{{ item.item_code }}"
           data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"

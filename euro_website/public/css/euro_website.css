@@ -1153,6 +1153,13 @@ select {
   padding: 14px 22px;
 }
 
+.btn-large {
+  width: 100%;
+  justify-content: center;
+  padding: 18px 26px;
+  font-size: 16px;
+}
+
 .btn-buy {
   background: #111827;
   color: #fff;
@@ -1214,6 +1221,10 @@ select {
   gap: 10px;
   color: var(--muted);
   font-size: 14px;
+}
+
+.product-title-tight {
+  margin-top: 2px;
 }
 
 .subline-tag {
@@ -1280,6 +1291,29 @@ select {
   align-items: center;
   gap: 14px;
   margin-top: 8px;
+}
+
+.price-stack {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.price-discount {
+  font-weight: 700;
+  color: #16a34a;
+  font-size: 13px;
+}
+
+.price-note {
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .qty-label {
@@ -1622,6 +1656,11 @@ select {
   font-size: 16px;
 }
 
+.cart-line--save {
+  color: #16a34a;
+  font-weight: 600;
+}
+
 .cart-badge {
   position: absolute;
   top: 6px;
@@ -1711,6 +1750,19 @@ select {
   font-size: 18px;
   border-top: 1px solid var(--border);
   padding-top: 12px;
+}
+
+.checkout-line {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.checkout-save {
+  color: #16a34a;
+  font-weight: 700;
+  margin-top: -4px;
 }
 
 .stepper {

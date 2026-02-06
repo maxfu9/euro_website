@@ -93,7 +93,18 @@
       }
     }
     if (cartTotalEl) {
-      cartTotalEl.textContent = cartTotal(cart).toFixed(2);
+      const total = cartTotal(cart);
+      cartTotalEl.textContent = total.toFixed(2);
+      const subtotalEl = document.getElementById("cart-subtotal");
+      if (subtotalEl) {
+        const subtotal = total / 0.875;
+        subtotalEl.textContent = subtotal.toFixed(2);
+      }
+      const savingsEl = document.getElementById("cart-savings");
+      if (savingsEl) {
+        const savings = (total / 0.875) - total;
+        savingsEl.textContent = `You saved ${savings.toFixed(2)}`;
+      }
     }
     if (cartSubtotalEl) {
       cartSubtotalEl.textContent = cartTotal(cart).toFixed(2);
@@ -441,6 +452,16 @@
     }
     const totalEl = document.getElementById("checkout-total");
     if (totalEl) totalEl.textContent = cartTotal(cart).toFixed(2);
+    const savingsEl = document.getElementById("checkout-savings");
+    const subtotalEl = document.getElementById("checkout-subtotal");
+    if (subtotalEl) {
+      const subtotal = cartTotal(cart) / 0.875;
+      subtotalEl.textContent = subtotal.toFixed(2);
+    }
+    if (savingsEl) {
+      const savings = (cartTotal(cart) / 0.875) - cartTotal(cart);
+      savingsEl.textContent = `You saved ${savings.toFixed(2)}`;
+    }
   }
 
   const checkoutForm = document.getElementById("checkout-form");
