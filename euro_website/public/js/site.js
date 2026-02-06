@@ -51,6 +51,9 @@
       el.textContent = count;
       el.style.display = count ? "inline-flex" : "none";
     });
+    document.querySelectorAll("[data-cart-toggle]").forEach((el) => {
+      el.style.display = count ? "inline-flex" : "none";
+    });
 
     const cartItems = document.getElementById("cart-items");
     const cartTotalEl = document.getElementById("cart-total");
@@ -288,6 +291,9 @@
     const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
     document.querySelectorAll("[data-wishlist-count]").forEach((el) => {
       el.textContent = list.length;
+      el.style.display = list.length ? "inline-flex" : "none";
+    });
+    document.querySelectorAll(".icon-btn--wish").forEach((el) => {
       el.style.display = list.length ? "inline-flex" : "none";
     });
   };
