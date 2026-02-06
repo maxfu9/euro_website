@@ -1153,6 +1153,12 @@ select {
   padding: 14px 22px;
 }
 
+.btn-buy {
+  background: #111827;
+  color: #fff;
+  border-color: transparent;
+}
+
 .product-copy {
   display: grid;
   gap: 12px;

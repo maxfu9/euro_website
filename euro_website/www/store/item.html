@@ -42,6 +42,16 @@
           data-qty-input="detail-qty">
           Add to cart
         </button>
+        <button class="btn btn-solid btn-buy" type="button"
+          data-buy-now
+          data-item-code="{{ item.item_code }}"
+          data-item-name="{{ item.item_name }}"
+          data-item-route="{{ item.route or item.item_code }}"
+          data-item-image="{{ item.website_image or item.thumbnail or '' }}"
+          data-item-price="{{ price or 0 }}"
+          data-qty-input="detail-qty">
+          Buy now
+        </button>
         <button class="btn btn-ghost" type="button" data-cart-toggle>View cart</button>
         <button class="btn btn-ghost" type="button"
           data-add-to-wishlist

@@ -324,6 +324,34 @@
     });
   });
 
+  const buyButtons = document.querySelectorAll("[data-buy-now]");
+  buyButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const itemCode = button.getAttribute("data-item-code");
+      const itemName = button.getAttribute("data-item-name");
+      const itemRoute = button.getAttribute("data-item-route");
+      const itemImage = button.getAttribute("data-item-image");
+      const itemPrice = button.getAttribute("data-item-price");
+      const qtyInputId = button.getAttribute("data-qty-input");
+      const qtyInput = qtyInputId ? document.getElementById(qtyInputId) : null;
+      const qty = Math.max(1, parseInt(qtyInput?.value || "1", 10));
+      if (!itemCode) return;
+
+      const cart = getCart();
+      cart.length = 0;
+      cart.push({
+        item_code: itemCode,
+        item_name: itemName || itemCode,
+        route: itemRoute || itemCode,
+        image: itemImage || "",
+        rate: parseFloat(itemPrice) || 0,
+        qty,
+      });
+      saveCart(cart);
+      window.location.href = "/checkout";
+    });
+  });
+
   const addWishlistButtons = document.querySelectorAll("[data-add-to-wishlist]");
   addWishlistButtons.forEach((button) => {
     button.addEventListener("click", () => {
