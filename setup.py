@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-with open("euro_website/__init__.py", "r", encoding="utf-8") as f:
+with open("euro_website/euro_website/__init__.py", "r", encoding="utf-8") as f:
     for line in f:
         if line.startswith("__version__"):
             version = line.split("=")[1].strip().strip('"')
