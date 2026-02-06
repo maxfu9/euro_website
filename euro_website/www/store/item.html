@@ -18,7 +18,7 @@
         <p class="eyebrow">{{ item.item_code }}</p>
         <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
       </div>
-      <h1>{{ item.item_name }}</h1>
+      <h1>{{ item.website_item_name or item.item_name }}</h1>
       <div class="product-subline">
         <span class="subline-tag">Loose leaf inspired</span>
         <span class="subline-sep">•</span>

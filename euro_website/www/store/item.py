@@ -40,6 +40,7 @@ def _get_item_by_route(route):
             "name",
             "item_code",
             "item_name",
+            "website_item_name",
             "route",
             "thumbnail",
             "website_image",
