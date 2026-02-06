@@ -16,6 +16,11 @@
     <div>
       <p class="eyebrow">{{ item.item_code }}</p>
       <h1>{{ item.item_name }}</h1>
+      <div class="product-badges">
+        <span class="tag">100% virgin material</span>
+        <span class="tag">Food safe</span>
+        <span class="tag">BPA free</span>
+      </div>
       <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
       <p class="lead">{{ item.website_description or item.web_long_description or '' }}</p>
       <div class="product-actions">

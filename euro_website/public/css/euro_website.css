@@ -28,6 +28,16 @@ h1, h2, h3, .brand {
   color: var(--text);
 }
 
+h1 {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.2;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -94,7 +104,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 20px;
+  padding: 13px 22px;
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 600;
@@ -233,7 +243,7 @@ button:focus-visible {
 .hero {
   background: radial-gradient(circle at top left, #f2e4f3 0%, transparent 45%),
     radial-gradient(circle at 20% 20%, rgba(163, 24, 122, 0.2) 0%, transparent 50%);
-  padding: 80px 0 120px;
+  padding: 90px 0 120px;
 }
 
 .hero-grid {
@@ -256,7 +266,7 @@ button:focus-visible {
 }
 
 .lead {
-  font-size: 18px;
+  font-size: 19px;
   color: var(--muted);
   line-height: 1.7;
 }
@@ -386,6 +396,37 @@ button:focus-visible {
   padding: 70px 0 46px;
   background: linear-gradient(135deg, rgba(163, 24, 122, 0.08), rgba(255, 255, 255, 0));
   border-bottom: 1px solid var(--border);
+}
+
+.store-benefits {
+  padding: 30px 0 10px;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.benefit-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+}
+
+.benefit-title {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.benefit-text {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
 .info-card {
@@ -588,6 +629,13 @@ select {
   font-size: 18px;
   font-weight: 600;
   color: var(--accent);
+}
+
+.product-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 6px;
 }
 
 .product-cta {
