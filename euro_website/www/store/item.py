@@ -23,7 +23,9 @@ def get_context(context):
     context.price_list = price_list
     context.price = _get_item_price(item.item_code, price_list) or getattr(item, "standard_rate", 0) or 0
     context.meta_title = f"{title} | Euro Plast"
-    context.meta_description = _clean_meta(item.website_description or item.web_long_description or "")
+    context.meta_description = _clean_meta(
+        getattr(item, "short_description", None) or getattr(item, "web_long_description", None) or ""
+    )
     context.meta_image = item.website_image or item.thumbnail
     return context
 
