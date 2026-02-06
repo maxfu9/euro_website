@@ -292,6 +292,13 @@
     });
   };
 
+  document.querySelectorAll("[data-user-menu]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const wrapper = button.closest(".user-menu");
+      wrapper?.classList.toggle("is-open");
+    });
+  });
+
   const addressHistoryKey = () => `euro_address_history:${getUserKey()}`;
   const saveAddressHistory = (entry) => {
     const history = JSON.parse(localStorage.getItem(addressHistoryKey()) || "[]");

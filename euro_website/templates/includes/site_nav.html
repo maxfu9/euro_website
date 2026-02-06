@@ -16,8 +16,18 @@
         <a class="btn btn-ghost" href="/signup">Sign Up</a>
         <a class="btn btn-solid" href="/login?redirect-to=/portal">Login</a>
       {% else %}
-        <div class="avatar">{{ frappe.session.user[:1]|upper }}</div>
-        <a class="btn btn-ghost" href="/logout">Logout</a>
+        {% set current_user = frappe.get_doc("User", frappe.session.user) %}
+        <div class="user-menu">
+          <button class="avatar" type="button" data-user-menu>{{ frappe.session.user[:1]|upper }}</button>
+          <div class="user-dropdown">
+            <div class="user-name">{{ current_user.full_name or frappe.session.user }}</div>
+            {% if current_user.user_type == "System User" %}
+              <a href="/app">Desk</a>
+            {% endif %}
+            <a href="/portal">Portal</a>
+            <a href="/logout">Logout</a>
+          </div>
+        </div>
       {% endif %}
       <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
         <span class="icon">🛒</span>

@@ -148,6 +148,47 @@ a {
   justify-content: center;
   font-weight: 700;
   text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  display: none;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  z-index: 80;
+}
+
+.user-dropdown a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.user-dropdown a:hover {
+  background: rgba(163, 24, 122, 0.08);
+}
+
+.user-name {
+  font-weight: 600;
+  padding: 6px 10px;
+  color: var(--muted);
+}
+
+.user-menu:hover .user-dropdown,
+.user-menu.is-open .user-dropdown {
+  display: block;
 }
 
 .btn:hover {
