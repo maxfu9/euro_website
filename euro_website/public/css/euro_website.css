@@ -583,6 +583,48 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
+.essentials {
+  padding-top: 20px;
+}
+
+.essentials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.essentials-card {
+  background: #f6f4f7;
+  border-radius: 28px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  display: grid;
+  gap: 12px;
+  min-height: 420px;
+}
+
+.essentials-card h3 {
+  font-size: 26px;
+  margin: 0;
+}
+
+.essentials-card .lead {
+  font-size: 16px;
+}
+
+.essentials-image {
+  margin-top: auto;
+  height: 220px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  background-color: #fff;
+}
+
+.essentials-image--alt {
+  filter: saturate(1.1);
+}
+
 .section.dark {
   background: var(--bg-dark);
   color: #fff;
