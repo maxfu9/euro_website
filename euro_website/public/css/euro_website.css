@@ -1161,8 +1161,9 @@ select {
 }
 
 .product-qty .btn-solid {
-  padding: 16px 26px;
-  font-size: 15px;
+  padding: 18px 26px;
+  font-size: 16px;
+  min-width: 220px;
 }
 
 .btn-buy {

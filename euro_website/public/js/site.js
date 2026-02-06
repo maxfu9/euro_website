@@ -77,7 +77,7 @@
                   <button class="cart-remove" type="button" data-cart-remove="${item.item_code}">×</button>
                 </div>
                 <div class="cart-meta">
-                  ${(item.rate || 0).toFixed(2)}
+                  Rs ${(item.rate || 0).toFixed(2)}
                   <span class="cart-savings">You saved 12.5%</span>
                 </div>
                 <div class="cart-actions">
@@ -94,16 +94,16 @@
     }
     if (cartTotalEl) {
       const total = cartTotal(cart);
-      cartTotalEl.textContent = total.toFixed(2);
+      cartTotalEl.textContent = `Rs ${total.toFixed(2)}`;
       const subtotalEl = document.getElementById("cart-subtotal");
       if (subtotalEl) {
         const subtotal = total / 0.875;
-        subtotalEl.textContent = subtotal.toFixed(2);
+        subtotalEl.textContent = `Rs ${subtotal.toFixed(2)}`;
       }
       const savingsEl = document.getElementById("cart-savings");
       if (savingsEl) {
         const savings = (total / 0.875) - total;
-        savingsEl.textContent = `You saved ${savings.toFixed(2)}`;
+        savingsEl.textContent = `You saved Rs ${savings.toFixed(2)}`;
       }
     }
     if (cartSubtotalEl) {
@@ -114,7 +114,7 @@
     }
     const compactTotal = document.getElementById("cart-total-compact");
     if (compactTotal) {
-      compactTotal.textContent = cartTotal(cart).toFixed(2);
+      compactTotal.textContent = `Rs ${cartTotal(cart).toFixed(2)}`;
     }
     if (cartCountHeader) {
       cartCountHeader.textContent = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
@@ -451,16 +451,16 @@
         .join("");
     }
     const totalEl = document.getElementById("checkout-total");
-    if (totalEl) totalEl.textContent = cartTotal(cart).toFixed(2);
+    if (totalEl) totalEl.textContent = `Rs ${cartTotal(cart).toFixed(2)}`;
     const savingsEl = document.getElementById("checkout-savings");
     const subtotalEl = document.getElementById("checkout-subtotal");
     if (subtotalEl) {
       const subtotal = cartTotal(cart) / 0.875;
-      subtotalEl.textContent = subtotal.toFixed(2);
+      subtotalEl.textContent = `Rs ${subtotal.toFixed(2)}`;
     }
     if (savingsEl) {
       const savings = (cartTotal(cart) / 0.875) - cartTotal(cart);
-      savingsEl.textContent = `You saved ${savings.toFixed(2)}`;
+      savingsEl.textContent = `You saved Rs ${savings.toFixed(2)}`;
     }
   }
 

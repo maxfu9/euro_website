@@ -44,10 +44,10 @@
       <p class="lead">{{ item.website_description or item.web_long_description or '' }}</p>
       <div class="price-stack">
         <div class="price-row">
-          <div class="product-price">{{ frappe.utils.fmt_money(price or 0) }}</div>
+        <div class="product-price">Rs {{ price or 0 }}</div>
           <div class="price-discount">Save 12.5%</div>
         </div>
-        <div class="price-note">Was {{ frappe.utils.fmt_money((price or 0) * 1.125) }}</div>
+        <div class="price-note">Was Rs {{ (price or 0) * 1.125 }}</div>
       </div>
       <div class="product-qty">
         <div class="qty-control">
