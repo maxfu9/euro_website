@@ -117,10 +117,17 @@ def _available_fields(doctype, candidates):
 
 
 def _get_price_list():
-    candidates = ["Website Price List", "Standard Selling"]
-    for name in candidates:
-        if frappe.db.exists("Price List", name):
-            return name
+    user = frappe.session.user
+    if user and user != "Guest":
+        customer = _get_customer_for_user(user)
+        if customer:
+            group = frappe.db.get_value("Customer", customer, "customer_group")
+            if group == "Commercial" and frappe.db.exists("Price List", "Standard Selling"):
+                return "Standard Selling"
+    if frappe.db.exists("Price List", "Website Price List"):
+        return "Website Price List"
+    if frappe.db.exists("Price List", "Standard Selling"):
+        return "Standard Selling"
     price_list = frappe.get_all("Price List", filters={"selling": 1}, fields=["name"], limit_page_length=1)
     return price_list[0].name if price_list else None
 
@@ -134,3 +141,31 @@ def _get_item_price(item_code, price_list):
         "price_list_rate",
     )
     return price
+
+
+def _get_customer_for_user(user):
+    customer = frappe.get_all(
+        "Customer",
+        filters={"email_id": user},
+        fields=["name"],
+        limit_page_length=1,
+    )
+    if customer:
+        return customer[0].name
+
+    contact = frappe.get_all(
+        "Contact",
+        filters={"email_id": user},
+        fields=["name"],
+        limit_page_length=1,
+    )
+    if contact:
+        link = frappe.get_all(
+            "Dynamic Link",
+            filters={"parent": contact[0].name, "link_doctype": "Customer"},
+            fields=["link_name"],
+            limit_page_length=1,
+        )
+        if link:
+            return link[0].link_name
+    return None
