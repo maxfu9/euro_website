@@ -1053,6 +1053,14 @@ select {
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
 }
 
+.wishlist-card .product-body {
+  gap: 10px;
+}
+
+.wishlist-card .btn {
+  align-self: flex-start;
+}
+
 .product-media {
   height: 200px;
   background-size: cover;
@@ -1208,7 +1216,7 @@ select {
   background: rgba(220, 38, 38, 0.1);
 }
 
-.stock-heart {
+.wishlist-icon {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -1219,6 +1227,12 @@ select {
   align-items: center;
   justify-content: center;
   color: var(--accent);
+  cursor: pointer;
+}
+
+.wishlist-icon.is-active {
+  background: rgba(163, 24, 122, 0.12);
+  border-color: rgba(163, 24, 122, 0.4);
 }
 
 .product-subline {

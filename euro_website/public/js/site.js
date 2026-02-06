@@ -363,7 +363,25 @@
     });
   });
 
-  const addWishlistButtons = document.querySelectorAll("[data-add-to-wishlist]");
+  const toggleWishlist = (item, button) => {
+    const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
+    const exists = list.find((entry) => entry.item_code === item.item_code);
+    let updated;
+    if (exists) {
+      updated = list.filter((entry) => entry.item_code !== item.item_code);
+    } else {
+      updated = [...list, item];
+    }
+    localStorage.setItem(wishlistKey(), JSON.stringify(updated));
+    if (button) {
+      button.classList.toggle("is-active", !exists);
+      button.textContent = !exists ? "♥" : "♡";
+    }
+    wishlistCount();
+    renderWishlist();
+  };
+
+  const addWishlistButtons = document.querySelectorAll("[data-add-to-wishlist],[data-wishlist-toggle]");
   addWishlistButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const itemCode = button.getAttribute("data-item-code");
@@ -371,37 +389,48 @@
       const itemRoute = button.getAttribute("data-item-route");
       const itemImage = button.getAttribute("data-item-image");
       if (!itemCode) return;
-
-      const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
-      const exists = list.find((entry) => entry.item_code === itemCode);
-      if (!exists) {
-        list.push({
+      toggleWishlist(
+        {
           item_code: itemCode,
-        item_name: itemName || itemCode,
+          item_name: itemName || itemCode,
           route: itemRoute || itemCode,
           image: itemImage || "",
-        });
-        localStorage.setItem(wishlistKey(), JSON.stringify(list));
-      }
-      button.textContent = "Saved";
+        },
+        button
+      );
     });
   });
 
   const wishlistGrid = document.getElementById("wishlist-grid");
-  if (wishlistGrid) {
+  const renderWishlist = () => {
+    if (!wishlistGrid) return;
     const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
     const empty = document.getElementById("wishlist-empty");
     if (!list.length) {
       if (empty) empty.style.display = "block";
+      wishlistGrid.innerHTML = "";
       return;
     }
-
+    if (empty) empty.style.display = "none";
     wishlistGrid.innerHTML = list
       .map(
-        (item) => `\n        <a class="product-card" href="/store/${item.route}">\n          <div class="product-media" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')"></div>\n          <div class="product-body">\n            <div class="product-title">${item.item_name}</div>\n            <div class="product-cta">View details</div>\n          </div>\n        </a>\n      `
+        (item) => `\n        <div class="product-card wishlist-card">\n          <a href="/store/${item.route}">\n            <div class="product-media" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')"></div>\n          </a>\n          <div class="product-body">\n            <div class="product-title">${item.item_name}</div>\n            <div class="product-cta">View details</div>\n            <button class="btn btn-ghost btn-small" type="button" data-wishlist-remove="${item.item_code}">Remove</button>\n          </div>\n        </div>\n      `
       )
       .join("");
-  }
+  };
+  renderWishlist();
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (target?.dataset?.wishlistRemove) {
+      const itemCode = target.dataset.wishlistRemove;
+      const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
+      const updated = list.filter((entry) => entry.item_code !== itemCode);
+      localStorage.setItem(wishlistKey(), JSON.stringify(updated));
+      wishlistCount();
+      renderWishlist();
+    }
+  });
 
   const wishlistCount = () => {
     const list = JSON.parse(localStorage.getItem(wishlistKey()) || "[]");
