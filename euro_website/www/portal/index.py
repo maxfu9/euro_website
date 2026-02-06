@@ -3,6 +3,12 @@ import frappe
 
 def get_context(context):
     context.no_cache = 1
+    context.summary = {
+        "order_total": 0,
+        "invoice_total": 0,
+        "outstanding_total": 0,
+        "payments_total": 0,
+    }
 
     if frappe.session.user == "Guest":
         frappe.local.response["type"] = "redirect"

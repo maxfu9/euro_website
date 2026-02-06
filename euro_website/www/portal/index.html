@@ -15,19 +15,19 @@
     <div class="portal-summary">
       <div class="summary-card">
         <div class="summary-label">Orders total</div>
-        <div class="summary-value">{{ frappe.utils.fmt_money(summary.order_total) }}</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.order_total if summary else 0) }}</div>
       </div>
       <div class="summary-card">
         <div class="summary-label">Invoices total</div>
-        <div class="summary-value">{{ frappe.utils.fmt_money(summary.invoice_total) }}</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.invoice_total if summary else 0) }}</div>
       </div>
       <div class="summary-card">
         <div class="summary-label">Outstanding</div>
-        <div class="summary-value">{{ frappe.utils.fmt_money(summary.outstanding_total) }}</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.outstanding_total if summary else 0) }}</div>
       </div>
       <div class="summary-card">
         <div class="summary-label">Payments received</div>
-        <div class="summary-value">{{ frappe.utils.fmt_money(summary.payments_total) }}</div>
+        <div class="summary-value">{{ frappe.utils.fmt_money(summary.payments_total if summary else 0) }}</div>
       </div>
     </div>
     {% if pending_trader %}
