@@ -51,15 +51,30 @@
 <div class="cart-backdrop" data-cart-close></div>
 <aside class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
-    <div class="cart-title">Your Cart</div>
-    <button class="btn btn-ghost btn-small" type="button" data-cart-close>Close</button>
+    <button class="cart-back" type="button" data-cart-close>←</button>
+    <div class="cart-title">Review Your Cart</div>
+    <div class="cart-count" id="cart-count-header">0</div>
   </div>
   <div class="cart-items" id="cart-items"></div>
   <div class="cart-footer">
-    <div class="cart-total">
-      <span>Total</span>
-      <span id="cart-total">0</span>
+    <button class="cart-discount" type="button">
+      <span>Got a Discount Code?</span>
+      <span class="chevron">⌄</span>
+    </button>
+    <div class="cart-summary">
+      <div class="cart-line">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">0</span>
+      </div>
+      <div class="cart-line">
+        <span>Shipping</span>
+        <span id="cart-shipping">0</span>
+      </div>
+      <div class="cart-line cart-line--total">
+        <span>Total</span>
+        <span id="cart-total">0</span>
+      </div>
     </div>
-    <a class="btn btn-solid" href="/checkout">Go to checkout</a>
+    <a class="btn btn-solid cart-checkout" href="/checkout">Proceed to Checkout →</a>
   </div>
 </aside>

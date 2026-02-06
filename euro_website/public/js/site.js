@@ -57,6 +57,9 @@
 
     const cartItems = document.getElementById("cart-items");
     const cartTotalEl = document.getElementById("cart-total");
+    const cartSubtotalEl = document.getElementById("cart-subtotal");
+    const cartShippingEl = document.getElementById("cart-shipping");
+    const cartCountHeader = document.getElementById("cart-count-header");
     if (cartItems) {
       if (!cart.length) {
         cartItems.innerHTML = "<p class='muted'>Your cart is empty.</p>";
@@ -67,12 +70,15 @@
             <div class="cart-row">
               <div class="cart-thumb" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')"></div>
               <div class="cart-info">
-                <div class="cart-name">${item.item_name}</div>
-                <div class="cart-meta">${item.qty} × ${item.rate} = ${(item.qty * item.rate).toFixed(2)}</div>
+                <div class="cart-top">
+                  <div class="cart-name">${item.item_name}</div>
+                  <button class="cart-remove" type="button" data-cart-remove="${item.item_code}">×</button>
+                </div>
+                <div class="cart-meta">${(item.rate || 0).toFixed(2)}</div>
                 <div class="cart-actions">
-                  <button class="btn btn-ghost btn-small" data-cart-minus="${item.item_code}">-</button>
-                  <button class="btn btn-ghost btn-small" data-cart-plus="${item.item_code}">+</button>
-                  <button class="btn btn-ghost btn-small" data-cart-remove="${item.item_code}">Remove</button>
+                  <button class="qty-btn" data-cart-minus="${item.item_code}">−</button>
+                  <span class="qty-value">${item.qty || 1}</span>
+                  <button class="qty-btn" data-cart-plus="${item.item_code}">+</button>
                 </div>
               </div>
             </div>
@@ -84,9 +90,18 @@
     if (cartTotalEl) {
       cartTotalEl.textContent = cartTotal(cart).toFixed(2);
     }
+    if (cartSubtotalEl) {
+      cartSubtotalEl.textContent = cartTotal(cart).toFixed(2);
+    }
+    if (cartShippingEl) {
+      cartShippingEl.textContent = "0";
+    }
     const compactTotal = document.getElementById("cart-total-compact");
     if (compactTotal) {
       compactTotal.textContent = cartTotal(cart).toFixed(2);
+    }
+    if (cartCountHeader) {
+      cartCountHeader.textContent = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
     }
   };
 
