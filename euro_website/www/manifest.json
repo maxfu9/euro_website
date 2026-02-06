@@ -1,0 +1,20 @@
+{
+  "name": "Euro Plast",
+  "short_name": "Euro Plast",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f5f2",
+  "theme_color": "#a3187a",
+  "icons": [
+    {
+      "src": "/assets/frappe/images/ui/placeholder-image.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/frappe/images/ui/placeholder-image.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

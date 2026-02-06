@@ -758,4 +758,60 @@
   refreshCartPrices();
   renderCart();
   wishlistCount();
+
+  const ensureHeadTag = (tagName, attrs) => {
+    const selector = Object.entries(attrs)
+      .map(([key, value]) => `[${key}="${value}"]`)
+      .join("");
+    if (document.head.querySelector(`${tagName}${selector}`)) return;
+    const el = document.createElement(tagName);
+    Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+    document.head.appendChild(el);
+  };
+
+  const setupSEO = () => {
+    const description =
+      document.querySelector("meta[name='description']")?.content ||
+      "Euro Plast manufactures homeware and kitchenware for retail and wholesale customers.";
+    ensureHeadTag("meta", { name: "description", content: description });
+    ensureHeadTag("meta", { property: "og:title", content: document.title || "Euro Plast" });
+    ensureHeadTag("meta", { property: "og:description", content: description });
+    ensureHeadTag("meta", { property: "og:type", content: "website" });
+    ensureHeadTag("meta", { property: "og:url", content: window.location.href });
+
+    const logo = document.querySelector(".brand-logo img")?.getAttribute("src");
+    if (logo) {
+      ensureHeadTag("meta", { property: "og:image", content: logo });
+    }
+
+    if (!document.querySelector("link[rel='manifest']")) {
+      const link = document.createElement("link");
+      link.rel = "manifest";
+      link.href = "/manifest.json";
+      document.head.appendChild(link);
+    }
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Euro Plast",
+      url: window.location.origin,
+      logo: logo || "",
+    };
+    if (!document.getElementById("org-schema")) {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.id = "org-schema";
+      script.textContent = JSON.stringify(schema);
+      document.head.appendChild(script);
+    }
+  };
+
+  const registerSW = () => {
+    if (!("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  };
+
+  setupSEO();
+  registerSW();
 })();
