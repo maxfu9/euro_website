@@ -9,19 +9,31 @@
 </section>
 
 <section class="section">
-  <div class="container grid-2">
-    <form class="contact-card" id="login-form">
+  <div class="container login-grid">
+    <form class="login-card" id="login-form">
+      <div class="login-header">
+        <h2>Welcome back</h2>
+        <p class="muted">Sign in to manage orders, invoices, and approvals.</p>
+      </div>
       <label>Email</label>
       <input type="email" name="login_email" placeholder="you@company.com" required />
       <label>Password</label>
       <input type="password" name="login_password" placeholder="Your password" required />
-      <button class="btn btn-solid" type="submit">Login</button>
+      <button class="btn btn-solid btn-large" type="submit">Sign in</button>
       <div class="form-note" id="login-status"></div>
-      <a class="row-link" href="/signup">Create an account</a>
+      <div class="login-links">
+        <a class="row-link" href="/signup">Create an account</a>
+        <a class="row-link" href="/signup?type=trader">Apply for wholesale</a>
+      </div>
     </form>
-    <div class="info-card">
+    <div class="login-benefits">
       <h3>New customer?</h3>
-      <p>Create an account to track orders and request wholesale access.</p>
+      <p>Create an account to track orders, manage invoices, and request trader pricing.</p>
+      <ul class="benefit-list">
+        <li>Track orders and payments</li>
+        <li>Save addresses for faster checkout</li>
+        <li>Request wholesale approval</li>
+      </ul>
       <a class="btn btn-ghost" href="/signup">Sign up</a>
     </div>
   </div>
