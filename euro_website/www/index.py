@@ -36,15 +36,7 @@ def _get_rotating_item():
     if not items:
         return None
 
-    item_groups = _get_item_groups(items)
-    categories = sorted({group for group in item_groups.values() if group})
-    if not categories:
-        return _random_item(items)
-
-    today = frappe.utils.now_datetime().date()
-    category = categories[today.toordinal() % len(categories)]
-    filtered = [item for item in items if item_groups.get(item.item_code) == category]
-    return _random_item(filtered or items)
+    return _random_item(items)
 
 
 def _get_lineup_items():
