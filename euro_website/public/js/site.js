@@ -550,6 +550,26 @@
 
   updateAuthUI();
 
+  document.querySelectorAll("[data-auth-link]").forEach((link) => {
+    link.addEventListener("click", async (event) => {
+      event.preventDefault();
+      try {
+        const resp = await fetch("/api/method/frappe.auth.get_logged_user", {
+          credentials: "same-origin",
+        });
+        const data = await resp.json();
+        const user = data?.message || "Guest";
+        if (user === "Guest") {
+          window.location.href = link.getAttribute("href") || "/";
+        } else {
+          window.location.href = "/portal";
+        }
+      } catch (e) {
+        window.location.href = link.getAttribute("href") || "/";
+      }
+    });
+  });
+
   const addressHistoryKey = () => `euro_address_history:${getUserKey()}`;
   const saveAddressHistory = (entry) => {
     const history = JSON.parse(localStorage.getItem(addressHistoryKey()) || "[]");
