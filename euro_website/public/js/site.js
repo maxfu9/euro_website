@@ -292,7 +292,20 @@
         });
         const result = await response.json();
         if (result.message === "Logged In" || result.home_page) {
-          window.location.href = "/portal";
+          try {
+            const userResp = await fetch(
+              `/api/resource/User/${encodeURIComponent(loginForm.login_email.value)}`,
+              { credentials: "same-origin" }
+            );
+            const userData = await userResp.json();
+            if (userData?.data?.user_type === "System User") {
+              window.location.href = "/app";
+            } else {
+              window.location.href = "/portal";
+            }
+          } catch (e) {
+            window.location.href = "/portal";
+          }
         } else {
           status.textContent = "Invalid credentials. Try again.";
         }
