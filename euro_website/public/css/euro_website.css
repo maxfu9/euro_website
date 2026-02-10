@@ -239,6 +239,19 @@ a {
   text-transform: uppercase;
   border: none;
   cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-initial {
+  font-size: 14px;
 }
 
 .user-menu {

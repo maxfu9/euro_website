@@ -477,6 +477,51 @@
     });
   });
 
+  const updateAuthUI = async () => {
+    if (!(window.frappe && frappe.session)) return;
+    const isGuest = frappe.session.user === "Guest";
+    document.querySelectorAll("[data-auth-guest]").forEach((el) => {
+      el.style.display = isGuest ? "flex" : "none";
+    });
+    document.querySelectorAll("[data-auth-user]").forEach((el) => {
+      el.style.display = isGuest ? "none" : "block";
+    });
+    if (isGuest) return;
+
+    try {
+      const userResp = await fetch(
+        `/api/resource/User/${encodeURIComponent(frappe.session.user)}`,
+        { credentials: "same-origin" }
+      );
+      const userData = await userResp.json();
+      const data = userData?.data || {};
+      const name = data.full_name || frappe.session.user;
+      document.querySelectorAll("[data-user-name]").forEach((el) => {
+        el.textContent = name;
+      });
+      const initials = name?.trim()?.[0]?.toUpperCase() || "U";
+      document.querySelectorAll(".avatar-initial").forEach((el) => {
+        el.textContent = initials;
+      });
+      if (data.user_image) {
+        document.querySelectorAll(".avatar-img").forEach((img) => {
+          img.src = data.user_image;
+          img.style.display = "block";
+        });
+        document.querySelectorAll(".avatar-initial").forEach((el) => {
+          el.style.display = "none";
+        });
+      }
+      if (data.user_type === "System User") {
+        document.querySelectorAll("[data-desk-link]").forEach((el) => {
+          el.style.display = "block";
+        });
+      }
+    } catch (e) {
+      // ignore
+    }
+  };
+
   document.querySelectorAll("[data-logout]").forEach((link) => {
     link.addEventListener("click", async (event) => {
       event.preventDefault();
@@ -488,6 +533,8 @@
       window.location.href = "/";
     });
   });
+
+  updateAuthUI();
 
   const addressHistoryKey = () => `euro_address_history:${getUserKey()}`;
   const saveAddressHistory = (entry) => {
