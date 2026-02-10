@@ -18,26 +18,49 @@
       {% endif %}
     </div>
     <div class="nav-cta">
-      <div class="auth-guest" data-auth-guest>
-        <a class="btn btn-ghost" href="/signup">Sign Up</a>
-        <a class="btn btn-solid" href="/login?redirect-to=/portal">Login</a>
-      </div>
-      <div class="auth-user" data-auth-user style="display:none;">
-        <div class="user-menu">
-          <button class="avatar" type="button" data-user-menu>
-            <img class="avatar-img" alt="User" style="display:none;" />
-            <span class="avatar-initial">U</span>
-          </button>
-          <div class="user-dropdown">
-            <div class="user-name" data-user-name>Account</div>
-            <a href="/app" data-desk-link style="display:none;">Desk</a>
-            <a href="/portal">Portal</a>
-            <a href="/profile">Profile</a>
-            <a href="/addresses">Addresses</a>
-            <a href="#" data-logout>Logout</a>
+      {% if frappe.session.user == "Guest" %}
+        <div class="auth-guest" data-auth-guest>
+          <a class="btn btn-ghost" href="/signup">Sign Up</a>
+          <a class="btn btn-solid" href="/login">Login</a>
+        </div>
+        <div class="auth-user" data-auth-user style="display:none;">
+          <div class="user-menu">
+            <button class="avatar" type="button" data-user-menu>
+              <img class="avatar-img" alt="User" style="display:none;" />
+              <span class="avatar-initial">U</span>
+            </button>
+            <div class="user-dropdown">
+              <div class="user-name" data-user-name>Account</div>
+              <a href="/app" data-desk-link style="display:none;">Desk</a>
+              <a href="/portal">Portal</a>
+              <a href="/profile">Profile</a>
+              <a href="/addresses">Addresses</a>
+              <a href="#" data-logout>Logout</a>
+            </div>
           </div>
         </div>
-      </div>
+      {% else %}
+        <div class="auth-guest" data-auth-guest style="display:none;">
+          <a class="btn btn-ghost" href="/signup">Sign Up</a>
+          <a class="btn btn-solid" href="/login">Login</a>
+        </div>
+        <div class="auth-user" data-auth-user>
+          <div class="user-menu">
+            <button class="avatar" type="button" data-user-menu>
+              <img class="avatar-img" alt="User" style="display:none;" />
+              <span class="avatar-initial">U</span>
+            </button>
+            <div class="user-dropdown">
+              <div class="user-name" data-user-name>Account</div>
+              <a href="/app" data-desk-link style="display:none;">Desk</a>
+              <a href="/portal">Portal</a>
+              <a href="/profile">Profile</a>
+              <a href="/addresses">Addresses</a>
+              <a href="#" data-logout>Logout</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
       <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
         <span class="icon">🛒</span>
         <span class="badge" data-cart-count>0</span>
