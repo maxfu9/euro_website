@@ -48,6 +48,7 @@ web_include_js = [
 
 website_route_rules = [
     {"from_route": "/store/<item>", "to_route": "store/item"},
+    {"from_route": "/login", "to_route": "login"},
 ]
 
 doc_events = {
