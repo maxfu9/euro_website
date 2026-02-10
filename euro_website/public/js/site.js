@@ -248,6 +248,10 @@
 
   const signupForm = document.getElementById("signup-form");
   if (signupForm) {
+    if (window.frappe && frappe.session && frappe.session.user !== "Guest") {
+      window.location.href = "/portal";
+      return;
+    }
     signupForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const status = document.getElementById("signup-status");
@@ -276,6 +280,10 @@
 
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
+    if (window.frappe && frappe.session && frappe.session.user !== "Guest") {
+      window.location.href = "/portal";
+      return;
+    }
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const status = document.getElementById("login-status");

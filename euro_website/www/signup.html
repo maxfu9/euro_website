@@ -2,6 +2,9 @@
 {% set hide_footer = 1 %}
 {% extends "templates/web.html" %}
 {% block page_content %}
+{% if frappe.session.user != "Guest" %}
+  <meta http-equiv="refresh" content="0; url=/portal">
+{% endif %}
 <section class="page-hero">
   <div class="container">
     <p class="eyebrow">Create Account</p>
