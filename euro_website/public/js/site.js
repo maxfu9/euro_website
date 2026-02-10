@@ -478,7 +478,19 @@
   });
 
   const updateAuthUI = async () => {
-    const userMeta = document.querySelector(".site-nav")?.dataset?.user || "Guest";
+    let userMeta = document.querySelector(".site-nav")?.dataset?.user || "Guest";
+    try {
+      const resp = await fetch("/api/method/frappe.auth.get_logged_user", {
+        credentials: "same-origin",
+      });
+      const data = await resp.json();
+      if (data?.message) {
+        userMeta = data.message;
+        document.querySelector(".site-nav")?.setAttribute("data-user", userMeta);
+      }
+    } catch (e) {
+      // ignore
+    }
     const isGuest = userMeta === "Guest";
     document.querySelectorAll("[data-auth-guest]").forEach((el) => {
       el.style.display = isGuest ? "flex" : "none";
