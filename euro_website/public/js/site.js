@@ -469,6 +469,18 @@
     });
   });
 
+  document.querySelectorAll("[data-logout]").forEach((link) => {
+    link.addEventListener("click", async (event) => {
+      event.preventDefault();
+      try {
+        await fetch("/api/method/logout", { credentials: "same-origin" });
+      } catch (e) {
+        // ignore
+      }
+      window.location.href = "/";
+    });
+  });
+
   const addressHistoryKey = () => `euro_address_history:${getUserKey()}`;
   const saveAddressHistory = (entry) => {
     const history = JSON.parse(localStorage.getItem(addressHistoryKey()) || "[]");
