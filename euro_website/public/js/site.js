@@ -248,7 +248,7 @@
 
   const signupForm = document.getElementById("signup-form");
   if (signupForm) {
-    if (window.frappe && frappe.session && frappe.session.user !== "Guest") {
+    if (window.frappe && frappe.session && frappe.session.user && frappe.session.user !== "Guest") {
       window.location.href = "/portal";
       return;
     }
@@ -280,7 +280,7 @@
 
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
-    if (window.frappe && frappe.session && frappe.session.user !== "Guest") {
+    if (window.frappe && frappe.session && frappe.session.user && frappe.session.user !== "Guest") {
       window.location.href = "/portal";
       return;
     }
