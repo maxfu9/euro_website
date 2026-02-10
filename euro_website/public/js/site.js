@@ -478,8 +478,8 @@
   });
 
   const updateAuthUI = async () => {
-    if (!(window.frappe && frappe.session)) return;
-    const isGuest = frappe.session.user === "Guest";
+    const userMeta = document.querySelector(".site-nav")?.dataset?.user || "Guest";
+    const isGuest = userMeta === "Guest";
     document.querySelectorAll("[data-auth-guest]").forEach((el) => {
       el.style.display = isGuest ? "flex" : "none";
     });
@@ -490,7 +490,7 @@
 
     try {
       const userResp = await fetch(
-        `/api/resource/User/${encodeURIComponent(frappe.session.user)}`,
+        `/api/resource/User/${encodeURIComponent(userMeta)}`,
         { credentials: "same-origin" }
       );
       const userData = await userResp.json();
@@ -530,6 +530,8 @@
       } catch (e) {
         // ignore
       }
+      localStorage.removeItem(cartKey());
+      localStorage.removeItem(wishlistKey());
       window.location.href = "/";
     });
   });
