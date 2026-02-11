@@ -248,7 +248,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 22px;
+  padding: 12px 26px;
   min-height: 44px;
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
@@ -265,15 +265,16 @@ a {
 }
 
 .btn i {
-  font-size: 0.95em;
+  font-size: 0.9em;
+  opacity: 0.9;
 }
 
 .btn i:first-child {
-  margin-right: 6px;
+  margin-right: 8px;
 }
 
 .btn i:last-child {
-  margin-left: 6px;
+  margin-left: 10px;
 }
 
 .badge {
@@ -411,9 +412,10 @@ button:focus-visible {
 }
 
 .btn-ghost {
-  border-color: var(--border);
-  background: #fff;
+  border-color: rgba(27, 24, 34, 0.14);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--text);
+  box-shadow: var(--shadow-soft);
 }
 
 .btn-solid:hover {
@@ -421,7 +423,8 @@ button:focus-visible {
 }
 
 .btn-ghost:hover {
-  background: var(--surface-2);
+  background: #fff;
+  border-color: rgba(163, 24, 122, 0.25);
 }
 
 .btn-ghost,
