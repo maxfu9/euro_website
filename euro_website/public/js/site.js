@@ -74,7 +74,9 @@
               <div class="cart-info">
                 <div class="cart-top">
                   <div class="cart-name">${item.item_name}</div>
-                  <button class="cart-remove" type="button" data-cart-remove="${item.item_code}">×</button>
+                  <button class="cart-remove" type="button" data-cart-remove="${item.item_code}">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
                 </div>
                 <div class="cart-meta">
                   Rs ${(item.rate || 0).toFixed(2)}
@@ -412,7 +414,11 @@
     localStorage.setItem(wishlistKey(), JSON.stringify(updated));
     if (button) {
       button.classList.toggle("is-active", !exists);
-      button.textContent = !exists ? "♥" : "♡";
+      const icon = button.querySelector("i");
+      if (icon) {
+        icon.classList.remove("fa-heart", "fa-heart-o");
+        icon.classList.add(!exists ? "fa-heart" : "fa-heart-o");
+      }
     }
     wishlistCount();
     renderWishlist();
@@ -451,7 +457,7 @@
     if (empty) empty.style.display = "none";
     wishlistGrid.innerHTML = list
       .map(
-        (item) => `\n        <div class="product-card wishlist-card">\n          <a href="/store/${item.route}">\n            <div class="product-media" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')"></div>\n          </a>\n          <div class="product-body">\n            <div class="product-title">${item.item_name}</div>\n            <div class="product-cta">View details</div>\n            <button class="btn btn-ghost btn-small" type="button" data-wishlist-remove="${item.item_code}">Remove</button>\n          </div>\n        </div>\n      `
+        (item) => `\n        <div class="product-card wishlist-card">\n          <a href="/store/${item.route}">\n            <div class="product-media" style="background-image: url('${item.image || '/assets/frappe/images/ui/placeholder-image.png'}')"></div>\n          </a>\n          <div class="product-body">\n            <div class="product-title">${item.item_name}</div>\n            <div class="product-cta">View details</div>\n            <button class="btn btn-ghost btn-small" type="button" data-wishlist-remove="${item.item_code}">Remove <i class="fa fa-times" aria-hidden="true"></i></button>\n          </div>\n        </div>\n      `
       )
       .join("");
   };
@@ -522,7 +528,11 @@
       const isHidden = input.type === "password";
       input.type = isHidden ? "text" : "password";
       button.setAttribute("aria-label", isHidden ? "Hide password" : "Show password");
-      button.textContent = isHidden ? "🙈" : "👁";
+      const icon = button.querySelector("i");
+      if (icon) {
+        icon.classList.remove("fa-eye", "fa-eye-slash");
+        icon.classList.add(isHidden ? "fa-eye-slash" : "fa-eye");
+      }
     });
   });
 

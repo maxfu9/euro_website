@@ -17,23 +17,31 @@
       <div class="product-top">
         <div class="product-status">
           {% if item.in_stock or item.is_in_stock %}
-            <span class="stock in-stock">✔ In stock</span>
+            <span class="stock in-stock"><i class="fa fa-check" aria-hidden="true"></i> In stock</span>
           {% else %}
-            <span class="stock out-stock">✖ Out of stock</span>
+            <span class="stock out-stock"><i class="fa fa-times" aria-hidden="true"></i> Out of stock</span>
           {% endif %}
           <button class="wishlist-icon" type="button"
             data-wishlist-toggle
             data-item-code="{{ item.item_code }}"
             data-item-name="{{ item.web_item_name or item.website_item_name or item.item_name }}"
             data-item-route="{{ item.route or item.item_code }}"
-            data-item-image="{{ item.website_image or item.thumbnail or '' }}">♥</button>
+            data-item-image="{{ item.website_image or item.thumbnail or '' }}">
+            <i class="fa fa-heart-o" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
       <h1 class="product-title-tight">{{ item.web_item_name or item.website_item_name or item.item_name }}</h1>
       <div class="product-subline">
         <span class="subline-tag">Homeware essentials</span>
         <span class="subline-sep">•</span>
-        <span class="subline-rating">★★★★★</span>
+        <span class="subline-rating">
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+        </span>
         <span class="subline-reviews">{{ reviews | length }} Reviews</span>
       </div>
       <div class="product-badges">
@@ -63,7 +71,7 @@
           data-item-image="{{ item.website_image or item.thumbnail or '' }}"
           data-item-price="{{ price or 0 }}"
           data-qty-input="detail-qty">
-          Add to cart
+          Add to cart <i class="fa fa-cart-plus" aria-hidden="true"></i>
         </button>
       </div>
       <div class="product-actions refined">
@@ -75,9 +83,11 @@
           data-item-image="{{ item.website_image or item.thumbnail or '' }}"
           data-item-price="{{ price or 0 }}"
           data-qty-input="detail-qty">
-          Buy now
+          Buy now <i class="fa fa-bolt" aria-hidden="true"></i>
         </button>
-        <button class="btn btn-ghost" type="button" data-cart-toggle>View cart</button>
+        <button class="btn btn-ghost" type="button" data-cart-toggle>
+          View cart <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </button>
       </div>
       {% if options and options | length %}
         <div class="product-options">
