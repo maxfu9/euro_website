@@ -30,10 +30,11 @@
 
 <section class="section">
   <div class="container store-layout">
-    <aside class="filter-panel">
+    <div class="filter-backdrop"></div>
+    <aside class="filter-panel" id="store-filters">
       <div class="filter-header">
         <h3>Filters</h3>
-        <a class="btn btn-ghost btn-small" href="/store">Reset</a>
+        <button class="btn btn-ghost btn-small filter-close" type="button" data-filter-close>Close</button>
       </div>
       <form class="filter-form" method="get">
         <div class="filter-field">
@@ -72,7 +73,10 @@
     <div>
       <div class="store-toolbar">
         <div>Showing {{ products | length }} of {{ total_products }} items</div>
-        <button class="btn btn-ghost" type="button" data-cart-toggle>View Cart</button>
+        <div class="store-actions">
+          <button class="btn btn-ghost filter-toggle" type="button" data-filter-toggle>Filters</button>
+          <button class="btn btn-ghost" type="button" data-cart-toggle>View Cart</button>
+        </div>
       </div>
       {% if products and products | length %}
         <div class="product-grid grid-3">

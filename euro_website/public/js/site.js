@@ -477,6 +477,27 @@
     });
   });
 
+  document.querySelectorAll("[data-filter-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.getElementById("store-filters")?.classList.add("is-open");
+      document.querySelector(".filter-backdrop")?.classList.add("is-open");
+    });
+  });
+
+  document.querySelectorAll("[data-filter-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.getElementById("store-filters")?.classList.remove("is-open");
+      document.querySelector(".filter-backdrop")?.classList.remove("is-open");
+    });
+  });
+
+  document.querySelectorAll(".filter-backdrop").forEach((el) => {
+    el.addEventListener("click", () => {
+      document.getElementById("store-filters")?.classList.remove("is-open");
+      el.classList.remove("is-open");
+    });
+  });
+
   const updateAuthUI = async () => {
     let userMeta = document.querySelector(".site-nav")?.dataset?.user || "Guest";
     try {
