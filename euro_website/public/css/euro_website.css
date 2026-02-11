@@ -2766,10 +2766,12 @@ select {
   font-size: 12px;
   letter-spacing: 0.22em;
   color: rgba(24, 20, 31, 0.55);
+  justify-self: center;
 }
 
 .nav-cta {
   gap: 10px;
+  justify-self: end;
 }
 
 .nav-cta .btn {
