@@ -1,12 +1,9 @@
 <nav class="site-nav" data-user="{{ frappe.session.user }}">
   <div class="container nav-inner">
     {% set nav_logo = nav_logo or brand_image or footer_logo %}
-    <a class="brand brand-logo" href="/">
-      {% if nav_logo %}
-        <img src="{{ nav_logo }}" alt="Euro Plast" />
-      {% else %}
-        Euro Plast
-      {% endif %}
+    <a class="brand brand-logo" href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
+      <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" />
+      <span class="brand-text">Euro Plast</span>
     </a>
     <button class="nav-toggle" type="button" aria-label="Open menu">
       <i class="fa fa-bars" aria-hidden="true"></i>
