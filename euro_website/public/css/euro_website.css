@@ -2944,11 +2944,42 @@ section + section,
   --text-strong: #0f172a;
   --text-muted: rgba(15, 23, 42, 0.62);
   --accent: #a0187a;
+  --font-sans: "Manrope", "IBM Plex Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces", "Playfair Display", "Georgia", serif;
 }
 
 body {
   background: #ffffff;
   color: var(--text-strong);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-size: clamp(36px, 4.6vw, 60px);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.15;
+}
+
+h3 {
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.25;
+}
+
+small,
+.meta,
+.eyebrow,
+.nav-links {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 11px;
 }
 
 .container,
@@ -2974,13 +3005,15 @@ section,
 
 h1,
 .hero-title {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 h2,
 h3,
 .section-title {
+  font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -2990,6 +3023,7 @@ p,
 .meta,
 .form-hint {
   color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* Buttons */
