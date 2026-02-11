@@ -3078,3 +3078,18 @@ label,
   box-shadow: var(--shadow-1);
   background: #fff;
 }
+
+/* Remove container backgrounds (keep hero background) */
+.container,
+.page-container,
+.page-content,
+.page-content-wrapper,
+.section,
+.panel,
+.card,
+.info-card,
+.contact-card,
+.product-card,
+.checkout-card {
+  background: transparent !important;
+}
