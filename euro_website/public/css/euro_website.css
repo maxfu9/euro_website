@@ -3101,3 +3101,16 @@ label,
 .checkout-card {
   background: transparent !important;
 }
+
+/* Home page: remove all section backgrounds */
+body[data-path="index"] .hero,
+body[data-path="index"] .section,
+body[data-path="index"] section,
+body[data-path="index"] .cta,
+body[data-path="index"] .info-card,
+body[data-path="index"] .contact-card,
+body[data-path="index"] .product-card,
+body[data-path="index"] .panel,
+body[data-path="index"] .card {
+  background: transparent !important;
+}
