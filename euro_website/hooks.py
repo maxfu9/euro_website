@@ -29,13 +29,19 @@ def get_website_context(context):
         except Exception:
             company_logo = None
 
-        context.brand_image = website_brand or company_logo
+        brand_image = website_brand or company_logo
+        if brand_image and not str(brand_image).startswith("http"):
+            brand_image = frappe.utils.get_url(brand_image)
+        context.brand_image = brand_image
         context.nav_logo = context.brand_image
-        context.footer_logo = (
+        footer_logo = (
             website_footer
             or website_brand
             or company_logo
         )
+        if footer_logo and not str(footer_logo).startswith("http"):
+            footer_logo = frappe.utils.get_url(footer_logo)
+        context.footer_logo = footer_logo
         context.base_template_path = "euro_website/templates/base_custom.html"
         context.meta_title = "Euro Plast"
         context.meta_description = (
