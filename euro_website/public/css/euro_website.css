@@ -2920,7 +2920,7 @@ select {
 
 /* === Minimal Clean Global Refresh === */
 :root {
-  --page-max: 1120px;
+  --page-max: 1240px;
   --space-1: 6px;
   --space-2: 10px;
   --space-3: 16px;
