@@ -48,7 +48,7 @@ def _get_paging():
     except (TypeError, ValueError):
         page = 1
     try:
-        page_size = max(12, min(48, int(form.get("page_size", 24))))
+        page_size = max(9, min(48, int(form.get("page_size", 9))))
     except (TypeError, ValueError):
         page_size = 24
     return page, page_size

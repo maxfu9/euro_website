@@ -29,51 +29,57 @@
 </section>
 
 <section class="section">
-  <div class="container">
-    <div class="store-toolbar">
-      <div>Showing {{ products | length }} of {{ total_products }} items</div>
-      <button class="btn btn-ghost" type="button" data-cart-toggle>View Cart</button>
-    </div>
-    {% if category_chips and category_chips | length %}
-      <div class="category-chips">
-        {% for chip in category_chips %}
-          <a class="chip {% if chip.active %}is-active{% endif %}" href="/store?{{ chip.query }}">{{ chip.label }}</a>
-        {% endfor %}
+  <div class="container store-layout">
+    <aside class="filter-panel">
+      <div class="filter-header">
+        <h3>Filters</h3>
+        <a class="btn btn-ghost btn-small" href="/store">Reset</a>
       </div>
-    {% endif %}
-    <form class="filter-bar" method="get">
-      <div class="filter-field">
-        <label>Search</label>
-        <input type="text" name="q" placeholder="Search products" value="{{ filters.q }}" />
-      </div>
-      <div class="filter-field">
-        <label>Category</label>
-        <select name="category">
-          <option value="">All categories</option>
-          {% for cat in categories %}
-            <option value="{{ cat }}" {% if filters.category == cat %}selected{% endif %}>{{ cat }}</option>
+      <form class="filter-form" method="get">
+        <div class="filter-field">
+          <label>Search</label>
+          <input type="text" name="q" placeholder="Search products" value="{{ filters.q }}" />
+        </div>
+        <div class="filter-field">
+          <label>Category</label>
+          <select name="category">
+            <option value="">All categories</option>
+            {% for cat in categories %}
+              <option value="{{ cat }}" {% if filters.category == cat %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="filter-field">
+          <label>Min price</label>
+          <input type="number" name="min_price" min="0" step="0.01" value="{{ filters.min_price or '' }}" />
+        </div>
+        <div class="filter-field">
+          <label>Max price</label>
+          <input type="number" name="max_price" min="0" step="0.01" value="{{ filters.max_price or '' }}" />
+        </div>
+        <div class="filter-actions">
+          <button class="btn btn-solid" type="submit">Apply</button>
+        </div>
+      </form>
+      {% if category_chips and category_chips | length %}
+        <div class="category-chips">
+          {% for chip in category_chips %}
+            <a class="chip {% if chip.active %}is-active{% endif %}" href="/store?{{ chip.query }}">{{ chip.label }}</a>
           {% endfor %}
-        </select>
+        </div>
+      {% endif %}
+    </aside>
+    <div>
+      <div class="store-toolbar">
+        <div>Showing {{ products | length }} of {{ total_products }} items</div>
+        <button class="btn btn-ghost" type="button" data-cart-toggle>View Cart</button>
       </div>
-      <div class="filter-field">
-        <label>Min price</label>
-        <input type="number" name="min_price" min="0" step="0.01" value="{{ filters.min_price or '' }}" />
-      </div>
-      <div class="filter-field">
-        <label>Max price</label>
-        <input type="number" name="max_price" min="0" step="0.01" value="{{ filters.max_price or '' }}" />
-      </div>
-      <div class="filter-actions">
-        <button class="btn btn-solid" type="submit">Apply</button>
-        <a class="btn btn-ghost" href="/store">Reset</a>
-      </div>
-    </form>
-    {% if products and products | length %}
-      <div class="product-grid">
-        {% for item in products %}
-          <div class="product-card">
-            <a href="/store/{{ item.route or item.item_code }}">
-              <div class="product-media" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
+      {% if products and products | length %}
+        <div class="product-grid grid-3">
+          {% for item in products %}
+            <div class="product-card">
+              <a href="/store/{{ item.route or item.item_code }}">
+                <div class="product-media" style="background-image: url('{{ item.thumbnail or item.website_image or '/assets/frappe/images/ui/placeholder-image.png' }}')"></div>
             </a>
             <div class="product-body">
               <div class="product-title">{{ item.web_item_name or item.item_name }}</div>
@@ -101,25 +107,26 @@
             </div>
           </div>
         {% endfor %}
-      </div>
-    {% else %}
-      <div class="empty-state">
-        <h3>No products found</h3>
-        <p class="muted">Try adjusting your filters or search.</p>
-        <a class="btn btn-ghost" href="/store">Clear filters</a>
-      </div>
-    {% endif %}
-    {% if total_pages > 1 %}
-      <div class="pager">
-        {% if page > 1 %}
-          <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page - 1 }}">Previous</a>
-        {% endif %}
-        <div class="pager-info">Page {{ page }} of {{ total_pages }}</div>
-        {% if page < total_pages %}
-          <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page + 1 }}">Next</a>
-        {% endif %}
-      </div>
-    {% endif %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <h3>No products found</h3>
+          <p class="muted">Try adjusting your filters or search.</p>
+          <a class="btn btn-ghost" href="/store">Clear filters</a>
+        </div>
+      {% endif %}
+      {% if total_pages > 1 %}
+        <div class="pager">
+          {% if page > 1 %}
+            <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page - 1 }}">Previous</a>
+          {% endif %}
+          <div class="pager-info">Page {{ page }} of {{ total_pages }}</div>
+          {% if page < total_pages %}
+            <a class="btn btn-ghost" href="/store?{{ base_query_string }}&page={{ page + 1 }}">Next</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
   </div>
 </section>
 
