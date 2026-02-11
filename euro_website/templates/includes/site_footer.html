@@ -1,6 +1,6 @@
 <footer class="site-footer">
   <div class="container footer-grid">
-    {% set footer_brand = footer_logo or brand_image or frappe.db.get_value("Website Settings", "Website Settings", "banner_image") %}
+    {% set footer_brand = footer_logo or brand_image %}
     <div class="footer-brand">
       {% if footer_brand %}
         <img src="{{ footer_brand }}" alt="Euro Plast" class="footer-logo" />

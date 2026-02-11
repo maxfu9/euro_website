@@ -30,6 +30,7 @@ def get_website_context(context):
             company_logo = None
 
         context.brand_image = website_brand or company_logo
+        context.nav_logo = context.brand_image
         context.footer_logo = (
             website_footer
             or website_brand

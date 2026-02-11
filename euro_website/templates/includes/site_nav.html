@@ -1,6 +1,6 @@
 <nav class="site-nav" data-user="{{ frappe.session.user }}">
   <div class="container nav-inner">
-    {% set nav_logo = brand_image or footer_logo or frappe.db.get_value("Website Settings", "Website Settings", "banner_image") %}
+    {% set nav_logo = nav_logo or brand_image or footer_logo %}
     <a class="brand brand-logo" href="/">
       {% if nav_logo %}
         <img src="{{ nav_logo }}" alt="Euro Plast" />
