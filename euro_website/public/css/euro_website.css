@@ -91,7 +91,7 @@ a {
   top: 0;
   z-index: 50;
   backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 10px 30px rgba(27, 12, 31, 0.06);
   overflow: visible;
@@ -102,7 +102,7 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 12px 0;
-  gap: 20px;
+  gap: 24px;
 }
 
 .site-nav {
@@ -144,8 +144,7 @@ a {
 
 @media (max-width: 1024px) {
   .brand-logo img {
-    height: 64px;
-    top: -16px;
+    height: 48px;
   }
   .nav-inner {
     flex-wrap: wrap;
@@ -204,8 +203,7 @@ a {
 
 @media (max-width: 768px) {
   .brand-logo img {
-    height: 56px;
-    top: -12px;
+    height: 44px;
   }
   .hero-grid,
   .product-detail,
@@ -242,27 +240,24 @@ a {
   position: relative;
   display: inline-flex;
   align-items: center;
-  height: 64px;
-  width: 84px;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(27, 24, 34, 0.1);
+  box-shadow: var(--shadow-soft);
 }
 
 .brand-logo img {
-  height: 84px;
+  height: 56px;
   width: auto;
   display: block;
-  position: absolute;
-  left: 0;
-  top: -22px;
-  filter: drop-shadow(0 10px 18px rgba(22, 10, 27, 0.18));
+  filter: drop-shadow(0 6px 12px rgba(22, 10, 27, 0.12));
 }
 
 .brand-text {
-  position: absolute;
-  inset: 0;
-  display: inline-flex;
-  align-items: center;
-  opacity: 0;
-  pointer-events: none;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .site-footer .footer-logo {
