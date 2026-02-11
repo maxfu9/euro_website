@@ -1,83 +1,88 @@
 <nav class="site-nav" data-user="{{ frappe.session.user }}">
-  <div class="container nav-shell">
-    <div class="nav-pill">
+  <div class="nav-wrap">
+    <div class="nav-inner">
       {% set nav_logo = nav_logo or brand_image or footer_logo %}
-      <a class="brand brand-logo" href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
-        <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" />
-      </a>
+      <div class="nav-left">
+        <a class="brand-logo" href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
+          <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" />
+        </a>
+      </div>
       <button class="nav-toggle" type="button" aria-label="Open menu">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/store">Store</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-        {% if frappe.session.user != "Guest" %}
-          <a href="/portal">Portal</a>
-        {% endif %}
+      <div class="nav-center">
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/store">Store</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          {% if frappe.session.user != "Guest" %}
+            <a href="/portal">Portal</a>
+          {% endif %}
+        </div>
       </div>
-      <div class="nav-cta">
-      {% if frappe.session.user == "Guest" %}
-        <div class="auth-guest" data-auth-guest>
-          <a class="btn btn-ghost" href="/signup" data-auth-link>
-            Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
-          </a>
-          <a class="btn btn-solid" href="/login" data-auth-link>
-            Login <i class="fa fa-sign-in" aria-hidden="true"></i>
-          </a>
-        </div>
-        <div class="auth-user" data-auth-user style="display:none;">
-          <div class="user-menu">
-            <button class="avatar" type="button" data-user-menu>
-              <img class="avatar-img" alt="User" style="display:none;" />
-              <span class="avatar-initial">U</span>
-            </button>
-            <div class="user-dropdown">
-              <div class="user-name" data-user-name>Account</div>
-              <a href="/app" data-desk-link style="display:none;">Desk</a>
-              <a href="/portal">Portal</a>
-              <a href="/profile">Profile</a>
-              <a href="/addresses">Addresses</a>
-              <a href="#" data-logout>Logout</a>
+      <div class="nav-right">
+        {% if frappe.session.user == "Guest" %}
+          <div class="auth-guest" data-auth-guest>
+            <a class="btn btn-ghost" href="/signup" data-auth-link>
+              Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-solid" href="/login" data-auth-link>
+              Login <i class="fa fa-sign-in" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="auth-user" data-auth-user style="display:none;">
+            <div class="user-menu">
+              <button class="avatar" type="button" data-user-menu>
+                <img class="avatar-img" alt="User" style="display:none;" />
+                <span class="avatar-initial">U</span>
+              </button>
+              <div class="user-dropdown">
+                <div class="user-name" data-user-name>Account</div>
+                <a href="/app" data-desk-link style="display:none;">Desk</a>
+                <a href="/portal">Portal</a>
+                <a href="/profile">Profile</a>
+                <a href="/addresses">Addresses</a>
+                <a href="#" data-logout>Logout</a>
+              </div>
             </div>
           </div>
-        </div>
-      {% else %}
-        <div class="auth-guest" data-auth-guest style="display:none;">
-          <a class="btn btn-ghost" href="/signup" data-auth-link>
-            Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
-          </a>
-          <a class="btn btn-solid" href="/login" data-auth-link>
-            Login <i class="fa fa-sign-in" aria-hidden="true"></i>
-          </a>
-        </div>
-        <div class="auth-user" data-auth-user>
-          <div class="user-menu">
-            <button class="avatar" type="button" data-user-menu>
-              <img class="avatar-img" alt="User" style="display:none;" />
-              <span class="avatar-initial">U</span>
-            </button>
-            <div class="user-dropdown">
-              <div class="user-name" data-user-name>Account</div>
-              <a href="/app" data-desk-link style="display:none;">Desk</a>
-              <a href="/portal">Portal</a>
-              <a href="/profile">Profile</a>
-              <a href="/addresses">Addresses</a>
-              <a href="#" data-logout>Logout</a>
+        {% else %}
+          <div class="auth-guest" data-auth-guest style="display:none;">
+            <a class="btn btn-ghost" href="/signup" data-auth-link>
+              Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-solid" href="/login" data-auth-link>
+              Login <i class="fa fa-sign-in" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="auth-user" data-auth-user>
+            <div class="user-menu">
+              <button class="avatar" type="button" data-user-menu>
+                <img class="avatar-img" alt="User" style="display:none;" />
+                <span class="avatar-initial">U</span>
+              </button>
+              <div class="user-dropdown">
+                <div class="user-name" data-user-name>Account</div>
+                <a href="/app" data-desk-link style="display:none;">Desk</a>
+                <a href="/portal">Portal</a>
+                <a href="/profile">Profile</a>
+                <a href="/addresses">Addresses</a>
+                <a href="#" data-logout>Logout</a>
+              </div>
             </div>
           </div>
-        </div>
-      {% endif %}
-      <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
-        <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-        <span class="badge" data-cart-count>0</span>
-        <span class="cart-total hidden" id="cart-total-compact">0</span>
-      </button>
-      <a class="icon-btn icon-btn--wish" href="/wishlist">
-        <span class="icon"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-        <span class="badge" data-wishlist-count>0</span>
-      </a>
+        {% endif %}
+        <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
+          <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+          <span class="badge" data-cart-count>0</span>
+          <span class="cart-total hidden" id="cart-total-compact">0</span>
+        </button>
+        <a class="icon-btn icon-btn--wish" href="/wishlist">
+          <span class="icon"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
+          <span class="badge" data-wishlist-count>0</span>
+        </a>
+      </div>
     </div>
   </div>
 </nav>
