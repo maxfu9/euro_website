@@ -2,6 +2,10 @@
 {% set hide_footer = 1 %}
 {% extends "templates/web.html" %}
 {% block page_content %}
+{% if redirect_to %}
+  <meta http-equiv="refresh" content="0; url={{ redirect_to }}">
+  <script>window.location.href = "{{ redirect_to }}";</script>
+{% endif %}
 <section class="page-hero">
   <div class="container">
     <p class="eyebrow">Account</p>

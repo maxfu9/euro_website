@@ -285,9 +285,18 @@
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
     if (window.frappe && frappe.session && frappe.session.user && frappe.session.user !== "Guest") {
-      window.location.href = "/portal";
+      resolveUserRedirect("/portal").then((url) => {
+        window.location.href = url;
+      });
       return;
     }
+    getLoggedUser().then((user) => {
+      if (user && user !== "Guest") {
+        resolveUserRedirect("/portal").then((url) => {
+          window.location.href = url;
+        });
+      }
+    });
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const status = document.getElementById("login-status");
@@ -304,20 +313,8 @@
         });
         const result = await response.json();
         if (result.message === "Logged In" || result.home_page) {
-          try {
-            const userResp = await fetch(
-              `/api/resource/User/${encodeURIComponent(loginForm.login_email.value)}`,
-              { credentials: "same-origin" }
-            );
-            const userData = await userResp.json();
-            if (userData?.data?.user_type === "System User") {
-              window.location.href = "/app";
-            } else {
-              window.location.href = "/portal";
-            }
-          } catch (e) {
-            window.location.href = "/portal";
-          }
+          const url = await resolveUserRedirect("/portal");
+          window.location.href = url;
         } else {
           status.textContent = "Invalid credentials. Try again.";
         }
@@ -502,6 +499,36 @@
     });
   });
 
+  let cachedUserType = null;
+  const getLoggedUser = async () => {
+    try {
+      const resp = await fetch("/api/method/frappe.auth.get_logged_user", {
+        credentials: "same-origin",
+      });
+      const data = await resp.json();
+      return data?.message || "Guest";
+    } catch (e) {
+      return "Guest";
+    }
+  };
+
+  const resolveUserRedirect = async (fallback = "/portal") => {
+    const user = await getLoggedUser();
+    if (!user || user === "Guest") return fallback;
+    if (cachedUserType) return cachedUserType === "System User" ? "/app" : "/portal";
+    try {
+      const userResp = await fetch(`/api/resource/User/${encodeURIComponent(user)}`, {
+        credentials: "same-origin",
+      });
+      const userData = await userResp.json();
+      const userType = userData?.data?.user_type || "Website User";
+      cachedUserType = userType;
+      return userType === "System User" ? "/app" : "/portal";
+    } catch (e) {
+      return "/portal";
+    }
+  };
+
   const updateAuthUI = async () => {
     let userMeta = document.querySelector(".site-nav")?.dataset?.user || "Guest";
     try {
@@ -549,6 +576,10 @@
           el.style.display = "none";
         });
       }
+      if (data.user_type) {
+        cachedUserType = data.user_type;
+        document.querySelector(".site-nav")?.setAttribute("data-user-type", data.user_type);
+      }
       if (data.user_type === "System User") {
         document.querySelectorAll("[data-desk-link]").forEach((el) => {
           el.style.display = "block";
@@ -579,15 +610,12 @@
     link.addEventListener("click", async (event) => {
       event.preventDefault();
       try {
-        const resp = await fetch("/api/method/frappe.auth.get_logged_user", {
-          credentials: "same-origin",
-        });
-        const data = await resp.json();
-        const user = data?.message || "Guest";
+        const user = await getLoggedUser();
         if (user === "Guest") {
           window.location.href = link.getAttribute("href") || "/";
         } else {
-          window.location.href = "/portal";
+          const url = await resolveUserRedirect("/portal");
+          window.location.href = url;
         }
       } catch (e) {
         window.location.href = link.getAttribute("href") || "/";
