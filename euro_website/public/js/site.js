@@ -514,6 +514,18 @@
     });
   });
 
+  document.querySelectorAll("[data-toggle-password]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const wrapper = button.closest(".password-field");
+      const input = wrapper?.querySelector("input");
+      if (!input) return;
+      const isHidden = input.type === "password";
+      input.type = isHidden ? "text" : "password";
+      button.setAttribute("aria-label", isHidden ? "Hide password" : "Show password");
+      button.textContent = isHidden ? "🙈" : "👁";
+    });
+  });
+
   let cachedUserType = null;
   const getLoggedUser = async () => {
     try {

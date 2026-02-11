@@ -22,7 +22,10 @@
       <label>Email</label>
       <input type="email" name="email" placeholder="you@company.com" required />
       <label>Password</label>
-      <input type="password" name="password" placeholder="Create a password" required />
+      <div class="password-field">
+        <input type="password" name="password" placeholder="Create a password" required />
+        <button class="password-toggle" type="button" data-toggle-password aria-label="Show password">👁</button>
+      </div>
       <label class="checkbox-line">
         <input type="checkbox" name="is_trader" />
         Sign up as trader (wholesale)

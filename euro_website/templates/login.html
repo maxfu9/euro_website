@@ -22,7 +22,10 @@
       <label>Email</label>
       <input type="email" name="login_email" placeholder="you@company.com" required />
       <label>Password</label>
-      <input type="password" name="login_password" placeholder="Your password" required />
+      <div class="password-field">
+        <input type="password" name="login_password" placeholder="Your password" required />
+        <button class="password-toggle" type="button" data-toggle-password aria-label="Show password">👁</button>
+      </div>
       <button class="btn btn-solid btn-large" type="submit">Sign in</button>
       <div class="form-note" id="login-status"></div>
       <div class="login-links">
