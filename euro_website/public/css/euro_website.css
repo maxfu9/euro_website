@@ -3111,6 +3111,11 @@ body[data-path="index"] .info-card,
 body[data-path="index"] .contact-card,
 body[data-path="index"] .product-card,
 body[data-path="index"] .panel,
-body[data-path="index"] .card {
+body[data-path="index"] .card,
+body[data-path="index"] .lineup-card,
+body[data-path="index"] .essentials-card,
+body[data-path="index"] .trending-card,
+body[data-path="index"] .message-card,
+body[data-path="index"] .why-card {
   background: transparent !important;
 }
