@@ -94,6 +94,7 @@ a {
   background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 10px 30px rgba(27, 12, 31, 0.06);
+  overflow: visible;
 }
 
 .nav-inner {
@@ -106,10 +107,6 @@ a {
 
 .site-nav {
   padding-top: 0;
-}
-
-.nav-inner {
-  min-height: 64px;
 }
 
 .nav-links {
@@ -246,6 +243,8 @@ a {
   position: relative;
   display: inline-flex;
   align-items: center;
+  min-height: 64px;
+  min-width: 84px;
 }
 
 .brand-logo img {
@@ -255,6 +254,7 @@ a {
   position: absolute;
   left: 0;
   top: -18px;
+  z-index: 2;
   filter: drop-shadow(0 10px 18px rgba(22, 10, 27, 0.18));
 }
 
