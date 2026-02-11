@@ -2917,3 +2917,156 @@ select {
     justify-content: flex-start;
   }
 }
+
+/* === Minimal Clean Global Refresh === */
+:root {
+  --page-max: 980px;
+  --space-1: 6px;
+  --space-2: 10px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --radius-1: 10px;
+  --radius-2: 16px;
+  --radius-3: 24px;
+  --shadow-1: 0 6px 18px rgba(16, 24, 40, 0.08);
+  --shadow-2: 0 12px 30px rgba(16, 24, 40, 0.12);
+  --border-soft: rgba(15, 23, 42, 0.12);
+  --text-strong: #0f172a;
+  --text-muted: rgba(15, 23, 42, 0.62);
+  --accent: #a0187a;
+}
+
+body {
+  background: #f7f7fb;
+  color: var(--text-strong);
+}
+
+.container,
+.nav-shell {
+  max-width: var(--page-max);
+}
+
+section,
+.section,
+.page-content,
+.page-content-wrapper {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+}
+
+h1,
+.hero-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2,
+h3,
+.section-title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p,
+.muted,
+.meta,
+.form-hint {
+  color: var(--text-muted);
+}
+
+/* Buttons */
+.btn,
+button.btn,
+a.btn {
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 12px 20px;
+  box-shadow: var(--shadow-1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover,
+button.btn:hover,
+a.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+}
+
+.btn-solid {
+  background: #101828;
+  color: #fff;
+}
+
+.btn-solid:hover {
+  background: #0b1220;
+}
+
+.btn-ghost {
+  background: #fff;
+  border: 1px solid var(--border-soft);
+  color: var(--text-strong);
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select,
+textarea,
+.form-control,
+.input-with-feedback {
+  border-radius: var(--radius-2);
+  border: 1px solid var(--border-soft);
+  background: #fff;
+  padding: 12px 14px;
+  font-size: 15px;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.form-control:focus,
+.input-with-feedback:focus {
+  border-color: rgba(160, 24, 122, 0.45);
+  box-shadow: 0 0 0 3px rgba(160, 24, 122, 0.12);
+  outline: none;
+}
+
+label,
+.form-label {
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: var(--space-1);
+}
+
+.form-error,
+.error,
+.has-error .help-box,
+.has-error .form-error {
+  color: #b42318;
+  font-weight: 600;
+}
+
+.form-error,
+.help-box {
+  margin-top: var(--space-1);
+  font-size: 13px;
+}
+
+/* Panels + cards */
+.card,
+.panel,
+.info-card,
+.contact-card,
+.product-card,
+.checkout-card {
+  border-radius: var(--radius-3);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow-1);
+  background: #fff;
+}
