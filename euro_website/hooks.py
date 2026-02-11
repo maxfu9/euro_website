@@ -11,12 +11,29 @@ def get_website_context(context):
         import frappe
 
         settings = frappe.get_cached_doc("Website Settings", "Website Settings")
-        context.brand_image = settings.brand_image
-        context.footer_logo = (
-            settings.footer_logo
-            or settings.logo
+        website_brand = settings.brand_image
+        website_footer = (
+            getattr(settings, "footer_logo", None)
+            or getattr(settings, "logo", None)
             or settings.brand_image
-            or settings.banner_image
+            or getattr(settings, "banner_image", None)
+        )
+
+        company_logo = None
+        try:
+            default_company = frappe.db.get_single_value("Global Defaults", "default_company")
+            if not default_company:
+                default_company = frappe.db.get_value("Company", {"is_default": 1}, "name")
+            if default_company:
+                company_logo = frappe.db.get_value("Company", default_company, "company_logo")
+        except Exception:
+            company_logo = None
+
+        context.brand_image = website_brand or company_logo
+        context.footer_logo = (
+            website_footer
+            or website_brand
+            or company_logo
         )
         context.base_template_path = "euro_website/templates/base_custom.html"
         context.meta_title = "Euro Plast"
