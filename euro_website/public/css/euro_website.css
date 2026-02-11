@@ -1,16 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 :root {
-  --bg: #f7f5f2;
-  --bg-dark: #1b0c1f;
+  --bg: #f6f3f8;
+  --bg-dark: #160a1b;
   --surface: #ffffff;
-  --surface-2: #fbfaf8;
-  --text: #1f1b22;
-  --muted: #6c6375;
+  --surface-2: #fdfcff;
+  --text: #1b1822;
+  --muted: #6b6476;
   --accent: #a3187a;
-  --accent-2: #2d5f5d;
-  --border: rgba(31, 27, 34, 0.12);
-  --shadow: 0 24px 60px rgba(27, 12, 31, 0.16);
+  --accent-2: #245d62;
+  --border: rgba(27, 24, 34, 0.12);
+  --shadow: 0 18px 48px rgba(22, 10, 27, 0.18);
+  --shadow-soft: 0 10px 26px rgba(27, 24, 34, 0.08);
+  --shadow-strong: 0 24px 60px rgba(22, 10, 27, 0.22);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --space-1: 6px;
+  --space-2: 10px;
+  --space-3: 14px;
+  --space-4: 18px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 56px;
 }
 
 * {
@@ -36,6 +50,19 @@ h1 {
 h2 {
   font-size: clamp(24px, 3vw, 34px);
   line-height: 1.2;
+}
+
+p {
+  line-height: 1.7;
+}
+
+.lead {
+  font-size: clamp(16px, 1.5vw, 19px);
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
 }
 
 a {
@@ -73,14 +100,25 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
-  gap: 24px;
+  padding: 16px 0;
+  gap: 20px;
 }
 
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   font-weight: 500;
+}
+
+.nav-links a {
+  padding: 6px 10px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-links a:hover {
+  background: rgba(163, 24, 122, 0.08);
+  color: var(--accent);
 }
 
 .nav-toggle {
@@ -212,12 +250,12 @@ a {
   gap: 8px;
   padding: 12px 22px;
   min-height: 44px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.2px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
 .btn-small {
@@ -267,11 +305,12 @@ a {
   align-items: center;
   gap: 6px;
   padding: 10px 12px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #fff;
   border: 1px solid var(--border);
   font-weight: 600;
   position: relative;
+  box-shadow: var(--shadow-soft);
 }
 
 .icon-btn .icon {
@@ -366,9 +405,9 @@ button:focus-visible {
 }
 
 .btn-solid {
-  background: var(--accent);
+  background: linear-gradient(135deg, #b71f87 0%, #8f1367 100%);
   color: #fff;
-  box-shadow: 0 12px 30px rgba(163, 24, 122, 0.35);
+  box-shadow: 0 14px 30px rgba(163, 24, 122, 0.35);
 }
 
 .btn-ghost {
@@ -378,16 +417,22 @@ button:focus-visible {
 }
 
 .btn-solid:hover {
-  box-shadow: 0 16px 40px rgba(163, 24, 122, 0.4);
+  box-shadow: 0 18px 44px rgba(163, 24, 122, 0.45);
 }
 
 .btn-ghost:hover {
   background: var(--surface-2);
 }
 
+.btn-ghost,
+.btn-solid {
+  backdrop-filter: saturate(110%);
+}
+
 .hero {
-  background: radial-gradient(circle at top left, rgba(163, 24, 122, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 20% 20%, rgba(0, 114, 255, 0.12) 0%, transparent 50%);
+  background: radial-gradient(circle at top left, rgba(163, 24, 122, 0.18) 0%, transparent 48%),
+    radial-gradient(circle at 25% 15%, rgba(0, 114, 255, 0.12) 0%, transparent 55%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 245, 250, 0.9));
   padding: 90px 0 120px;
 }
 
@@ -922,13 +967,13 @@ button:focus-visible {
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  gap: 26px;
 }
 
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 32px;
+  gap: 28px;
 }
 
 .feature {
@@ -974,7 +1019,8 @@ button:focus-visible {
 
 .page-hero {
   padding: 64px 0 40px;
-  background: linear-gradient(135deg, rgba(163, 24, 122, 0.08), rgba(255, 255, 255, 0));
+  background: radial-gradient(circle at 10% 20%, rgba(163, 24, 122, 0.14), transparent 55%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 245, 250, 0.8));
   border-bottom: 1px solid var(--border);
 }
 
@@ -1009,15 +1055,15 @@ button:focus-visible {
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
 .benefit-card {
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-soft);
 }
 
 .benefit-title {
@@ -1035,20 +1081,22 @@ button:focus-visible {
 
 .info-card {
   background: #fff;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: 24px;
   border: 1px solid var(--border);
   display: grid;
   gap: 12px;
+  box-shadow: var(--shadow-soft);
 }
 
 .contact-card {
   background: #fff;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: 24px;
   border: 1px solid var(--border);
   display: grid;
   gap: 12px;
+  box-shadow: var(--shadow-soft);
 }
 
 .login-grid {
@@ -1060,12 +1108,12 @@ button:focus-visible {
 
 .login-card {
   background: #fff;
-  border-radius: 22px;
+  border-radius: var(--radius-lg);
   padding: 28px;
   border: 1px solid var(--border);
   display: grid;
   gap: 12px;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
 }
 
 .password-field {
@@ -1108,11 +1156,12 @@ button:focus-visible {
 
 .login-benefits {
   background: #fff;
-  border-radius: 22px;
+  border-radius: var(--radius-lg);
   padding: 24px;
   border: 1px solid var(--border);
   display: grid;
   gap: 12px;
+  box-shadow: var(--shadow-soft);
 }
 
 .benefit-list {
@@ -1146,9 +1195,11 @@ button:focus-visible {
 input, textarea {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   font-family: inherit;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input-error {
@@ -1159,10 +1210,11 @@ input, textarea {
 select {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   font-family: inherit;
   background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-note {
@@ -1316,19 +1368,20 @@ select {
 
 .product-card {
   background: #fff;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   animation: fadeUp 0.6s ease both;
+  box-shadow: var(--shadow-soft);
 }
 
 .product-card:hover {
   transform: translateY(-4px);
   border-color: rgba(163, 24, 122, 0.3);
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow);
 }
 
 .wishlist-card .product-body {
@@ -1340,16 +1393,16 @@ select {
 }
 
 .product-media {
-  height: 200px;
+  height: 210px;
   background-size: cover;
   background-position: center;
   background-color: var(--surface-2);
 }
 
 .product-body {
-  padding: 18px;
+  padding: 20px;
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .card-actions {
