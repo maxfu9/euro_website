@@ -1,8 +1,8 @@
-<nav class="site-nav w-full sticky top-4 z-50" data-user="{{ frappe.session.user }}">
-  <div class="container nav-inner mx-auto max-w-6xl px-4">
-    <div class="relative flex items-center justify-between gap-6 rounded-full border border-black/5 bg-white/95 px-6 py-3 pl-40 shadow-xl backdrop-blur">
+<nav class="site-nav sticky top-4 z-50 w-full" data-user="{{ frappe.session.user }}">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="relative grid grid-cols-[auto,1fr,auto] items-center gap-6 rounded-full border border-black/5 bg-white/95 px-6 py-3 shadow-xl backdrop-blur">
       {% set nav_logo = nav_logo or brand_image or footer_logo %}
-      <a class="brand brand-logo absolute left-4 -top-6 flex items-center gap-3 rounded-3xl border border-black/5 bg-white px-4 py-3 shadow-lg"
+      <a class="brand brand-logo absolute -left-2 -top-6 flex items-center gap-3 rounded-3xl border border-black/5 bg-white px-4 py-3 shadow-lg"
          href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
         <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" class="h-16 w-auto" />
         <span class="brand-text text-sm font-semibold tracking-wide">Euro Plast</span>
@@ -10,7 +10,7 @@
       <button class="nav-toggle inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-3 py-2 text-lg md:hidden" type="button" aria-label="Open menu">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
-      <div class="nav-links hidden items-center justify-center gap-7 text-[12px] font-semibold uppercase tracking-[0.18em] text-black/60 md:flex">
+      <div class="nav-links hidden items-center justify-center gap-8 text-[12px] font-semibold uppercase tracking-[0.18em] text-black/60 md:flex">
         <a class="hover:text-blue-600" href="/">Home</a>
         <a class="hover:text-blue-600" href="/store">Store</a>
         <a class="hover:text-blue-600" href="/about">About</a>
@@ -22,7 +22,7 @@
       <div class="nav-cta flex items-center gap-3">
       {% if frappe.session.user == "Guest" %}
         <div class="auth-guest flex items-center gap-2" data-auth-guest>
-          <a class="btn btn-ghost inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-black"
+          <a class="btn btn-ghost inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-black shadow-sm"
              href="/signup" data-auth-link>
             Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
           </a>
@@ -75,13 +75,13 @@
           </div>
         </div>
       {% endif %}
-      <button class="icon-btn icon-btn--cart inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm"
+      <button class="icon-btn icon-btn--cart inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm shadow-sm"
               type="button" data-cart-toggle>
         <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
         <span class="badge" data-cart-count>0</span>
         <span class="cart-total hidden" id="cart-total-compact">0</span>
       </button>
-      <a class="icon-btn icon-btn--wish inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm"
+      <a class="icon-btn icon-btn--wish inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm shadow-sm"
          href="/wishlist">
         <span class="icon"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
         <span class="badge" data-wishlist-count>0</span>
