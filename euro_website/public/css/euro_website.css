@@ -99,8 +99,8 @@ a {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 28px;
-  padding: 12px 28px 12px 160px;
+  gap: 24px;
+  padding: 12px 24px 12px 210px;
   background: #fff;
   border-radius: 999px;
   border: 1px solid rgba(27, 24, 34, 0.08);
@@ -119,6 +119,7 @@ a {
   text-transform: uppercase;
   font-size: 12px;
   justify-content: center;
+  white-space: nowrap;
 }
 
 .nav-links a {
@@ -153,15 +154,16 @@ a {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 @media (max-width: 1024px) {
   .nav-inner {
     grid-template-columns: auto 1fr;
-    padding: 12px 18px 12px 110px;
+    padding: 12px 18px 12px 150px;
   }
   .brand-logo img {
-    height: 52px;
+    height: 60px;
   }
   .nav-inner {
     flex-wrap: wrap;
@@ -221,10 +223,10 @@ a {
 @media (max-width: 768px) {
   .nav-inner {
     grid-template-columns: 1fr auto;
-    padding: 12px 16px 12px 92px;
+    padding: 12px 16px 12px 120px;
   }
   .brand-logo img {
-    height: 46px;
+    height: 52px;
   }
   .hero-grid,
   .product-detail,
@@ -262,18 +264,18 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 16px;
-  border-radius: 22px;
+  padding: 14px 18px 12px;
+  border-radius: 26px;
   background: #fff;
   border: 1px solid rgba(27, 24, 34, 0.08);
   box-shadow: 0 16px 34px rgba(27, 24, 34, 0.12);
   position: absolute;
-  left: -10px;
-  top: -18px;
+  left: -16px;
+  top: -22px;
 }
 
 .brand-logo img {
-  height: 66px;
+  height: 72px;
   width: auto;
   display: block;
   filter: drop-shadow(0 6px 12px rgba(22, 10, 27, 0.12));
@@ -282,11 +284,13 @@ a {
 .brand-text {
   font-size: 16px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .nav-cta .btn {
   min-height: 40px;
   padding: 10px 18px;
+  white-space: nowrap;
 }
 
 .nav-cta .btn-solid {
