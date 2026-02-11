@@ -323,8 +323,9 @@ label,
 }
 
 .hero-content .lead {
-  font-size: 18px;
+  font-size: 19px;
   max-width: 520px;
+  letter-spacing: -0.005em;
 }
 
 .hero-actions {
@@ -723,4 +724,18 @@ label,
   .nav-inner {
     grid-template-columns: auto 1fr;
   }
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(44px, 5.2vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.hero .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: rgba(15, 23, 42, 0.55);
+  font-weight: 600;
 }
