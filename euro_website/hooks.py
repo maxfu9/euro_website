@@ -11,7 +11,7 @@ def get_website_context(context):
         import frappe
 
         settings = frappe.get_cached_doc("Website Settings", "Website Settings")
-        website_brand = settings.brand_image
+        website_brand = settings.brand_image or getattr(settings, "banner_image", None)
         website_footer = (
             getattr(settings, "footer_logo", None)
             or getattr(settings, "logo", None)
