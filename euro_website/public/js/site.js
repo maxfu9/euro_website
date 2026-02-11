@@ -142,7 +142,11 @@
     const itemCodes = cart.map((item) => item.item_code).filter(Boolean);
     if (!itemCodes.length) return;
     try {
-      const result = await call("euro_website.api.get_item_prices", { item_codes: itemCodes });
+      const query = encodeURIComponent(JSON.stringify(itemCodes));
+      const response = await fetch(`/api/method/euro_website.api.get_item_prices?item_codes=${query}`, {
+        credentials: "same-origin",
+      });
+      const result = await response.json();
       const data = result.message || result;
       const prices = data?.prices || {};
       const updated = cart.map((item) => ({
