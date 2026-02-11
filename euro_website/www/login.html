@@ -44,4 +44,53 @@
     </div>
   </div>
 </section>
+<script>
+  (function () {
+    const form = document.getElementById("login-form");
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = "1";
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const status = document.getElementById("login-status");
+      if (status) status.textContent = "Signing in...";
+      try {
+        const response = await fetch("/api/method/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usr: form.login_email?.value || "",
+            pwd: form.login_password?.value || "",
+          }),
+          credentials: "same-origin",
+        });
+        const result = await response.json();
+        if (result.message === "Logged In" || result.home_page) {
+          let user = "Guest";
+          try {
+            const userResp = await fetch("/api/method/frappe.auth.get_logged_user", {
+              credentials: "same-origin",
+            });
+            const userData = await userResp.json();
+            user = userData?.message || "Guest";
+          } catch (e) {}
+          let redirect = "/portal";
+          if (user && user !== "Guest") {
+            try {
+              const metaResp = await fetch(`/api/resource/User/${encodeURIComponent(user)}`, {
+                credentials: "same-origin",
+              });
+              const meta = await metaResp.json();
+              if (meta?.data?.user_type === "System User") redirect = "/app";
+            } catch (e) {}
+          }
+          window.location.href = redirect;
+        } else if (status) {
+          status.textContent = "Invalid credentials. Try again.";
+        }
+      } catch (e) {
+        if (status) status.textContent = "Unable to sign in. Try again.";
+      }
+    });
+  })();
+</script>
 {% endblock %}
