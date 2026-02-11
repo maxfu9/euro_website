@@ -284,15 +284,15 @@ label,
 
 /* Hero */
 .hero {
-  background: radial-gradient(circle at 12% 10%, rgba(160, 24, 122, 0.12), transparent 50%),
-    radial-gradient(circle at 88% 0%, rgba(37, 99, 235, 0.12), transparent 45%);
-  padding: 88px 0 110px;
+  background: radial-gradient(900px 360px at 12% 10%, rgba(160, 24, 122, 0.18), transparent 60%),
+    radial-gradient(700px 300px at 88% 0%, rgba(37, 99, 235, 0.18), transparent 55%);
+  padding: 96px 0 120px;
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 48px;
+  gap: 56px;
   align-items: center;
 }
 
@@ -300,11 +300,13 @@ label,
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 14px;
-  border: 1px solid var(--border-soft);
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 999px;
   font-size: 12px;
-  color: var(--text-muted);
+  color: rgba(15, 23, 42, 0.7);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-1);
 }
 
 .pill-icon {
@@ -319,8 +321,8 @@ label,
 }
 
 .hero-content .lead {
-  font-size: 18px;
-  max-width: 540px;
+  font-size: 19px;
+  max-width: 560px;
 }
 
 .hero-actions {
@@ -328,6 +330,10 @@ label,
   gap: 14px;
   flex-wrap: wrap;
   margin-top: 20px;
+}
+
+.hero-actions .btn {
+  padding: 14px 22px;
 }
 
 .hero-stats {
@@ -366,8 +372,9 @@ label,
 
 .hero-figure img {
   width: 100%;
-  height: 420px;
+  height: 440px;
   object-fit: cover;
+  transform: translateZ(0);
 }
 
 .hero-chip {
@@ -379,6 +386,7 @@ label,
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-1);
   font-size: 12px;
 }
 
@@ -396,7 +404,7 @@ label,
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   display: inline-flex;
   align-items: center;
   justify-content: center;
