@@ -329,6 +329,83 @@ a {
   font-size: 18px;
 }
 
+/* Tailwind navbar fallback (ensures layout even if Tailwind fails to load) */
+.site-nav .nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 28px 12px 200px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  border: 1px solid rgba(27, 24, 34, 0.08);
+  box-shadow: 0 18px 42px rgba(27, 24, 34, 0.1);
+  position: relative;
+  backdrop-filter: blur(18px);
+}
+
+.site-nav .nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(27, 24, 34, 0.6);
+  flex: 1;
+}
+
+.site-nav .nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-nav .brand-logo {
+  position: absolute;
+  left: -16px;
+  top: -22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid rgba(27, 24, 34, 0.08);
+  box-shadow: 0 16px 34px rgba(27, 24, 34, 0.12);
+}
+
+.site-nav .brand-logo img {
+  height: 66px;
+  width: auto;
+  display: block;
+}
+
+.site-nav .brand-text {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .site-nav .nav-inner {
+    padding: 12px 18px 12px 150px;
+  }
+  .site-nav .brand-logo img {
+    height: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-nav .nav-inner {
+    padding: 12px 16px 12px 120px;
+  }
+  .site-nav .nav-links {
+    display: none;
+  }
+}
+
 .footer-brand {
   display: grid;
   gap: 8px;
