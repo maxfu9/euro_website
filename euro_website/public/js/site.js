@@ -271,8 +271,23 @@
         const result = await call("euro_website.api.signup_portal_user", payload);
         const ok = result.message ? result.message.ok : result.ok;
         if (ok) {
-          status.textContent = "Account created. Please log in.";
-          window.location.href = "/login?redirect-to=/portal";
+          status.textContent = "Account created. Signing you in...";
+          try {
+            const response = await fetch("/api/method/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ usr: payload.email, pwd: payload.password }),
+              credentials: "same-origin",
+            });
+            const loginResult = await response.json();
+            if (loginResult.message === "Logged In" || loginResult.home_page) {
+              window.location.href = "/signup-success";
+              return;
+            }
+          } catch (e) {
+            // ignore and fall through
+          }
+          window.location.href = "/signup-success";
         } else {
           status.textContent = "Unable to create account. Try again.";
         }
