@@ -1,7 +1,11 @@
 <footer class="site-footer">
   <div class="container footer-grid">
-    <div>
-      <div class="brand">Euro Plast</div>
+    <div class="footer-brand">
+      {% if footer_logo %}
+        <img src="{{ footer_logo }}" alt="Euro Plast" class="footer-logo" />
+      {% else %}
+        <div class="brand">Euro Plast</div>
+      {% endif %}
       <p>Premium plastic solutions with ERPNext precision.</p>
     </div>
     <div>

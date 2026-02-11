@@ -227,9 +227,21 @@ a {
 }
 
 .brand-logo img {
-  height: 32px;
+  height: 34px;
   width: auto;
   display: block;
+}
+
+.site-footer .footer-logo {
+  height: 40px;
+  width: auto;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.footer-brand {
+  display: grid;
+  gap: 8px;
 }
 
 @keyframes fadeUp {

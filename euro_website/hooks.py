@@ -10,7 +10,14 @@ def get_website_context(context):
     try:
         import frappe
 
-        context.brand_image = frappe.db.get_value("Website Settings", "Website Settings", "brand_image")
+        settings = frappe.get_cached_doc("Website Settings", "Website Settings")
+        context.brand_image = settings.brand_image
+        context.footer_logo = (
+            settings.footer_logo
+            or settings.logo
+            or settings.brand_image
+            or settings.banner_image
+        )
         context.base_template_path = "euro_website/templates/base_custom.html"
         context.meta_title = "Euro Plast"
         context.meta_description = (
