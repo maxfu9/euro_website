@@ -3116,6 +3116,13 @@ body[data-path="index"] .lineup-card,
 body[data-path="index"] .essentials-card,
 body[data-path="index"] .trending-card,
 body[data-path="index"] .message-card,
-body[data-path="index"] .why-card {
+body[data-path="index"] .why-card,
+body[data-path="index"] .section.dark,
+body[data-path="index"] .cta,
+body[data-path="index"] .cta-grid,
+body[data-path="index"] .cta-item,
+body[data-path="index"] .lineup-body,
+body[data-path="index"] .trending-body,
+body[data-path="index"] .hero {
   background: transparent !important;
 }
