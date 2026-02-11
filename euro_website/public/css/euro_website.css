@@ -2949,6 +2949,8 @@ body {
 .page-content,
 .page-content-wrapper {
   max-width: var(--page-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 section,
