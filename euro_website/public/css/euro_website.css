@@ -104,6 +104,10 @@ a {
   gap: 20px;
 }
 
+.site-nav {
+  padding-top: 8px;
+}
+
 .nav-links {
   display: flex;
   gap: 18px;
@@ -139,6 +143,10 @@ a {
 }
 
 @media (max-width: 1024px) {
+  .brand-logo img {
+    height: 64px;
+    top: 4px;
+  }
   .nav-inner {
     flex-wrap: wrap;
   }
@@ -195,6 +203,10 @@ a {
 }
 
 @media (max-width: 768px) {
+  .brand-logo img {
+    height: 56px;
+    top: 2px;
+  }
   .hero-grid,
   .product-detail,
   .grid-2,
@@ -226,10 +238,19 @@ a {
   letter-spacing: 0.5px;
 }
 
+.brand-logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .brand-logo img {
-  height: 34px;
+  height: 84px;
   width: auto;
   display: block;
+  position: relative;
+  top: 6px;
+  filter: drop-shadow(0 10px 18px rgba(22, 10, 27, 0.18));
 }
 
 .site-footer .footer-logo {
