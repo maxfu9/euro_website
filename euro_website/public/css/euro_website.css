@@ -2858,7 +2858,7 @@ select {
 /* Subtle section separation */
 section + section,
 .section + .section {
-  border-top: 1px solid rgba(15, 23, 42, 0.04);
+  border-top: none;
 }
 
 .site-footer a {
