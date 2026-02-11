@@ -2939,21 +2939,24 @@ select {
 }
 
 body {
-  background: #f7f7fb;
+  background: #f4f5f8;
   color: var(--text-strong);
 }
 
 .container,
-.nav-shell {
-  max-width: var(--page-max);
+.nav-shell,
+.page-container,
+.page-content,
+.page-content-wrapper {
+  max-width: var(--page-max) !important;
 }
 
 section,
 .section,
 .page-content,
 .page-content-wrapper {
-  padding-top: var(--space-6);
-  padding-bottom: var(--space-6);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
 }
 
 h1,
