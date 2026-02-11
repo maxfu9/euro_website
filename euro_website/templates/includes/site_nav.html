@@ -1,37 +1,34 @@
-<nav class="site-nav sticky top-4 z-50 w-full" data-user="{{ frappe.session.user }}">
-  <div class="container mx-auto max-w-6xl px-4">
-    <div class="relative grid grid-cols-[auto,1fr,auto] items-center gap-6 rounded-full border border-white/40 bg-white/70 px-6 py-3 shadow-2xl backdrop-blur-xl ring-1 ring-white/50">
+<nav class="site-nav" data-user="{{ frappe.session.user }}">
+  <div class="container nav-shell">
+    <div class="nav-pill">
       {% set nav_logo = nav_logo or brand_image or footer_logo %}
-      <a class="brand brand-logo absolute -left-6 -top-7 flex items-center gap-3 rounded-3xl border border-black/5 bg-white px-5 py-3 shadow-xl"
-         href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
-        <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" class="h-16 w-auto" />
-        <span class="brand-text text-sm font-semibold tracking-wide">Euro Plast</span>
+      <a class="brand brand-logo" href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
+        <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" />
+        <span class="brand-text">Euro Plast</span>
       </a>
-      <button class="nav-toggle inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-3 py-2 text-lg md:hidden" type="button" aria-label="Open menu">
+      <button class="nav-toggle" type="button" aria-label="Open menu">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
-      <div class="nav-links hidden items-center justify-center gap-8 text-[12px] font-semibold uppercase tracking-[0.18em] text-black/60 md:flex">
-        <a class="hover:text-blue-600" href="/">Home</a>
-        <a class="hover:text-blue-600" href="/store">Store</a>
-        <a class="hover:text-blue-600" href="/about">About</a>
-        <a class="hover:text-blue-600" href="/contact">Contact</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/store">Store</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
         {% if frappe.session.user != "Guest" %}
-          <a class="hover:text-blue-600" href="/portal">Portal</a>
+          <a href="/portal">Portal</a>
         {% endif %}
       </div>
-      <div class="nav-cta flex items-center gap-3">
+      <div class="nav-cta">
       {% if frappe.session.user == "Guest" %}
-        <div class="auth-guest flex items-center gap-2" data-auth-guest>
-          <a class="btn btn-ghost inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-black shadow-sm"
-             href="/signup" data-auth-link>
+        <div class="auth-guest" data-auth-guest>
+          <a class="btn btn-ghost" href="/signup" data-auth-link>
             Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-solid inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-md"
-             href="/login" data-auth-link>
+          <a class="btn btn-solid" href="/login" data-auth-link>
             Login <i class="fa fa-sign-in" aria-hidden="true"></i>
           </a>
         </div>
-        <div class="auth-user hidden" data-auth-user>
+        <div class="auth-user" data-auth-user style="display:none;">
           <div class="user-menu">
             <button class="avatar" type="button" data-user-menu>
               <img class="avatar-img" alt="User" style="display:none;" />
@@ -48,13 +45,11 @@
           </div>
         </div>
       {% else %}
-        <div class="auth-guest hidden" data-auth-guest>
-          <a class="btn btn-ghost inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-black"
-             href="/signup" data-auth-link>
+        <div class="auth-guest" data-auth-guest style="display:none;">
+          <a class="btn btn-ghost" href="/signup" data-auth-link>
             Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-solid inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-md"
-             href="/login" data-auth-link>
+          <a class="btn btn-solid" href="/login" data-auth-link>
             Login <i class="fa fa-sign-in" aria-hidden="true"></i>
           </a>
         </div>
@@ -75,18 +70,15 @@
           </div>
         </div>
       {% endif %}
-      <button class="icon-btn icon-btn--cart inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm shadow-sm"
-              type="button" data-cart-toggle>
+      <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
         <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
         <span class="badge" data-cart-count>0</span>
         <span class="cart-total hidden" id="cart-total-compact">0</span>
       </button>
-      <a class="icon-btn icon-btn--wish inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm shadow-sm"
-         href="/wishlist">
+      <a class="icon-btn icon-btn--wish" href="/wishlist">
         <span class="icon"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
         <span class="badge" data-wishlist-count>0</span>
       </a>
-    </div>
     </div>
   </div>
 </nav>
