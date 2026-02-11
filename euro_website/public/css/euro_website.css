@@ -105,10 +105,13 @@ a {
   gap: 20px;
 }
 
+<<<<<<< ours
 .site-nav {
   padding-top: 0;
 }
 
+=======
+>>>>>>> theirs
 .nav-links {
   display: flex;
   gap: 18px;
@@ -144,10 +147,13 @@ a {
 }
 
 @media (max-width: 1024px) {
+<<<<<<< ours
   .brand-logo img {
     height: 64px;
     top: -8px;
   }
+=======
+>>>>>>> theirs
   .nav-inner {
     flex-wrap: wrap;
   }
@@ -204,10 +210,13 @@ a {
 }
 
 @media (max-width: 768px) {
+<<<<<<< ours
   .brand-logo img {
     height: 56px;
     top: -6px;
   }
+=======
+>>>>>>> theirs
   .hero-grid,
   .product-detail,
   .grid-2,
@@ -239,6 +248,7 @@ a {
   letter-spacing: 0.5px;
 }
 
+<<<<<<< ours
 .brand-logo {
   position: relative;
   display: inline-flex;
@@ -247,13 +257,18 @@ a {
   min-width: 84px;
 }
 
+=======
+>>>>>>> theirs
 .brand-logo img {
-  height: 84px;
+  height: 34px;
   width: auto;
   display: block;
+<<<<<<< ours
   position: relative;
   top: -12px;
   filter: drop-shadow(0 10px 18px rgba(22, 10, 27, 0.18));
+=======
+>>>>>>> theirs
 }
 
 .site-footer .footer-logo {
