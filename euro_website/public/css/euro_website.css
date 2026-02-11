@@ -152,7 +152,7 @@ a {
 
 .nav-cta {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   align-items: center;
   flex-wrap: nowrap;
 }
@@ -2732,7 +2732,7 @@ select {
 }
 
 .nav-shell {
-  max-width: 1080px;
+  max-width: 980px;
 }
 
 .nav-pill {
@@ -2749,8 +2749,8 @@ select {
 }
 
 .brand-logo {
-  left: -12px;
-  top: -26px;
+  left: 0;
+  top: -16px;
   border-radius: 28px;
   padding: 16px 20px;
   box-shadow: 0 20px 50px rgba(24, 20, 31, 0.2);
@@ -2772,6 +2772,7 @@ select {
 .nav-cta {
   gap: 10px;
   justify-self: end;
+  margin-right: 6px;
 }
 
 .nav-cta .btn {
