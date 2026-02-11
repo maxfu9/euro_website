@@ -2944,13 +2944,16 @@ body {
 }
 
 .container,
-.nav-shell,
 .page-container,
 .page-content,
 .page-content-wrapper {
   max-width: var(--page-max) !important;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+.nav-shell {
+  max-width: 1360px !important;
 }
 
 section,
