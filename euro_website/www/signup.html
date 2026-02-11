@@ -24,7 +24,9 @@
       <label>Password</label>
       <div class="password-field">
         <input type="password" name="password" placeholder="Create a password" required />
-        <button class="password-toggle" type="button" data-toggle-password aria-label="Show password">👁</button>
+        <button class="password-toggle" type="button" data-toggle-password aria-label="Show password">
+          <i class="fa-regular fa-eye" aria-hidden="true"></i>
+        </button>
       </div>
       <label class="checkbox-line">
         <input type="checkbox" name="is_trader" />
@@ -52,7 +54,11 @@
         const isHidden = input.type === "password";
         input.type = isHidden ? "text" : "password";
         button.setAttribute("aria-label", isHidden ? "Hide password" : "Show password");
-        button.textContent = isHidden ? "🙈" : "👁";
+        const icon = button.querySelector("i");
+        if (icon) {
+          icon.classList.remove("fa-eye", "fa-eye-slash");
+          icon.classList.add(isHidden ? "fa-eye-slash" : "fa-eye");
+        }
       });
     });
   })();
