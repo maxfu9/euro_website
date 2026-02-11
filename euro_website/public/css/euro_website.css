@@ -3143,3 +3143,15 @@ body[data-path="index"] .hero,
 .trending-body {
   background: transparent !important;
 }
+
+/* Home page: remove card fills, borders, and shadows */
+.lineup-card,
+.trending-card,
+.essentials-card,
+.message-card,
+.why-card,
+.cta-item {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
