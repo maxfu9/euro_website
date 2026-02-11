@@ -1,33 +1,37 @@
-<nav class="site-nav" data-user="{{ frappe.session.user }}">
-  <div class="container nav-inner">
-    {% set nav_logo = nav_logo or brand_image or footer_logo %}
-    <a class="brand brand-logo" href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
-      <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" />
-      <span class="brand-text">Euro Plast</span>
-    </a>
-    <button class="nav-toggle" type="button" aria-label="Open menu">
-      <i class="fa fa-bars" aria-hidden="true"></i>
-    </button>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/store">Store</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-      {% if frappe.session.user != "Guest" %}
-        <a href="/portal">Portal</a>
-      {% endif %}
-    </div>
-    <div class="nav-cta">
+<nav class="site-nav w-full sticky top-4 z-50" data-user="{{ frappe.session.user }}">
+  <div class="container nav-inner mx-auto max-w-6xl px-4">
+    <div class="relative flex items-center justify-between gap-6 rounded-full border border-black/5 bg-white/95 px-6 py-3 pl-40 shadow-xl backdrop-blur">
+      {% set nav_logo = nav_logo or brand_image or footer_logo %}
+      <a class="brand brand-logo absolute left-4 -top-6 flex items-center gap-3 rounded-3xl border border-black/5 bg-white px-4 py-3 shadow-lg"
+         href="/" data-logo="{{ nav_logo or '/files/europlast.png' }}">
+        <img src="{{ nav_logo or '/files/europlast.png' }}" alt="Euro Plast" class="h-16 w-auto" />
+        <span class="brand-text text-sm font-semibold tracking-wide">Euro Plast</span>
+      </a>
+      <button class="nav-toggle inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-3 py-2 text-lg md:hidden" type="button" aria-label="Open menu">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </button>
+      <div class="nav-links hidden items-center justify-center gap-7 text-[12px] font-semibold uppercase tracking-[0.18em] text-black/60 md:flex">
+        <a class="hover:text-blue-600" href="/">Home</a>
+        <a class="hover:text-blue-600" href="/store">Store</a>
+        <a class="hover:text-blue-600" href="/about">About</a>
+        <a class="hover:text-blue-600" href="/contact">Contact</a>
+        {% if frappe.session.user != "Guest" %}
+          <a class="hover:text-blue-600" href="/portal">Portal</a>
+        {% endif %}
+      </div>
+      <div class="nav-cta flex items-center gap-3">
       {% if frappe.session.user == "Guest" %}
-        <div class="auth-guest" data-auth-guest>
-          <a class="btn btn-ghost" href="/signup" data-auth-link>
+        <div class="auth-guest flex items-center gap-2" data-auth-guest>
+          <a class="btn btn-ghost inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-black"
+             href="/signup" data-auth-link>
             Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-solid" href="/login" data-auth-link>
+          <a class="btn btn-solid inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-md"
+             href="/login" data-auth-link>
             Login <i class="fa fa-sign-in" aria-hidden="true"></i>
           </a>
         </div>
-        <div class="auth-user" data-auth-user style="display:none;">
+        <div class="auth-user hidden" data-auth-user>
           <div class="user-menu">
             <button class="avatar" type="button" data-user-menu>
               <img class="avatar-img" alt="User" style="display:none;" />
@@ -44,11 +48,13 @@
           </div>
         </div>
       {% else %}
-        <div class="auth-guest" data-auth-guest style="display:none;">
-          <a class="btn btn-ghost" href="/signup" data-auth-link>
+        <div class="auth-guest hidden" data-auth-guest>
+          <a class="btn btn-ghost inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-black"
+             href="/signup" data-auth-link>
             Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-solid" href="/login" data-auth-link>
+          <a class="btn btn-solid inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-md"
+             href="/login" data-auth-link>
             Login <i class="fa fa-sign-in" aria-hidden="true"></i>
           </a>
         </div>
@@ -69,51 +75,55 @@
           </div>
         </div>
       {% endif %}
-      <button class="icon-btn icon-btn--cart" type="button" data-cart-toggle>
+      <button class="icon-btn icon-btn--cart inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm"
+              type="button" data-cart-toggle>
         <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
         <span class="badge" data-cart-count>0</span>
-        <span class="cart-total" id="cart-total-compact">0</span>
+        <span class="cart-total hidden" id="cart-total-compact">0</span>
       </button>
-      <a class="icon-btn icon-btn--wish" href="/wishlist">
+      <a class="icon-btn icon-btn--wish inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-sm"
+         href="/wishlist">
         <span class="icon"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
         <span class="badge" data-wishlist-count>0</span>
       </a>
     </div>
+    </div>
   </div>
 </nav>
-<div class="cart-backdrop" data-cart-close></div>
-<aside class="cart-drawer" id="cart-drawer">
-  <div class="cart-header">
-    <button class="cart-back" type="button" data-cart-close>
+<div class="cart-backdrop fixed inset-0 z-40 bg-black/40 opacity-0 pointer-events-none transition-opacity" data-cart-close></div>
+<aside class="cart-drawer fixed right-0 top-0 z-50 h-full w-full max-w-[420px] translate-x-full bg-white shadow-2xl transition-transform" id="cart-drawer">
+  <div class="cart-header flex items-center justify-between border-b border-black/10 px-6 py-4">
+    <button class="cart-back text-lg" type="button" data-cart-close>
       <i class="fa fa-arrow-left" aria-hidden="true"></i>
     </button>
-    <div class="cart-title">Review Your Cart</div>
-    <div class="cart-count" id="cart-count-header">0</div>
+    <div class="cart-title text-base font-semibold">Review Your Cart</div>
+    <div class="cart-count text-sm text-black/60" id="cart-count-header">0</div>
   </div>
-  <div class="cart-items" id="cart-items"></div>
-  <div class="cart-footer">
-    <button class="cart-discount" type="button">
+  <div class="cart-items space-y-4 px-6 py-4" id="cart-items"></div>
+  <div class="cart-footer border-t border-black/10 px-6 py-4">
+    <button class="cart-discount flex w-full items-center justify-between rounded-full border border-black/10 px-4 py-3 text-sm" type="button">
       <span>Got a Discount Code?</span>
       <span class="chevron"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
     </button>
-    <div class="cart-summary">
-      <div class="cart-line">
+    <div class="cart-summary mt-4 space-y-2 text-sm">
+      <div class="cart-line flex items-center justify-between">
         <span>Subtotal</span>
         <span id="cart-subtotal">0</span>
       </div>
-      <div class="cart-line cart-line--save">
+      <div class="cart-line cart-line--save text-emerald-600">
         <span id="cart-savings">You saved 0</span>
       </div>
-      <div class="cart-line">
+      <div class="cart-line flex items-center justify-between">
         <span>Shipping</span>
         <span id="cart-shipping">0</span>
       </div>
-      <div class="cart-line cart-line--total">
+      <div class="cart-line cart-line--total flex items-center justify-between text-base font-semibold">
         <span>Total</span>
         <span id="cart-total">0</span>
       </div>
     </div>
-    <a class="btn btn-solid cart-checkout" href="/checkout">
+    <a class="btn btn-solid cart-checkout mt-5 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-4 py-3 text-sm font-semibold text-white"
+       href="/checkout">
       Proceed to Checkout <i class="fa fa-arrow-right" aria-hidden="true"></i>
     </a>
   </div>

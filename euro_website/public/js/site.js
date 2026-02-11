@@ -174,13 +174,21 @@
   };
 
   const openCart = () => {
-    document.querySelector(".cart-drawer")?.classList.add("is-open");
-    document.querySelector(".cart-backdrop")?.classList.add("is-open");
+    const drawer = document.querySelector(".cart-drawer");
+    const backdrop = document.querySelector(".cart-backdrop");
+    drawer?.classList.remove("translate-x-full");
+    drawer?.classList.add("translate-x-0");
+    backdrop?.classList.remove("opacity-0", "pointer-events-none");
+    backdrop?.classList.add("opacity-100");
   };
 
   const closeCart = () => {
-    document.querySelector(".cart-drawer")?.classList.remove("is-open");
-    document.querySelector(".cart-backdrop")?.classList.remove("is-open");
+    const drawer = document.querySelector(".cart-drawer");
+    const backdrop = document.querySelector(".cart-backdrop");
+    drawer?.classList.remove("translate-x-0");
+    drawer?.classList.add("translate-x-full");
+    backdrop?.classList.remove("opacity-100");
+    backdrop?.classList.add("opacity-0", "pointer-events-none");
   };
 
   document.querySelectorAll("[data-cart-toggle]").forEach((button) => {
@@ -495,7 +503,10 @@
 
   document.querySelectorAll(".nav-toggle").forEach((button) => {
     button.addEventListener("click", () => {
-      document.querySelector(".nav-links")?.classList.toggle("is-open");
+      const links = document.querySelector(".nav-links");
+      if (!links) return;
+      links.classList.toggle("hidden");
+      links.classList.toggle("flex");
     });
   });
 

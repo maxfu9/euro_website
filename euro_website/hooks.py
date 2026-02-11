@@ -70,7 +70,6 @@ website_context = {}
 
 # Website assets
 web_include_css = [
-    "/assets/euro_website/css/euro_website.css",
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
 ]
 web_include_js = [
